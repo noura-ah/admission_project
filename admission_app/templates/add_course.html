@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form  method="post" action="/add_course">
+        <div class="col">
+            <label class="form-label">Name: </label>
+            <input type="text" name="name" class="form-control">
+        </div>
+        <div class="col">
+            <label class="form-label">desc: </label>
+            <input type="text" name="desc" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Photo:</label>
+            <input class="form-control" type="file" name="photo">
+          </div>
+          {% csrf_token %}
+          <div  class="d-grid gap-2 col-6 mx-auto" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-outline-success">Add</button>
+      </div>
+    </form>
+    
+</body>
+</html>
