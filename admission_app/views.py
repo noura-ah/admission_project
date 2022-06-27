@@ -97,11 +97,15 @@ def edit_state(request,id,state):
 
 def apply_course(request,id):
     if request.method =='POST':
-        course=Course.objects.get(id=id)
         user = User.objects.get(id=request.session["userId"])
-        user.course=course
-        user.save()
-        return redirect(f'/student_profile/{user.id}')
+        if (not user.course):
+           course=Course.objects.get(id=id)
+           user.course=course
+           user.save()
+           return redirect(f'/student_profile/{user.id}')
+        else: #user already applied to another course 
+            messages.error(request, "you are already applied to another course")
+    return redirect(f'/student_profile/{user.id}')
 
 def show_student(request,id):
     
