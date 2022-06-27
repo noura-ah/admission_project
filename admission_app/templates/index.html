@@ -1,31 +1,56 @@
-
-{%extends 'base.html'%}
-
-{%block content%}
-
-    <div class="container">
-        <div class="row align-items-start">
-       <div class="col">
-        <h1 style="text-align: center; color: rgb(18, 128, 91);">Login</h1>
-        <form method="post" action="/login">
-            <div class="col">
-                <label class="form-label">Email: </label>
-                <input type="text" name="email" class="form-control">
-            </div>
-            <div class="col">
-                <label class="form-label">Password: </label>
-                <input type="password" name="password" class="form-control">
-            </div>
-            {% csrf_token %}
-            <div  class="d-grid gap-2 col-6 mx-auto" style="margin-top: 20px;">
-            <button type="submit" class="btn btn-outline-success">Login</button>
-        </div>
-        </form>
-        <div>
-            <a href="/register">Register</a>
-        </div>
-    </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<title>Document</title>
+</head>
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form method="post" action="/register">
+			<h1>Create Account</h1>
+      <br>
+			<input type="text" placeholder="First Name" name="first_name"/>
+      <input type="text" placeholder="last Name" name="last_name"/>
+      <input type="text" placeholder="Email" name="email"/>
+      <input type="text" placeholder="Phone Number" name="phone"/>
+			<input type="password" placeholder="Password" name="password"/>
+      <input type="password" placeholder="Confirm Password" name="confirm_pw"/>
+      {% csrf_token %}
+			<button type="submit">Sign Up</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form method="post" action="/login">
+			<h1>Sign in</h1>
+      <br>
+			<input type="email" placeholder="Email"name="email" />
+			<input type="password" placeholder="Password" name="password" />
+      {% csrf_token %}
+			<button type="submit">Sign In</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello!</h1>
+				<p>Enter your personal information.</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
 </div>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
 
-{%endblock%}
+
