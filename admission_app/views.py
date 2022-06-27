@@ -98,11 +98,15 @@ def edit_state(request,id,state):
 
 def apply_course(request,id):
     if request.method =='POST':
-        course=Course.objects.get(id=id)
         user = User.objects.get(id=request.session["userId"])
-        user.course=course
-        user.save()
-        return redirect(f'/student_profile/{user.id}')
+        if (not user.course):
+            course=Course.objects.get(id=id)
+            user.course=course
+            user.save()
+            return redirect(f'/student_profile/{user.id}')
+        else: #user already applied to another course 
+            messages.error(request, "you are already applied to another course")
+    return redirect(f'/student_profile/{user.id}')
 
 def show_student(request,id):
     
@@ -140,6 +144,21 @@ def edit_course(request,id):
     }
     return render(request,'edit_course.html',context)
     
+    
+def edit_profile(request):
+    this_user=User.objects.get(id=request.session["userId"])
+    if request.method == "POST":
+        course_id=request.POST["course"]
+        this_course=Course.objects.get(id=course_id)
+        this_user.first_name=request.POST["first_name"]
+        this_user.last_name=request.POST["last_name"]
+        this_user.course=this_course
+        this_user.save()
+        return redirect(f'/student_profile/{this_user.id}')
+    
+    return redirect(f'/student_profile/{this_user.id}')
+
+
     
 def logout(request):
     request.session.clear()

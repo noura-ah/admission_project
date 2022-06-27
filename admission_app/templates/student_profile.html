@@ -1,35 +1,35 @@
-{%extends 'base.html' %}
+{%extends 'base.html'%}
 
 {%block content%}
 
 <div class="container">
-    <form action="" method="post">
+    <form action="/edit_profile" method="post">
         {% csrf_token %}
         <div>
             <label for="">First Name:</label>
-            <input type="text" name="first_name" id="" value="{{user.first_name}}">
+            <input type="text" name="first_name" id="first_name" value="{{user.first_name}}" readonly>
         </div>
         <div>
             <label for="">Last Name:</label>
-            <input type="text" name="last_name" id="" value="{{user.last_name}}">
+            <input type="text" name="last_name" id="last_name" value="{{user.last_name}}" readonly>
         </div>
-        {% if  user.course %}
+        {% if user.course %}
         <div>
-            
+
             <label for="">Course you applied to:</label>
-            <select name="course" id="">
+            <select name="course" id="courses" disabled>
                 {% for course in courses %}
-                
+
                 {% if course.id == user.course.id %}
                 <option value="{{course.id}}" selected>{{course.name}}</option>
                 {% else %}
                 <option value="{{course.id}}">{{course.name}}</option>
                 {% endif %}
-                
+
                 {% endfor %}
             </select>
 
-            
+
         </div>
         <div>
             {% if user.state == 'approve' %}
@@ -43,8 +43,15 @@
         {% else %}
         <p class="alert alert-warning w-25">You did not apply to any course </p>
         {% endif %}
-        <input type="submit" name="" id="" value="edit">
+
+        <input type="submit" id="update_btn" value="update my profile" class="btn btn-primary" style="display:none ;">
+
+
     </form>
+    <input type="submit" id="btn" value="edit">
+
 </div>
+
+
 
 {%endblock%}
