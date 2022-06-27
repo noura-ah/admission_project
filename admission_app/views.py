@@ -6,7 +6,7 @@ from django.contrib import messages
 import bcrypt
 import os 
 from django.conf import settings 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 def index(request):
     return render(request, 'index.html')
@@ -28,18 +28,25 @@ def register(request):
             newUser = User.objects.create(first_name=first_name,last_name=last_name,email=email,phone=phone,role = "Student",state="Pennding", password=passwordHash)
             request.session["userId"] = newUser.id
             messages.success(request, "User has been created")
-            return redirect("/success")
+            return redirect("/dashboard")
     return render(request,"register.html") 
 
 def login(request):
-    if (User.objects.filter(email=request.POST['email']).exists()):
-        user = User.objects.get(email=request.POST['email'])
-        if (bcrypt.checkpw(request.POST['password'].encode(), user.password.encode())):
-            request.session['userId'] = user.id
-            if(user.role=="admin"):
-               return redirect("/admin")
-            else:   
-               return redirect("/success")
+    if request.method == "POST":
+       
+         if (User.objects.filter(email=request.POST['email']).exists()):
+              user = User.objects.get(email=request.POST['email'])
+              if (bcrypt.checkpw(request.POST['password'].encode(), user.password.encode())):
+                     request.session['userId'] = user.id
+                     if(user.role=="admin"):
+                          return redirect("/admin")
+                     else:   
+                          return redirect("/dashboard")
+              else:
+                   messages.error(request, "User password do not match")
+                   
+         else:
+             messages.error(request, "User not found")
     return redirect('/')
 
 def dashboard(request):
@@ -49,7 +56,8 @@ def dashboard(request):
     user = User.objects.get(id=request.session["userId"])
     if(user.role=="Student"):
       context = {
-        "user": user
+        "user": user,
+        "courses":Course.objects.all()
       }
       return render(request, 'welcome.html', context)
     return HttpResponse("Please authenticate first")
@@ -59,11 +67,13 @@ def admin(request):
         return HttpResponse("Please authenticate first")
 
     user = User.objects.get(id=request.session["userId"])
-    course =Course.objects.get(id=6)
+    courses =Course.objects.all()
+    students = User.objects.filter(state="Pennding")
     if(user.role=="admin"):
       context = {
         "user": user,
-        "course":course,
+        "courses":courses,
+        "students":students
       }
       return render(request, 'admin.html', context)
     
@@ -73,29 +83,15 @@ def add_course(request):
     if request.method == "POST":
         name = request.POST["name"]
         desc = request.POST["desc"]
-        photo = request.FILES["photo"]
-        plt.savefig(os.path.join(settings.BASE_DIR, 'static\media\1.jpg'))
+        photo = request.FILES['photo']
         course = Course.objects.create(name=name,desc=desc,photo=photo)
         return redirect("/admin") 
     return render(request,"add_course.html")
-
+def edit_state(request,id,state):
+    user = User.objects.get(id=id)
+    # if(state= ) 
+    user.state = state
 def logout(request):
     request.session.clear()
     messages.success(request, "You have been logged out!")
     return redirect("/")
-    
-# Hussein Solution:
-# from django.core.files.base import ContentFile
-
-# with open('/path/to/already/existing/file') as f:
-#   data = f.read()
-
-
-# Ahmed Solution:
-# # obj.image is the ImageField
-# obj.image.save('imgfilename.jpg', ContentFile(data))
-
-# with open('path', 'wb+') as destination:
-#         for chunk in request.FILES['photo'].chunks():
-#             destination.write(chunk)
-

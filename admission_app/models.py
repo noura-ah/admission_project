@@ -3,7 +3,8 @@ from django.db import models
 import re
 
 class userManager(models.Manager):
-    def basic_validator(self, postData,user = None):
+    def basic_validator(self, postData):
+        email_exist=User.objects.get(email=postData["email"])
         errors = {}
         if len(postData['first_name']) < 2:
             errors["first_name"] = "First Name should be at least 2 characters"
@@ -19,17 +20,17 @@ class userManager(models.Manager):
                 errors["email"] = "Please enter email (Empty Check)"
         elif not EMAIL_REGEX.match(postData['email']):    # test whether a field matches the pattern            
             errors['email'] = "Invalid email address!"
-        else:
-            # run the validation if we are in the process of creating a new user, or updating user
-            if user is None or user.email != postData["email"]:
-                if User.objects.filter(email=postData["email"]).exists():
-                    errors["email"] = "The email is already exist, please try another one"
+        
+        elif len(email_exist) != 0 : # there is user already with this email 
+             errors["email"] = "The email is already exist, please try another one"
+            
+            
         return errors
     
 class Course(models.Model):
     name = models.CharField(max_length=255)
     desc=models.TextField()
-    photo = models.ImageField(upload_to='', null=True)
+    photo = models.ImageField(upload_to='images/', null=True)
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -45,4 +46,3 @@ class User(models.Model):
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects= userManager()
-
