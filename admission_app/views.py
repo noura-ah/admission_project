@@ -140,6 +140,21 @@ def edit_course(request,id):
     return render(request,'edit_course.html',context)
     
     
+def edit_profile(request):
+    this_user=User.objects.get(id=request.session["userId"])
+    if request.method == "POST":
+        course_id=request.POST["course"]
+        this_course=Course.objects.get(id=course_id)
+        this_user.first_name=request.POST["first_name"]
+        this_user.last_name=request.POST["last_name"]
+        this_user.course=this_course
+        this_user.save()
+        return redirect(f'/student_profile/{this_user.id}')
+    
+    return redirect(f'/student_profile/{this_user.id}')
+
+
+    
 def logout(request):
     request.session.clear()
     messages.success(request, "You have been logged out!")
