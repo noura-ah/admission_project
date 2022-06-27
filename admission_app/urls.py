@@ -8,11 +8,15 @@ urlpatterns = [
     path('', views.index),
     path('register', views.register),
     path('login', views.login),
-    path('dashboard',views.dashboard),
+    path('home',views.home),
     path('logout',views.logout),
     path('admin',views.admin),
     path('add_course',views.add_course),
     path('edit_state/<int:id>/<str:state>',views.edit_state),
+    path('apply_course/<int:id>',views.apply_course),
+    path('student_profile/<int:id>',views.show_student),
+    path('delete_course/<int:id>',views.delete_course),
+    path('edit_course/<int:id>',views.edit_course),
 
 ]
 

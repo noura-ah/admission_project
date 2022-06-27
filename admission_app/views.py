@@ -28,28 +28,28 @@ def register(request):
             newUser = User.objects.create(first_name=first_name,last_name=last_name,email=email,phone=phone,role = "Student",state="Pennding", password=passwordHash)
             request.session["userId"] = newUser.id
             messages.success(request, "User has been created")
-            return redirect("/dashboard")
+            return redirect("/home")
     return render(request,"register.html") 
 
 def login(request):
     if request.method == "POST":
-       
-         if (User.objects.filter(email=request.POST['email']).exists()):
-              user = User.objects.get(email=request.POST['email'])
-              if (bcrypt.checkpw(request.POST['password'].encode(), user.password.encode())):
-                     request.session['userId'] = user.id
-                     if(user.role=="admin"):
-                          return redirect("/admin")
-                     else:   
-                          return redirect("/dashboard")
-              else:
-                   messages.error(request, "User password do not match")
-                   
-         else:
-             messages.error(request, "User not found")
+        if (User.objects.filter(email=request.POST['email']).exists()):
+            user = User.objects.get(email=request.POST['email'])
+            if (bcrypt.checkpw(request.POST['password'].encode(), user.password.encode())):
+                request.session['userId'] = user.id
+                request.session['role'] = user.role
+                if(user.role=="admin"):
+                        
+                    return redirect("/admin")
+                else:   
+                    return redirect("/home")
+            else:
+                messages.error(request, "User password do not match")
+        else:
+            messages.error(request, "User not found")
     return redirect('/')
 
-def dashboard(request):
+def home(request):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
 
@@ -59,7 +59,7 @@ def dashboard(request):
         "user": user,
         "courses":Course.objects.all()
       }
-      return render(request, 'welcome.html', context)
+      return render(request, 'home.html', context)
     return HttpResponse("Please authenticate first")
 
 def admin(request):
@@ -70,13 +70,12 @@ def admin(request):
     courses =Course.objects.all()
     students = User.objects.filter(state="Pennding")
     if(user.role=="admin"):
-      context = {
-        "user": user,
-        "courses":courses,
-        "students":students
-      }
-      return render(request, 'admin.html', context)
-    
+        context = {
+            "user": user,
+            "courses":courses,
+            "students":students,
+        }
+        return render(request, 'admin.html', context)
     return HttpResponse("Please authenticate first")
 
 def add_course(request):
@@ -87,10 +86,60 @@ def add_course(request):
         course = Course.objects.create(name=name,desc=desc,photo=photo)
         return redirect("/admin") 
     return render(request,"add_course.html")
+
 def edit_state(request,id,state):
     user = User.objects.get(id=id)
-    # if(state= ) 
     user.state = state
+    user.save()
+    if state=='decline':
+        user.course=None
+    return redirect('/admin')
+
+def apply_course(request,id):
+    if request.method =='POST':
+        course=Course.objects.get(id=id)
+        user = User.objects.get(id=request.session["userId"])
+        user.course=course
+        user.save()
+        return redirect(f'/student_profile/{user.id}')
+
+def show_student(request,id):
+    
+    if request.method=='POST':
+        user=User.objects.get(id=id)
+        user.first_name=request.POST['first_name']
+        user.last_name=request.POST['last_name']
+        if request.POST.get('course'):
+            user.course=Course.objects.get(id=request.POST['course'])
+        user.save()
+        return redirect(f'/student_profile/{user.id}')
+    
+    context={
+        'user':User.objects.get(id=id),
+        'courses':Course.objects.all(),
+    }
+    return render(request,'student_profile.html',context)
+
+def delete_course(request,id):
+    Course.objects.get(id=id).delete()
+    return redirect('/admin')
+
+def edit_course(request,id):
+    course = Course.objects.get(id=id)
+    if request.method == "POST":
+        course.name = request.POST["name"]
+        course.desc = request.POST["desc"]
+        if request.FILES.get('photo'):
+            course.photo = request.FILES['photo']
+        course.save()
+        return redirect('/admin')
+    
+    context={
+        'course':course
+    }
+    return render(request,'edit_course.html',context)
+    
+    
 def logout(request):
     request.session.clear()
     messages.success(request, "You have been logged out!")

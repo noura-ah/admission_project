@@ -1,0 +1,50 @@
+{%extends 'base.html' %}
+
+{%block content%}
+
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="">First Name:</label>
+            <input type="text" name="first_name" id="" value="{{user.first_name}}">
+        </div>
+        <div>
+            <label for="">Last Name:</label>
+            <input type="text" name="last_name" id="" value="{{user.last_name}}">
+        </div>
+        {% if  user.course %}
+        <div>
+            
+            <label for="">Course applied to:</label>
+            <select name="course" id="">
+                {% for course in courses %}
+                
+                {% if course.id == user.course.id %}
+                <option value="{{course.id}}" selected>{{course.name}}</option>
+                {% else %}
+                <option value="{{course.id}}">{{course.name}}</option>
+                {% endif %}
+                
+                {% endfor %}
+            </select>
+
+            
+        </div>
+        <div>
+            {% if user.state == 'approve' %}
+            <label class="alert alert-success" for="">Request State : {{user.state}}</label>
+            {% elif user.state == 'decline' %}
+            <label class="alert alert-danger" for="">Request State : {{user.state}}</label>
+            {% else %}
+            <label class="alert alert-light" for="">Request State : {{user.state}}</label>
+            {% endif %}
+        </div>
+        {% else %}
+        <p class="alert alert-warning w-25">You did not apply to any course </p>
+        {% endif %}
+        <input type="submit" name="" id="" value="edit">
+    </form>
+</div>
+
+{%endblock%}

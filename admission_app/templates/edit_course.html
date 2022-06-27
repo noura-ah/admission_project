@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<form method="post" action="" enctype="multipart/form-data">
+    <div class="col">
+        <label class="form-label">Name: </label>
+        <input type="text" name="name" class="form-control" value="{{course.name}}">
+    </div>
+    <div class="col">
+        <label class="form-label">desc: </label>
+        <input type="text" name="desc" class="form-control" value="{{course.desc}}">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Photo:</label>
+        <input class="form-control" type="file" name="photo">
+    </div>
+    {% csrf_token %}
+    <div class="d-grid gap-2 col-6 mx-auto" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-outline-success">edit</button>
+    </div>
+</form>
+
+{%endblock%}

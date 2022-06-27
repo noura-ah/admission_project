@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h4>Welcome to user page {{user.first_name}}</h4>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  {% for course in courses %}
+  <div class="col">
+    <form method="post" action="/apply_course/{{course.id}}" class='card-deck'>
+      <div class="card" style="width: 16rem;">
+        <img src="{{course.photo.url}}" class="card-img-top" style="width:100%; height:200px;" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{course.name}}</h5>
+          <p class="card-text">{{course.desc}}</p>
+          <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
+          <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
+
+        </div>
+      </div>
+  </div>
+  {% csrf_token %}
+  </form>
+  {%endfor%}
+</div>
+
+
+{%endblock%}

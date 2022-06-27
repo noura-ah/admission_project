@@ -4,7 +4,7 @@ import re
 
 class userManager(models.Manager):
     def basic_validator(self, postData):
-        email_exist=User.objects.get(email=postData["email"])
+        
         errors = {}
         if len(postData['first_name']) < 2:
             errors["first_name"] = "First Name should be at least 2 characters"
@@ -15,14 +15,18 @@ class userManager(models.Manager):
         elif postData['password'] != postData['confirm_pw']:
                 errors['password'] = "Passwords DO NOT match!"
 
+        try:
+            
+            email_exist=User.objects.get(email=postData["email"])
+            if len(email_exist) != 0 : # there is user already with this email 
+                errors["email"] = "The email is already exist, please try another one"
+        except:
+            pass
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')   
         if not postData["email"]:
                 errors["email"] = "Please enter email (Empty Check)"
         elif not EMAIL_REGEX.match(postData['email']):    # test whether a field matches the pattern            
             errors['email'] = "Invalid email address!"
-        
-        elif len(email_exist) != 0 : # there is user already with this email 
-             errors["email"] = "The email is already exist, please try another one"
             
             
         return errors
