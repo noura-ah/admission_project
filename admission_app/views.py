@@ -5,10 +5,12 @@ from admission_app.models import Course, User
 from django.contrib import messages
 import bcrypt
 import os 
-from django.conf import settings 
-#import matplotlib.pyplot as plt
+
 
 def index(request):
+    #if the user is logged in, redirect to home page, dont show register and login page
+    if 'userId' in request.session:
+        return redirect('/home')
     return render(request, 'index.html')
 
 def register(request):
@@ -39,7 +41,6 @@ def login(request):
                 request.session['userId'] = user.id
                 request.session['role'] = user.role
                 if(user.role=="admin"):
-                        
                     return redirect("/admin")
                 else:   
                     return redirect("/home")
@@ -54,12 +55,12 @@ def home(request):
         return HttpResponse("Please authenticate first")
 
     user = User.objects.get(id=request.session["userId"])
-    if(user.role=="Student"):
-      context = {
-        "user": user,
-        "courses":Course.objects.all()
-      }
-      return render(request, 'home.html', context)
+    # if(user.role=="Student"):
+    context = {
+            "user": user,
+            "courses":Course.objects.all()
+        }
+    return render(request, 'home.html', context)
     return HttpResponse("Please authenticate first")
 
 def admin(request):
@@ -142,5 +143,5 @@ def edit_course(request,id):
     
 def logout(request):
     request.session.clear()
-    messages.success(request, "You have been logged out!")
+    # messages.success(request, "You have been logged out!")
     return redirect("/")

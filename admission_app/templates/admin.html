@@ -22,7 +22,8 @@
             <th scope="row">{{course.id}}</th>
             <td>{{course.name}}</td>
             <td>{{course.desc}}</td>
-            <td>{{course.users.all|length}} </td>
+            {% load filters %}
+            <td>{{ course.users.all|in_category:'approve'|length }} </td>
             <td>
               <a class="btn btn-primary btn-light" href="/edit_course/{{course.id}}">Edit</a> |
             <a class="btn btn-primary btn-light" href="/delete_course/{{course.id}}">Delete</a></td>

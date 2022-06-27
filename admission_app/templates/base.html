@@ -8,6 +8,7 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
 </head>
 
@@ -16,7 +17,8 @@
     {% if "userId" in request.session %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <img src="media\images\nav_logo.png" alt="logo" style="width:6%; height:6%;">
+            {% load static %}
+            <img src="{% static 'img/nav_logo.png' %}" alt="logo" style="width:6%; height:6%;">
             <!-- <a class="navbar-brand" href="#">Admission</a> -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -29,7 +31,7 @@
                         <a class="nav-link active" aria-current="page" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        {% if 'role' == 'admin' %}
+                        {% if request.session.role == 'admin' %}
                         <a class="nav-link" href="/admin" class="btn btn-dark">Profile</a>
                         {% else %}
                         <a class="nav-link" href="/student_profile/{{ request.session.userId}}" class="">Profile</a>
