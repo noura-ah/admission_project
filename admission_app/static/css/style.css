@@ -11,10 +11,10 @@ body {
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
+	height: 120vh;
 	margin: -20px 0 50px;
 }
-
+/* 
 h1 {
 	font-weight: bold;
 	margin: 0;
@@ -41,12 +41,12 @@ a {
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
-}
+} */
 /* ------------------------------button style-------------------------------------- */
 button {
 	border-radius: 20px;
 	border: 1px solid white;
-	background-color: #5264ea;
+	background-color: #4aaba9;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -74,7 +74,7 @@ button.ghost {
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 480px;
+	min-height: 550px;
 }
 /* ------------------------------form style-------------------------------------- */
 form {
@@ -156,7 +156,7 @@ input {
 .overlay {
 	background: #56C2C1;
 	/* background: -webkit-linear-gradient(to right, #5264ea,white); */
-	background: linear-gradient(to left,rgb(163, 178, 224),#5264ea,#5264ea,rgb(163, 178, 224));
+	background: linear-gradient(to left,#bbe4e4,#399897,#6bb5b4,#bbe4e4);
 	color: #FFFFFF;
 	position: relative;
 	left: -100%;

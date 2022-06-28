@@ -1,9 +1,6 @@
 {%extends 'base.html'%}
 
 {%block content%}
-
-    <a href="/logout">logout</a>
-    <a href="/add_course">Add Course</a>
     <h4>Welcome to admin page {{user.first_name}}</h4>
 
     <table class="table">
@@ -33,6 +30,7 @@
           {%endfor%}
         </tbody>
       </table>
+      <a class="btn btn-primary btn-light" href="/add_course">Add Course</a>
       <table class="table">
         <thead>
           <tr>

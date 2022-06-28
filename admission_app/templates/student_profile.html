@@ -33,6 +33,7 @@
         </div>
         <div>
             {% if user.state == 'approve' %}
+            <p class="text-muted">* You can't change the course after application is being Approved.</p>
             <label class="alert alert-success" for="">Request State : {{user.state}}</label>
             {% elif user.state == 'decline' %}
             <label class="alert alert-danger" for="">Request State : {{user.state}}</label>
@@ -48,8 +49,11 @@
 
 
     </form>
+    {% if user.state == 'approve' %}
+    <input type="submit" id="btn2" value="edit">
+    {% else %}
     <input type="submit" id="btn" value="edit">
-
+    {% endif %}
 </div>
 
 
