@@ -5,10 +5,12 @@ from admission_app.models import Course, User
 from django.contrib import messages
 import bcrypt
 import os 
-from django.conf import settings 
-#import matplotlib.pyplot as plt
+
 
 def index(request):
+    #if the user is logged in, redirect to home page, dont show register and login page
+    if 'userId' in request.session:
+        return redirect('/home')
     return render(request, 'index.html')
 
 def register(request):
@@ -39,7 +41,6 @@ def login(request):
                 request.session['userId'] = user.id
                 request.session['role'] = user.role
                 if(user.role=="admin"):
-                        
                     return redirect("/admin")
                 else:   
                     return redirect("/home")
@@ -54,12 +55,12 @@ def home(request):
         return HttpResponse("Please authenticate first")
 
     user = User.objects.get(id=request.session["userId"])
-    if(user.role=="Student"):
-      context = {
-        "user": user,
-        "courses":Course.objects.all()
-      }
-      return render(request, 'home.html', context)
+    # if(user.role=="Student"):
+    context = {
+            "user": user,
+            "courses":Course.objects.all()
+        }
+    return render(request, 'home.html', context)
     return HttpResponse("Please authenticate first")
 
 def admin(request):
@@ -68,7 +69,8 @@ def admin(request):
 
     user = User.objects.get(id=request.session["userId"])
     courses =Course.objects.all()
-    students = User.objects.filter(state="Pennding")
+    students = User.objects.filter(state="pennding")
+    request.session["request_pennding"]=len(students)
     if(user.role=="admin"):
         context = {
             "user": user,
@@ -79,32 +81,49 @@ def admin(request):
     return HttpResponse("Please authenticate first")
 
 def add_course(request):
+    if "userId" not in request.session:
+        return HttpResponse("Please authenticate first")
     if request.method == "POST":
         name = request.POST["name"]
         desc = request.POST["desc"]
+        capacity=request.POST["capacity"]
         photo = request.FILES['photo']
         course = Course.objects.create(name=name,desc=desc,photo=photo)
         return redirect("/admin") 
     return render(request,"add_course.html")
 
 def edit_state(request,id,state):
+    if "userId" not in request.session:
+        return HttpResponse("Please authenticate first")
     user = User.objects.get(id=id)
-    user.state = state
-    user.save()
     if state=='decline':
         user.course=None
+    elif user.course.capacity == len(user.course.users.all().filter(state='approve')):
+        messages.error(request,f'{user.course.name} course is full')
+        #state var here is approve, we need to change it pennding
+        state=user.state
+    user.state = state
+    user.save()
     return redirect('/admin')
 
 def apply_course(request,id):
+    if "userId" not in request.session:
+        return HttpResponse("Please authenticate first")
     if request.method =='POST':
-        course=Course.objects.get(id=id)
         user = User.objects.get(id=request.session["userId"])
-        user.course=course
-        user.save()
-        return redirect(f'/student_profile/{user.id}')
+        if (not user.course):
+            course=Course.objects.get(id=id)
+            user.course=course
+            user.state="pennding"
+            user.save()
+            return redirect(f'/student_profile/{user.id}')
+        else: #user already applied to another course 
+            messages.error(request, "you are already applied to another course")
+    return redirect(f'/student_profile/{user.id}')
 
 def show_student(request,id):
-    
+    if "userId" not in request.session:
+        return HttpResponse("Please authenticate first")
     if request.method=='POST':
         user=User.objects.get(id=id)
         user.first_name=request.POST['first_name']
@@ -121,14 +140,24 @@ def show_student(request,id):
     return render(request,'student_profile.html',context)
 
 def delete_course(request,id):
+    if "userId" not in request.session:
+        return HttpResponse("Please authenticate first")
     Course.objects.get(id=id).delete()
     return redirect('/admin')
 
 def edit_course(request,id):
+    if "userId" not in request.session:
+        return HttpResponse("Please authenticate first")
     course = Course.objects.get(id=id)
     if request.method == "POST":
         course.name = request.POST["name"]
         course.desc = request.POST["desc"]
+        if len(course.users.filter(state="approve"))<int(request.POST["capacity"]):
+          course.capacity=request.POST["capacity"]
+        else:
+            messages.error(request,"The new seats number is less than the number of applicants.")
+            return redirect(f'/edit_course/{course.id}')
+
         if request.FILES.get('photo'):
             course.photo = request.FILES['photo']
         course.save()
@@ -143,19 +172,18 @@ def edit_course(request,id):
 def edit_profile(request):
     this_user=User.objects.get(id=request.session["userId"])
     if request.method == "POST":
-        course_id=request.POST["course"]
-        this_course=Course.objects.get(id=course_id)
         this_user.first_name=request.POST["first_name"]
         this_user.last_name=request.POST["last_name"]
-        this_user.course=this_course
+        if "course" in request.POST:
+          course_id=request.POST["course"]
+          this_course=Course.objects.get(id=course_id)
+          this_user.course=this_course
         this_user.save()
         return redirect(f'/student_profile/{this_user.id}')
     
     return redirect(f'/student_profile/{this_user.id}')
 
-
-    
 def logout(request):
     request.session.clear()
-    messages.success(request, "You have been logged out!")
+    # messages.success(request, "You have been logged out!")
     return redirect("/")

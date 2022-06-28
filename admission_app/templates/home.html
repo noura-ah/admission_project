@@ -29,8 +29,11 @@
           <h5 class="card-title">{{course.name}}</h5>
           <p class="card-text">{{course.desc}}</p>
           <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
+          {% if request.session.role == 'admin' %}
+          <a  class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
+          {% else %}
           <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
-
+         {% endif %}
         </div>
       </div>
   </div>
