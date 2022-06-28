@@ -1,25 +1,25 @@
 from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from admission_app.models import Course, User
+from admission_app.models import *
 from django.contrib import messages
 import bcrypt
 import os 
 
 
 def index(request):
+    return redirect('/home')
+
+def register(request):
     #if the user is logged in, redirect to home page, dont show register and login page
     if 'userId' in request.session:
         return redirect('/home')
-    return render(request, 'index.html')
-
-def register(request):
     if request.method == "POST":
         errors = User.objects.basic_validator(request.POST)
         if len(errors) > 0:
             for key, errorMessage in errors.items():
                 messages.error(request, errorMessage)
-            return redirect("/")
+            return redirect("/register")
         else:
             first_name = request.POST["first_name"]
             last_name = request.POST["last_name"]
@@ -29,9 +29,8 @@ def register(request):
             passwordHash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             newUser = User.objects.create(first_name=first_name,last_name=last_name,email=email,phone=phone,role = "Student",state="Pennding", password=passwordHash)
             request.session["userId"] = newUser.id
-            messages.success(request, "User has been created")
             return redirect("/home")
-    return render(request,"register.html") 
+    return render(request,"index.html")
 
 def login(request):
     if request.method == "POST":
@@ -48,20 +47,18 @@ def login(request):
                 messages.error(request, "User password do not match")
         else:
             messages.error(request, "User not found")
-    return redirect('/')
+    return redirect('/register')
 
 def home(request):
-    if "userId" not in request.session:
-        return HttpResponse("Please authenticate first")
-
-    user = User.objects.get(id=request.session["userId"])
+    if "userId" in request.session:
+     user = User.objects.get(id=request.session["userId"])
     # if(user.role=="Student"):
     context = {
-            "user": user,
+            # "user": user,
             "courses":Course.objects.all()
         }
     return render(request, 'home.html', context)
-    return HttpResponse("Please authenticate first")
+    # return HttpResponse("Please authenticate first")
 
 def admin(request):
     if "userId" not in request.session:
@@ -88,7 +85,7 @@ def add_course(request):
         desc = request.POST["desc"]
         capacity=request.POST["capacity"]
         photo = request.FILES['photo']
-        course = Course.objects.create(name=name,desc=desc,photo=photo)
+        course = Course.objects.create(name=name,desc=desc,photo=photo,capacity=capacity)
         return redirect("/admin") 
     return render(request,"add_course.html")
 
@@ -182,7 +179,18 @@ def edit_profile(request):
         return redirect(f'/student_profile/{this_user.id}')
     
     return redirect(f'/student_profile/{this_user.id}')
-
+def add_message(request):
+    if request.method == "POST":
+        name=request.POST["name"]
+        email=request.POST["email"]
+        msg=request.POST["message"]
+        Message.objects.create(name=name,email=email,message=msg)
+    return redirect("/")   
+def show_message(request):
+    context={
+        "msgs":Message.objects.all()
+    }
+    return render(request,"show_message.html",context)
 def logout(request):
     request.session.clear()
     # messages.success(request, "You have been logged out!")

@@ -31,6 +31,8 @@
           <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
           {% if request.session.role == 'admin' %}
           <a  class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
+          {% elif "userId" not in request.session %}
+          <a  class="btn btn-info" style="color: white;" href="/register">Apply</a>
           {% else %}
           <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
          {% endif %}
@@ -42,7 +44,7 @@
   {%endfor%}
 </div>
 
-
+{% if not request.session.role == 'admin' %}
 <section class="contacts" id="contacts">
   <div class="container">
     <div class="row">
@@ -53,32 +55,31 @@
       </div>
       <div class="col-md-6">
           <h3 class="text-center">Contacat Us</h3>
-        <form class="contact-form row needs-validation" novalidate>
+        <form class="contact-form row needs-validation" method="post" action="/add_message" novalidate>
           <div class="col-md-6 mb-3">
-            <input type="text" class="form-control" placeholder="الاسم" required>
+            <input type="text" class="form-control" name="name" placeholder="Enter the name..." required>
             <div class="invalid-feedback">
-              عذرًا يرجى ادخال الاسم
+              Enter The Name
             </div>
           </div>
           <div class="col-md-6 mb-3">
-            <input type="email" class="form-control" placeholder="البريد الإلكتروني" required>
+            <input type="email" class="form-control" name="email" placeholder="Enter the email..." required>
             <div class="invalid-feedback">
-              عذرًا يرجى ادخال البريد الإلكتروني
+               Enter the Email
             </div>
           </div>
           <div class="col-12 mb-3">
-            <textarea class="form-control" placeholder="الرسالة" required></textarea>
+            <textarea class="form-control"   name="message" placeholder="Message..." required></textarea>
             <div class="invalid-feedback">
-              عذرًا يرجى ادخال الرسالة
+              Message
             </div>
           </div>
-          <button type="submit">إرسال</button>
+          <button type="submit">Send</button>
+          {% csrf_token %}
         </form>
       </div>
     </div>
   </div>
 </section>
-
-
-
+{% endif %}
 {%endblock%}

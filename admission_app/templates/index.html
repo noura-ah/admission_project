@@ -8,9 +8,16 @@
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	<title>Document</title>
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
 </head>
-
 <body>
+	{% if messages %}
+	{% for message in messages %}
+	<div style="background-color: rgba(255, 0, 0, 0.361);padding: 10px;">{{ message }}</div>
+	{% endfor %}
+	{% endif %}
+
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form method="post" action="/register">
@@ -52,6 +59,9 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+	crossorigin="anonymous"></script>
 </body>
 
 </html>
