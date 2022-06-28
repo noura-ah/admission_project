@@ -5,10 +5,133 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <head>
+        <title>My Page Title</title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+      </head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
+
+    <!--font awesom cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <style>
+.home{
+    position: relative;
+}
+.img-bg{
+    background: url("/static/images/bg9.jpeg")  no-repeat ;
+    background-position:bottom; 
+    height: 100vh; 
+    background-size:cover; 
+    max-width: 100%;
+
+    }
+.overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+}
+.home .content{
+    max-width: 50rem;
+    position: absolute;
+    top:25%;
+    right: 40%;
+}
+.home .content h3{
+    font-size: 3.2rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+ .home .content p{
+    font-size: 2rem;
+    color: #fff;
+    font-weight: lighter;
+    padding: 1rem 0;
+    margin: 10px;
+    }
+.content-btn{
+    position: relative;
+}    
+   
+.btn-content{
+   position: absolute;
+   right: 50%;
+    width: 180px;
+    padding: 10px;
+    background-color: #fff;
+    color: black;
+
+}
+section.contacts {
+    padding: 100px 0 60px;
+}
+
+section.contacts .map iframe {
+    height: 200px;
+    width: 90%;
+}
+
+section.contacts .contact-addresses h4 {
+    font-size: 24px;
+    color: #181c1c;
+    margin-bottom: 40px;
+}
+
+section.contacts .contact-addresses ul {
+    list-style: none;
+    padding: 0;
+}
+
+section.contacts .contact-addresses ul li {
+    font-size: 18px;
+    line-height: 25px;
+    color: #16aeca;
+    margin-bottom: 15px;
+}
+
+section.contacts .contact-addresses li address {
+    display: inline;
+}
+
+section.contacts .contact-text {
+    margin: 50px auto 20px;
+}
+
+section.contacts .contact-text h3 {
+    font-size: 24px;
+    color: #181c1c;
+    font-weight: bold;
+}
+
+section.contacts .contact-form {
+    width: 60%;
+    margin: auto;
+}
+
+section.contacts .contact-form input,
+section.contacts .contact-form textarea {
+    background-color: #f7f7f7;
+    border: 2px solid #ececec;
+    color: #5c5c5c;
+    font-size: 15px;
+    line-height: 25px;
+    border-radius: 3px;
+    text-align: right;
+}
+
+section.contacts .contact-form button {
+    background-color: #16aeca;
+    font-size: 15px;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 3px;
+    width: auto;
+    margin-right: 12px;
+    border: 0;
+}
+
+ </style>
 </head>
 
 <body>
@@ -28,37 +151,21 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/home">Home</a>
                     </li>
-                    <li class="nav-item">
-                        {% if 'role' == 'admin' %}
-                        <a class="nav-link" href="/admin" class="btn btn-dark">Profile</a>
-                        {% else %}
-                        <a class="nav-link" href="/student_profile/{{ request.session.userId}}" class="">Profile</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+                    <li><a class="nav-link" href="#review" data-scroll="review">review</a></li>
+                    <li><a class="nav-link" href="#contact" data-scroll="contact">Contact</a></li>
                 </ul>
-                <form class="d-flex ">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <div class="mr-2">
-                    <a href="/logout" class="btn btn-dark">Logout</a>
+                <div class="mr-2 d-flex">
+                    <div>
+                        {% if 'role' == 'admin' %}
+                        <a class="nav-link" href="/admin" >	<i class='fas fa-user-alt'></i></a>
+                        {% else %}
+                        <a class="nav-link" href="/student_profile/{{ request.session.userId}}" ><i class='fas fa-user-alt'></i></a>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <a href="/logout" class="btn btn-dark"> Logout </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,9 +180,9 @@
     {% endif %}
 
 
-    <div class="container">
+
         {% block content %}{% endblock %}
-    </div>
+
     <!-- <script type="text/javascript" src="{% static 'js/script.js' %}"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
