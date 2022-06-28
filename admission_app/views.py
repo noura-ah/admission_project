@@ -194,11 +194,21 @@ def add_message(request):
         msg=request.POST["message"]
         Message.objects.create(name=name,email=email,message=msg)
     return redirect("/")   
+
 def show_message(request):
     context={
         "msgs":Message.objects.all()
     }
     return render(request,"show_message.html",context)
+
+def read_message(request , id):
+    msg=Message.objects.get(id=id)
+    msg.read=True
+    msg.save()
+    request.session["msgs"]= request.session["msgs"] - 1
+    return redirect('/show_message')
+
+
 def logout(request):
     request.session.clear()
     # messages.success(request, "You have been logged out!")
