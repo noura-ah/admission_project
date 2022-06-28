@@ -83,6 +83,7 @@ def add_course(request):
     if request.method == "POST":
         name = request.POST["name"]
         desc = request.POST["desc"]
+        capacity=request.POST["capacity"]
         photo = request.FILES['photo']
         course = Course.objects.create(name=name,desc=desc,photo=photo)
         return redirect("/admin") 
@@ -90,6 +91,10 @@ def add_course(request):
 
 def edit_state(request,id,state):
     user = User.objects.get(id=id)
+    if user.course.capacity == len(user.course.users.all().filter(state='approve')):
+        messages.error(request,f'{user.course.name} course is full')
+        #state var here is approve, we need to change it pennding
+        state=user.state
     user.state = state
     user.save()
     if state=='decline':
@@ -134,6 +139,7 @@ def edit_course(request,id):
     if request.method == "POST":
         course.name = request.POST["name"]
         course.desc = request.POST["desc"]
+        course.capacity=request.POST["capacity"]
         if request.FILES.get('photo'):
             course.photo = request.FILES['photo']
         course.save()

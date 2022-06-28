@@ -12,6 +12,7 @@
             <th scope="col">ID</th>
             <th scope="col">Course Name</th>
             <th scope="col">Description</th>
+            <th scope="col">Capacity</th>
             <th scope="col">Students Number: </th>
             <th scope="col">Actions: </th>
           </tr>
@@ -22,6 +23,7 @@
             <th scope="row">{{course.id}}</th>
             <td>{{course.name}}</td>
             <td>{{course.desc}}</td>
+            <td>{{course.capacity}}</td>
             {% load filters %}
             <td>{{ course.users.all|in_category:'approve'|length }} </td>
             <td>
