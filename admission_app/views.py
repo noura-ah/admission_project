@@ -51,7 +51,7 @@ def login(request):
 
 def home(request):
     if "userId" in request.session:
-     user = User.objects.get(id=request.session["userId"])
+        user = User.objects.get(id=request.session["userId"])
     # if(user.role=="Student"):
     context = {
             # "user": user,
@@ -83,12 +83,18 @@ def add_course(request):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
     if request.method == "POST":
-        name = request.POST["name"]
-        desc = request.POST["desc"]
-        capacity=request.POST["capacity"]
-        photo = request.FILES['photo']
-        course = Course.objects.create(name=name,desc=desc,photo=photo,capacity=capacity)
-        return redirect("/admin") 
+        errors = Course.objects.basic_validator(request.FILES)
+        if len(errors) > 0:
+            for key, errorMessage in errors.items():
+                messages.error(request, errorMessage)
+            return redirect("/add_course")
+        else:
+            name = request.POST["name"]
+            desc = request.POST["desc"]
+            capacity=request.POST["capacity"]
+            photo = request.FILES['photo']
+            course = Course.objects.create(name=name,desc=desc,photo=photo,capacity=capacity)
+            return redirect("/admin") 
     return render(request,"add_course.html")
 
 def edit_state(request,id,state):

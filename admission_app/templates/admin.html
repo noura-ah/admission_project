@@ -8,7 +8,7 @@
             <th scope="col">ID</th>
             <th scope="col">Course Name</th>
             <th scope="col">Description</th>
-            <th scope="col">Capacity</th>
+            <th scope="col">Available Seats</th>
             <th scope="col">Students Number: </th>
             <th scope="col">Actions: </th>
           </tr>
@@ -19,9 +19,12 @@
             <th scope="row">{{course.id}}</th>
             <td>{{course.name}}</td>
             <td>{{course.desc}}</td>
-            <td>{{course.capacity}}</td>
             {% load filters %}
-            <td>{{ course.users.all|in_category:'approve'|length }} </td>
+            {% load mathfilters %}
+            {% with count_approve=course.users.all|in_category:'approve'|length %}
+            <td>{{ course.capacity|sub:count_approve }} </td>
+            <td>{{ count_approve }}</td>
+            {% endwith %}
             <td>
               <a class="btn btn-primary btn-light" href="/edit_course/{{course.id}}">Edit</a> |
             <a class="btn btn-primary btn-danger" href="/delete_course/{{course.id}}">Delete</a></td>
