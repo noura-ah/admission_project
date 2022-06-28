@@ -162,9 +162,13 @@ section.contacts .contact-form button {
                     </li>
                     {% if request.session.role == 'admin' %}
                     <li class="nav-item">
-                            <a href="#" class="nav-link">pennding requests <span class="badge bg-info ms-2">{{ request.session.request_pennding }}</span></a>
+                            <a href="/admin#pennding" data-scroll="pennding" class="nav-link">pennding requests <span class="badge bg-info ms-2">{{ request.session.request_pennding }}</span></a>
                         
                     </li>
+                    <li class="nav-item">
+                        <a href="/show_message" class="nav-link">Messages <span class="badge bg-info ms-2">{{ request.session.msgs }}</span></a>
+                    
+                </li>
                     {% endif %}
                 </ul>
                 <div class="mr-2">

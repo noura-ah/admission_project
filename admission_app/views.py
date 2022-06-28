@@ -68,6 +68,8 @@ def admin(request):
     courses =Course.objects.all()
     students = User.objects.filter(state="pennding")
     request.session["request_pennding"]=len(students)
+    msg=Message.objects.filter(read=False)
+    request.session["msgs"]=len(msg)
     if(user.role=="admin"):
         context = {
             "user": user,

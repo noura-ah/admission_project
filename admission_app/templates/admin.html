@@ -2,7 +2,6 @@
 
 {%block content%}
     <h4>Welcome to admin page {{user.first_name}}</h4>
-
     <table class="table">
         <thead>
           <tr>
@@ -31,7 +30,7 @@
         </tbody>
       </table>
       <a class="btn btn-primary btn-light" href="/add_course">Add Course</a>
-      <table class="table">
+      <table class="table" id="pennding">
         <thead>
           <tr>
             <th scope="col">ID</th>
