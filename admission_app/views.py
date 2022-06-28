@@ -193,6 +193,7 @@ def add_message(request):
         email=request.POST["email"]
         msg=request.POST["message"]
         Message.objects.create(name=name,email=email,message=msg)
+        request.session["sucess_msg"]="your message has been sent!"
     return redirect("/")   
 
 def show_message(request):
