@@ -159,6 +159,9 @@ section.contacts .contact-form button {
                         <a class="nav-link" href="/admin" class="btn btn-dark">Profile</a>
                         {% else %}
                         <a class="nav-link" href="/student_profile/{{ request.session.userId}}" class="">Profile</a>
+                        <li class="nav-item">
+                        <a class="nav-link" href="/home#contacts" class="">Contact us</a>
+                        </li>
                         {% endif %}
                     </li>
                     {% if request.session.role == 'admin' %}
