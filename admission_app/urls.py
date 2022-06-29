@@ -18,6 +18,8 @@ urlpatterns = [
     path('delete_course/<int:id>',views.delete_course),
     path('edit_course/<int:id>',views.edit_course),
     path('edit_profile',views.edit_profile),
+    path('add_message',views.add_message),
+    path('show_message',views.show_message)
 
 ]
 

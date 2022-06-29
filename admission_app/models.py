@@ -30,7 +30,15 @@ class userManager(models.Manager):
             
             
         return errors
-    
+
+class CourseManager(models.Manager):
+    def basic_validator(self,postData):
+        errors={}
+        print(postData)
+        photo=postData['photo']
+        if not photo.name.endswith((".jpg",".png",".gif",".jpeg")):
+            errors['img']="Only images end with .png, .gif, .jpg and .jpeg are accepted"
+        return errors
 class Course(models.Model):
     name = models.CharField(max_length=255)
     desc=models.TextField()
@@ -38,6 +46,7 @@ class Course(models.Model):
     capacity=models.IntegerField()
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects=CourseManager()
 
 class User(models.Model):
     first_name = models.CharField(max_length=255)
@@ -51,3 +60,11 @@ class User(models.Model):
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects= userManager()
+
+class Message(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    message=models.TextField()
+    read = models.BooleanField(default=False)
+    created_at= models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

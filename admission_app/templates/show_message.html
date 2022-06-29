@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="container">
+    {% for msg in msgs %}
+    <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <h4 data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                {{msg.name}}
+              </h4>
+            </h5>
+          </div>
+      
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+               {{msg.message}}
+            </div>
+            <div>
+            <a href = "mailto: {{msg.email}}"> Reply</a>
+        </div>
+          </div>
+        </div>
+      </div>
+  {%endfor%}
+</div>
+{%endblock%}
