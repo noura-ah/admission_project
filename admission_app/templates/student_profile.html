@@ -1,68 +1,144 @@
-{%extends 'base.html'%}
-{% block title %}Profile{% endblock %}
-{%block content%}
-
+{%extends 'base.html'%} {% block title %}Profile{% endblock %} {%block content%}
 <div class="container content-profile">
-    <div class="container" style="width:400px; margin-top: 40px;">
-        <form action="/edit_profile" method="post"  enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div>
-                <label for="">First Name:</label>
-                <input type="text" name="first_name" id="first_name" class="form-control" value="{{user.first_name}}"
-                    readonly>
+  <div class="container">
+    <form action="/edit_profile" method="post" enctype="multipart/form-data">
+      <div class="row justify-content-md-center" >
+        <!-- <div class="col col-md-12"> -->
+        <div class=" form-row">
+          {% if messages %}
+          <div></div>
+          <div class=" col-md-10 mb-1">
+          <div class="messages">
+            {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %} >
+              {{ message }}
             </div>
-            <div>
-                <label for="">Last Name:</label>
-                <input type="text" name="last_name" id="last_name" class="form-control" value="{{user.last_name}}"
-                    readonly>
-            </div>
-            <div>
-                <label for="cv">Upload CV:</label>
-                <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled/>
-               
-            </div>
-            {% if user.course %}
-            <div>
-                <label for="">Course you applied to:</label>
-                <select name="course" id="courses" class="form-control" disabled>
-                    {% for course in courses %}
+            {% endfor %}
+          </div>
+        </div>
+          {% endif %}
+        </div>
+      </div>
+        <div class="row justify-content-md-center" >
+      {% csrf_token %}
+      <div class="col col-md-9">
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+            <label class="form-label">First Name:</label>
+          </div>
+          <div class="col-md-9 mb-3">
+            <input type="text" name="first_name" id="first_name" class="form-control" value="{{user.first_name}}
+            " readonly/>
+          </div>
+        </div>
+      </div>
 
-                    {% if course.id == user.course.id %}
-                    <option value="{{course.id}}" selected>{{course.name}}</option>
-                    {% else %}
-                    <option value="{{course.id}}">{{course.name}}</option>
-                    {% endif %}
-
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div>
-                {% if user.state == 'approve' %}
-                <p class="text-muted">* You can't change the course after application is being Approved.</p>
-                <label class="alert alert-success" for="">Request State : {{user.state}}</label>
-                {% elif user.state == 'decline' %}
-                <label class="alert alert-danger" for="">Request State : {{user.state}}</label>
-                {% else %}
-                <label class="alert alert-light" for="">Request State : {{user.state}}</label>
-                {% endif %}
-            </div>
-            {% else %}
-            <p class="alert alert-warning ">You did not apply to any course </p>
-            {% endif %}
-
-            <input type="submit" id="update_btn" value="Update my profile" class="btn btn-light" style="display:none ;">
-
-
-        </form>
+      <div class="col col-md-9">
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+            <label class="form-label">Last Name:</label>
+          </div>
+          <div class="col-md-9 mb-3">
+            <input type="text" name="last_name" id="last_name" class="form-control" value="{{user.last_name}}"
+              readonly/>
+          </div>
+        </div>
+      </div>
+      <div class="col col-md-9">
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+        <label for="cv">Upload CV:</label>
+          </div>
+          <div class="col-md-9 mb-3">
+        <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled/>
+    </div>
+</div>
+      </div>
+      {% if user.course %}
+      <div class="col col-md-9">
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+        <label for="">Course you applied to:</label>
+          </div>
+          <div class="col-md-9 mb-3">
+        <select name="course" id="courses" class="form-control" disabled>
+          {% for course in courses %} {% if course.id == user.course.id %}
+          <option value="{{course.id}}" selected>{{course.name}}</option>
+          {% else %}
+          <option value="{{course.id}}">{{course.name}}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </div>
+        </div>
+    </div>
         {% if user.state == 'approve' %}
-        <input type="submit" id="btn2" value="edit" class="btn btn-info text-light">
+        <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col-md-2 mb-3">
+        <label>Request State :</label>
+        </div>
+        <div class="col-md-9 mb-3">
+        <div class="form-control  alert-success" for="">{{user.state}} </div>
+        <div>
+            <p class="text-muted">
+                * You can't change the course after application is being Approved.
+              </p>
+        </div>
+        </div>
+        </div>
+    </div>
+        {% elif user.state == 'decline' %}
+        <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col-md-2 mb-3">
+        <label>Request State :</label>
+        </div>
+        <div class="col-md-9 mb-3">
+        <div class="form-control  alert-danger" for="">{{user.state}} </div>
+        </div>
+        </div>
+    </div>
         {% else %}
-        <input type="submit" id="btn" value="edit" class="btn btn-info text-light">
+        <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col-md-2 mb-3">
+        <label>Request State :</label>
+        </div>
+        <div class="col-md-9 mb-3">
+        <div class="form-control  alert-light" for="">{{user.state}} </div>
+        </div>
+        </div>
+    </div>
         {% endif %}
+      </div>
+      {% else %}
+      <div class="row justify-content-md-center" >
+      <div class="col-md-7 mb-3">
+      <div class="form-control alert-warning">You did not apply to any course</div>
+    </div>
+      {% endif %}
+        </div>
+    </div>
     </div>
 
 
 
-{%endblock%}
+    <div class="row justify-content-md-center">
+        <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
+      <input type="submit" id="update_btn" value="Update my profile" class="btn text-light" style="background-color: rgb(78, 183, 181); display: none;"/>
+        </div>
+    </div>
+    </div>
+    </form>
+    <div class="row justify-content-md-center">
+        <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
+    {% if user.state == 'approve' %}
+    <input type="submit" id="btn2" value="Click to edit your information" class="btn text-light" style="background-color: rgb(78, 183, 181)"/>
+    {% else %}
+    <input type="submit" id="btn" value="Click to edit your information" class="btn text-light" style="background-color: rgb(78, 183, 181)"/>
+    {% endif %}
+  </div>
+  </div>
+  </div>
+  {%endblock%}
+</div>

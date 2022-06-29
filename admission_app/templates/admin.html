@@ -1,7 +1,9 @@
-{%extends 'base.html'%} {%block content%}
+{%extends 'base.html'%}
+{% block title %}Dashboard{% endblock %}
+{%block content%}
 <div class="container content-profile">
   <div class="d-flex justify-content-between">
-    <h4 class="display-4">Welcome, {{user.first_name}}</h4>
+    <h4 class="display-6">Welcome, {{user.first_name}}</h4>
     <!-- ADD COURSE BUTTON  -->
     <div style="justify-content: right">
       <a
@@ -13,6 +15,7 @@
     </div>
   </div>
   <!-- CORSES LIST TABLE  -->
+  <h5 class="mt-4">Courses List </h5>
   <table class="table table-hover table-bordered">
     <thead style="background-color: rgb(145, 214, 213)">
       <tr>
@@ -25,6 +28,7 @@
       </tr>
     </thead>
     <tbody>
+      {% if courses %}
       {% for course in courses %}
       <tr>
         <th scope="row">{{course.id}}</th>
@@ -52,11 +56,18 @@
         </td>
       </tr>
       {%endfor%}
+      {% else %}
+      <tr>
+        <td colspan="6 " class="text-center">There is no Courses</td>
+      </tr>
+      {% endif %}
+
     </tbody>
   </table>
-
+<br>
   <!-- STUDENTS REQUESTS TABLE  -->
-  <table class="table table-hover table-bordered" id="pennding">
+  <h5 class="mt-5">Pending Requests List </h5>
+  <table class="table table-hover table-bordered" id="pending">
     <thead class="" style="background-color: rgb(145, 214, 213)">
       <tr>
         <th scope="col">ID</th>
@@ -99,10 +110,9 @@
     </tbody>
     {% else %}
     <tr>
-      <td colspan="6 " class="text-center">There is no pennding request</td>
+      <td colspan="6 " class="text-center">There is no pending request</td>
     </tr>
   </table>
-
   {% endif %}
 </div>
 {%endblock%}
