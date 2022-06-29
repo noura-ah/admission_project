@@ -284,8 +284,9 @@ section.contacts .contact-form button {
 .footer .created {
     font-size: 1.2rem;
     color: #fff;
-    font-weight: lighter;
+    font-weight: normal;
     padding: 0.6rem 1.5rem 1.5rem;
+    
 }
 
 .footer span {
@@ -313,83 +314,148 @@ section.contacts .contact-form button {
 .course {
     background-color: #fff;
     padding: 50px 20px;
-    display: flex;
-    justify-content: center;
+
 }
+/* *************New card style************ */
 
-.carousel-indicators {
-    margin-bottom: -30px;
-}
+body{
+    background-color: #f1f6ff;
+  }
+  #news-slider{
+      margin-top: 80px;
+  }
+  .post-slide{
+      background: #fff;
+      margin: 20px 15px 20px;
+      border-radius: 15px;
+      padding-top: 1px;
+      box-shadow: 0px 14px 22px -9px #bbcbd8;
+  }
+  .post-slide .post-img{
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      margin: -12px 15px 8px 15px;
+      margin-left: -10px;
+  }
+  .post-slide .post-img img{
+      width: 100%;
+      height: auto;
+      transform: scale(1,1);
+      transition:transform 0.2s linear;
+  }
+  .post-slide:hover .post-img img{
+      transform: scale(1.1,1.1);
+  }
+  .post-slide .over-layer{
+      width:100%;
+      height:100%;
+      position: absolute;
+      top:0;
+      left:0;
+      opacity:0;
+      background: linear-gradient(-45deg, rgba(6,190,244,0.75) 0%, rgba(45,112,253,0.6) 100%);
+      transition:all 0.50s linear;
+  }
+  .post-slide:hover .over-layer{
+      opacity:1;
+      text-decoration:none;
+  }
+  .post-slide .over-layer i{
+      position: relative;
+      top:45%;
+      text-align:center;
+      display: block;
+      color:#fff;
+      font-size:25px;
+  }
+  .post-slide .post-content{
+      background:#fff;
+      padding: 2px 20px 40px;
+      border-radius: 15px;
+  }
+  .post-slide .post-title a{
+      font-size:15px;
+      font-weight:bold;
+      color:#333;
+      display: inline-block;
+      text-transform:uppercase;
+      transition: all 0.3s ease 0s;
+  }
+  .post-slide .post-title a:hover{
+      text-decoration: none;
+      color:#3498db;
+  }
+  .post-slide .post-description{
+      line-height:24px;
+      color:#808080;
+      margin-bottom:25px;
+  }
+  .post-slide .post-date{
+      color:#a9a9a9;
+      font-size: 14px;
+  }
+  .post-slide .post-date i{
+      font-size:20px;
+      margin-right:8px;
+      color: #CFDACE;
+  }
+  .post-slide .read-more{
+      padding: 7px 20px;
+      float: right;
+      font-size: 12px;
+      background: #2196F3;
+      color: #ffffff;
+      box-shadow: 0px 10px 20px -10px #1376c5;
+      border-radius: 25px;
+      text-transform: uppercase;
+  }
+  .post-slide .read-more:hover{
+      background: #3498db;
+      text-decoration:none;
+      color:#fff;
+  }
+  .owl-controls .owl-buttons{
+      text-align:center;
+      margin-top:20px;
+  }
+  .owl-controls .owl-buttons .owl-prev{
+      background: #fff;
+      position: absolute;
+      top:-13%;
+      left:15px;
+      padding: 0 18px 0 15px;
+      border-radius: 50px;
+      box-shadow: 3px 14px 25px -10px #92b4d0;
+      transition: rgb(178, 34, 34) 0.5s ease 0s;
+  }
+  .owl-controls .owl-buttons .owl-next{
+      background: #fff;
+      position: absolute;
+      top:-13%;
+      right: 15px;
+      padding: 0 15px 0 18px;
+      border-radius: 50px;
+      box-shadow: -3px 14px 25px -10px #92b4d0;
+      transition: rgb(176, 34, 34) 0.5s ease 0s;
+  }
+  .owl-controls .owl-buttons .owl-prev:after,
+  .owl-controls .owl-buttons .owl-next:after{
+      content:"\f104";
+      font-family: FontAwesome;
+      color: #333;
+      font-size:30px;
+  }
+  .owl-controls .owl-buttons .owl-next:after{
+      content:"\f105";
+  }
+  @media only screen and (max-width:1280px) {
+      .post-slide .post-content{
+          padding: 0px 15px 25px 15px;
+      }
+  }
 
-.carousel-indicators li::after {
-    background-color: #16aeca;
-}
-
-.carousel-indicators .container.my-5 {
-    min-width: 100%;
-}
-
-.card {
-    width: 280px;
-    background: #fdfcff;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-    position: relative;
-}
-
-.img-course-home {
-    width: 98%;
-    height: 170px !important;
-}
-
-.card-img-top {
-    width: 170px;
-    height: 100%;
-    padding: 10px;
-    object-fit: cover;
-}
-
-
-
-.card-body {
-    background: #f6f5f7;
-    
-}
-
-.cont-text {
-    height: 130px;
-}
-
-.btn-card {
-    background-color: #16aeca;
-    color: white;
-}
-
-.btn-card:hover {
-    background-color: #13131a;
-    color: white;
-}
-
-.controls-top {
-
-    position: absolute;
-    top: 40%;
-    width: 100%;
-}
-
-.fa-chevron-right:before {
-    position: absolute;
-    right: 2%;
-    font-size: 30px;
-    color: transparent;
-}
-
-.fa-chevron-left:before {
-    position: absolute;
-    left: -4%;
-    font-size: 30px;
-    color: transparent;
-}
-
+/* **********New card style ************* */
 .navbar-toggler-icon {
     background: #fdfcff;
     ;
