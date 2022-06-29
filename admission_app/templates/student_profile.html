@@ -46,10 +46,18 @@
       </div>
       <div class="col col-md-9">
         <div class="form-row">
-          <div class="col-md-2 mb-3">
-        <label for="cv">Upload CV:</label>
+           <div class="col-md-2 mb-3">
+        <label for="cv">Your CV:</label>
           </div>
           <div class="col-md-9 mb-3">
+            {%if user.cv.url %}
+            <div id="viewer">
+            <object data={{user.cv.url}} type="application/pdf" width="100%" height="70%" >
+              <iframe src="{{user.cv.url}}" width="100%" height="100%" style="border: none;">
+              </iframe>
+            </object>
+          </div>
+          {%endif%}
         <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled/>
     </div>
 </div>
