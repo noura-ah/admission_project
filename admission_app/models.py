@@ -59,10 +59,10 @@ class User(models.Model):
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     role = models.CharField(max_length=255) #student or manager.
-    course = models.ForeignKey(Course, related_name="users", on_delete=models.CASCADE, null=True, default='Empty')
+    course = models.ForeignKey(Course, related_name="users", on_delete=models.CASCADE, null=True)
     state = models.CharField(null= True, max_length=255)
     password = models.CharField(max_length=255)
-    cv = models.FileField(upload_to='cv_files/',null=True)
+    cv = models.FileField(upload_to='cv_files/',null=True, default='Empty')
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects= userManager()

@@ -8,7 +8,6 @@ import os
 
 
 def index(request):
-    
     return redirect('/home')
 
 

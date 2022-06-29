@@ -2,7 +2,7 @@
 {% block title %}Profile{% endblock %}
 {%block content%}
 
-<div class="container">
+<div class="container content-profile">
     <div class="container" style="width:400px; margin-top: 40px;">
         <form action="/edit_profile" method="post"  enctype="multipart/form-data">
             {% csrf_token %}
@@ -65,4 +65,4 @@
 
 
 
-    {%endblock%}
+{%endblock%}
