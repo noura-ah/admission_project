@@ -3,7 +3,7 @@
 {%block content%}
 
 <div class="container">
-    <form action="/edit_profile" method="post">
+    <form action="/edit_profile" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
             <label for="">First Name:</label>
@@ -15,7 +15,6 @@
         </div>
         {% if user.course %}
         <div>
-
             <label for="">Course you applied to:</label>
             <select name="course" id="courses" disabled>
                 {% for course in courses %}
@@ -28,8 +27,12 @@
 
                 {% endfor %}
             </select>
-
-
+        </div>
+        <div>
+            <input type="file" name="cv" id="cv" style="display:none;" disabled />
+            <label for="cv" class="btn btn-light">Click here to upload your cv</label>
+            <!-- <label for="">CV:</label>
+            <input type="file" name="cv" id="cv" value="{{user.cv}}" disabled> -->
         </div>
         <div>
             {% if user.state == 'approve' %}
@@ -45,14 +48,14 @@
         <p class="alert alert-warning w-25">You did not apply to any course </p>
         {% endif %}
 
-        <input type="submit" id="update_btn" value="update my profile" class="btn btn-primary" style="display:none ;">
+        <input type="submit" id="update_btn" value="Update my profile" class="btn btn-light" style="display:none ;">
 
 
     </form>
     {% if user.state == 'approve' %}
-    <input type="submit" id="btn2" value="edit">
+    <input class="btn btn-light" type="submit" id="btn2" value="Edit my profile">
     {% else %}
-    <input type="submit" id="btn" value="edit">
+    <input class="btn btn-light" type="submit" id="btn" value="Edit my profile">
     {% endif %}
 </div>
 
