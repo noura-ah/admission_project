@@ -51,7 +51,7 @@ def login(request):
 
 def home(request):
     if "userId" in request.session:
-     user = User.objects.get(id=request.session["userId"])
+        user = User.objects.get(id=request.session["userId"])
     # if(user.role=="Student"):
     context = {
             # "user": user,
@@ -83,12 +83,18 @@ def add_course(request):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
     if request.method == "POST":
-        name = request.POST["name"]
-        desc = request.POST["desc"]
-        capacity=request.POST["capacity"]
-        photo = request.FILES['photo']
-        course = Course.objects.create(name=name,desc=desc,photo=photo,capacity=capacity)
-        return redirect("/admin") 
+        errors = Course.objects.basic_validator(request.FILES)
+        if len(errors) > 0:
+            for key, errorMessage in errors.items():
+                messages.error(request, errorMessage)
+            return redirect("/add_course")
+        else:
+            name = request.POST["name"]
+            desc = request.POST["desc"]
+            capacity=request.POST["capacity"]
+            photo = request.FILES['photo']
+            course = Course.objects.create(name=name,desc=desc,photo=photo,capacity=capacity)
+            return redirect("/admin") 
     return render(request,"add_course.html")
 
 def edit_state(request,id,state):
@@ -99,7 +105,7 @@ def edit_state(request,id,state):
         user.course=None
     elif user.course.capacity == len(user.course.users.all().filter(state='approve')):
         messages.error(request,f'{user.course.name} course is full')
-        #state var here is approve, we need to change it pennding
+        #state var here is approve, we need to change t0 pennding
         state=user.state
     user.state = state
     user.save()
@@ -123,14 +129,19 @@ def apply_course(request,id):
 def show_student(request,id):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
-    if request.method=='POST':
-        user=User.objects.get(id=id)
-        user.first_name=request.POST['first_name']
-        user.last_name=request.POST['last_name']
-        if request.POST.get('course'):
-            user.course=Course.objects.get(id=request.POST['course'])
-        user.save()
-        return redirect(f'/student_profile/{user.id}')
+    # if request.method=='POST':
+    #     user=User.objects.get(id=id)
+    #     user.first_name=request.POST['first_name']
+    #     user.last_name=request.POST['last_name']
+    #     if request.POST.get('course'):
+    #         user.course=Course.objects.get(id=request.POST['course'])
+    #     if request.FILES.get('cv'):
+    #         if not request.FILES['cv'].name.endswith((".pdf")):
+    #             messages.error(request,"Only PDF files are accepted")
+    #             return redirect(f'/student_profile/{user.id}')
+    #         user.cv = request.FILES['cv']
+    #     user.save()
+    #     return redirect(f'/student_profile/{user.id}')
     
     context={
         'user':User.objects.get(id=id),
@@ -152,7 +163,7 @@ def edit_course(request,id):
         course.name = request.POST["name"]
         course.desc = request.POST["desc"]
         if len(course.users.filter(state="approve"))<int(request.POST["capacity"]):
-          course.capacity=request.POST["capacity"]
+            course.capacity=request.POST["capacity"]
         else:
             messages.error(request,"The new seats number is less than the number of applicants.")
             return redirect(f'/edit_course/{course.id}')
@@ -173,26 +184,53 @@ def edit_profile(request):
     if request.method == "POST":
         this_user.first_name=request.POST["first_name"]
         this_user.last_name=request.POST["last_name"]
+        
+        # check if course was changed before assign 
         if "course" in request.POST:
-          course_id=request.POST["course"]
-          this_course=Course.objects.get(id=course_id)
-          this_user.course=this_course
+            this_course=Course.objects.get(id=request.POST["course"])
+            this_user.course=this_course
+        
+        #check if cv was upladed
+        print(request.FILES.get('cv','empty'))
+        if request.FILES.get('cv'):
+            errors = User.objects.file_validatior(request.FILES['cv'])
+            if len(errors) > 0:
+                for key, errorMessage in errors.items():
+                    messages.error(request, errorMessage)
+                return redirect(f'/student_profile/{this_user.id}')
+            else:
+                this_user.cv = request.FILES['cv']
+                messages.success(request, 'CV is added successfully')
+        
+        #if no cv in the db
+        elif not this_user.cv:
+            messages.error(request,"You did not upload your CV")
         this_user.save()
-        return redirect(f'/student_profile/{this_user.id}')
-    
     return redirect(f'/student_profile/{this_user.id}')
+
 def add_message(request):
     if request.method == "POST":
         name=request.POST["name"]
         email=request.POST["email"]
         msg=request.POST["message"]
         Message.objects.create(name=name,email=email,message=msg)
+        request.session["sucess_msg"]="your message has been sent!"
     return redirect("/")   
+
 def show_message(request):
     context={
         "msgs":Message.objects.all()
     }
     return render(request,"show_message.html",context)
+
+def read_message(request , id):
+    msg=Message.objects.get(id=id)
+    msg.read=True
+    msg.save()
+    request.session["msgs"]= request.session["msgs"] - 1
+    return redirect('/show_message')
+
+
 def logout(request):
     request.session.clear()
     # messages.success(request, "You have been logged out!")
