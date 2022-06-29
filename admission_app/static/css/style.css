@@ -13,7 +13,7 @@ body {
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
 	margin: -20px 0 50px;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(128, 123, 123, 0.326);
 }
 
 h1 {
@@ -157,7 +157,7 @@ input {
 .overlay {
 	background: #56C2C1;
 	/* background: -webkit-linear-gradient(to right, #5264ea,white); */
-	background: linear-gradient(to left,#bbe4e4,#399897,#6bb5b4,#bbe4e4);
+	background: linear-gradient(to left,#619292,#1c6160,#448d8b,#6d9999);
 	color: #FFFFFF;
 	position: relative;
 	left: -100%;
