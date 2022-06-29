@@ -8,9 +8,7 @@ import os
 
 
 def index(request):
-    password = '000000000'
-    passwordHash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-    newUser = User.objects.create(first_name="admin",last_name="admin",email="admin@mail.com",role = "admin", password=passwordHash)
+    
     return redirect('/home')
 
 
@@ -56,6 +54,9 @@ def login(request):
 def home(request):
     if "userId" in request.session:
         user = User.objects.get(id=request.session["userId"])
+
+    msg=Message.objects.filter(read=False)
+    request.session["msgs"]=len(msg)
     # if(user.role=="Student"):
     context = {
             # "user": user,
@@ -72,8 +73,7 @@ def admin(request):
     courses =Course.objects.all()
     students = User.objects.filter(state="pennding")
     request.session["request_pennding"]=len(students)
-    msg=Message.objects.filter(read=False)
-    request.session["msgs"]=len(msg)
+    
     if(user.role=="admin"):
         context = {
             "user": user,
@@ -231,7 +231,6 @@ def read_message(request , id):
     msg=Message.objects.get(id=id)
     msg.read=True
     msg.save()
-    request.session["msgs"]= request.session["msgs"] - 1
     return redirect('/show_message')
 
 
