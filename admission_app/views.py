@@ -7,10 +7,8 @@ import bcrypt
 import os 
 
 
-def index(request): 
-    user = User.objects.get(id=2)
-    user.cv = "Empty"
-    user.save()
+def index(request):
+    
     return redirect('/home')
 
 

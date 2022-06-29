@@ -69,9 +69,17 @@
     </tr>
     {%endfor%}
   </tbody>
+  {% else %}
+<tr>
+  <td colspan="5">There is no pennding request </td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
 </table>
-{% else %}
-<p> There is no pennding request </p>
+
 {% endif %}
 </div>
 {%endblock%}
