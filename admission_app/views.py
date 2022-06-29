@@ -8,11 +8,7 @@ import os
 
 
 def index(request):
-    password = '000000000'
-    passwordHash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-    newUser = User.objects.create(first_name="admin",last_name="admin",email="admin@mail.com",role = "admin", password=passwordHash)
     return redirect('/home')
-
 
 def register(request):
     #if the user is logged in, redirect to home page, dont show register and login page
@@ -133,19 +129,19 @@ def apply_course(request,id):
 def show_student(request,id):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
-    # if request.method=='POST':
-    #     user=User.objects.get(id=id)
-    #     user.first_name=request.POST['first_name']
-    #     user.last_name=request.POST['last_name']
-    #     if request.POST.get('course'):
-    #         user.course=Course.objects.get(id=request.POST['course'])
-    #     if request.FILES.get('cv'):
-    #         if not request.FILES['cv'].name.endswith((".pdf")):
-    #             messages.error(request,"Only PDF files are accepted")
-    #             return redirect(f'/student_profile/{user.id}')
-    #         user.cv = request.FILES['cv']
-    #     user.save()
-    #     return redirect(f'/student_profile/{user.id}')
+    #  if request.method=='POST':
+    #      user=User.objects.get(id=id)
+    #      user.first_name=request.POST['first_name']
+    #      user.last_name=request.POST['last_name']
+    #      if request.POST.get('course'):
+    #          user.course=Course.objects.get(id=request.POST['course'])
+    #      if request.FILES.get('cv'):
+    #          if not request.FILES['cv'].name.endswith((".pdf")):
+    #              messages.error(request,"Only PDF files are accepted")
+    #              return redirect(f'/student_profile/{user.id}')
+    #          user.cv = request.FILES['cv']
+    #      user.save()
+    #      return redirect(f'/student_profile/{user.id}')
     
     context={
         'user':User.objects.get(id=id),

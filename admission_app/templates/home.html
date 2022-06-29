@@ -2,20 +2,30 @@
 <html lang="en">
 
 <head>
+
   <title>Admission</title>
   <link rel="icon" type="image/x-icon" href="../static/images/nav_logo.png" style="width:30px;">
 </head>
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-
 <!--font awesom cdn-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+<style>
+body {
+    margin: 0 auto;
+    padding: 0px;
+ }
+ html { 
+     overflow-x: hidden; 
+}
+</style>
 </head>
 
 <body>
@@ -90,30 +100,140 @@
     </div>
   </section>
 
-  <div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for course in courses %}
-    <div class="col">
-      <form method="post" action="/apply_course/{{course.id}}" class='card-deck'>
-        <div class="card" style="width: 16rem;">
-          <img src="{{course.photo.url}}" class="card-img-top" style="width:100%; height:200px;" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">{{course.name}}</h5>
-            <p class="card-text">{{course.desc}}</p>
-            <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
-            {% if request.session.role == 'admin' %}
-            <a class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
-            {% elif "userId" not in request.session %}
-            <a class="btn btn-info" style="color: white;" href="/register">Apply</a>
-            {% else %}
-            <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
-            {% endif %}
+
+  <section  class="course" id="course">
+    <div class="container">
+      <h3 class="text-center  mb-5">Selection Of Courses</h3>
+      <div class="container my-5">
+      <hr class="my-5">
+    
+      <!--Carousel Wrapper-->
+      <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+    
+      
+    
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+    
+          <!--First slide-->
+          <div class="carousel-item active">
+            {% for course in courses %}
+            <div class="col-md-4 col-sm-12 card-parent" style="float:left">
+              <div class="card mb-2">
+                  <div class="img-course-home">
+                    <img class="card-img-top" src="{{course.photo.url}}" alt="Card image cap">
+                  </div>
+                <div class="card-body">
+                  <div class="cont-text">
+                    <h4 class="card-title">{{course.name}}</h4>
+                    <p class="card-text">{{course.desc}}.</p>
+                  </div>
+
+                  <div class="btn-course-home">
+                    {% if request.session.role == 'admin' %}
+                    <a class="btn btn-card" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
+                    {% elif "userId" not in request.session %}
+                    <a class="btn btn-card" style="color: white;" href="/register">Apply</a>
+                    {% else %}
+                    <input class="btn btn-card" type="submit" name="btn" id="" value="Apply">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% csrf_token %}
+           </form>
+           {%endfor%}
           </div>
+          <!--/.First slide-->
+    
+          <!--Second slide-->
+          <div class="carousel-item ">
+            {% for course in courses %}
+            <div class="col-md-4  col-sm-6" style="float:left">
+              <div class="card mb-2">
+                  <div class="img-course-home">
+                    <img class="card-img-top" src="{{course.photo.url}}" alt="Card image cap">
+                  </div>
+                <div class="card-body">
+                  <div class="cont-text">
+                    <h4 class="card-title">{{course.name}}</h4>
+                    <p class="card-text">{{course.desc}}.</p>
+                  </div>
+                  <div class="btn-course-home">
+                    {% if request.session.role == 'admin' %}
+                    <a class="btn btn-card" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
+                    {% elif "userId" not in request.session %}
+                    <a class="btn btn-card" style="color: white;" href="/register">Apply</a>
+                    {% else %}
+                    <input class="btn btn-card" type="submit" name="btn" id="" value="Apply">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% csrf_token %}
+           </form>
+           {%endfor%}
+          </div>
+          <!--/.Second slide-->
+    
+    
+    
         </div>
+        <!--/.Slides-->
+    
+
+          <!--Controls-->
+          <div class="controls-top">
+            <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+            <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
+                                                                                    class="fas fa-chevron-right"></i></a>
+          </div>
+          <!--/.Controls-->
+      
+          <!--Indicators-->
+          <ol class="carousel-indicators">
+            <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+            <li data-target="#multi-item-example" data-slide-to="1"></li>
+      
+          </ol>
+          <!--/.Indicators-->
+      </div>
+      <!--/.Carousel Wrapper-->
+
+
+     <!--   <div class="row row-cols-1 row-cols-md-4 g-4 cards">
+        {% for course in courses %}
+        <div class="col">
+          <form method="post" action="/apply_course/{{course.id}}" class='card-deck'>
+            <div class="card" style="width: 16rem;">
+              <img src="{{course.photo.url}}" class="card-img-top" style="width:100%; height:200px;" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{course.name}}</h5>
+                <p class="card-text">{{course.desc}}</p>
+                <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
+                {% if request.session.role == 'admin' %}
+                <a class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
+                {% elif "userId" not in request.session %}
+                <a class="btn btn-info" style="color: white;" href="/register">Apply</a>
+                {% else %}
+                <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
+                {% endif %}
+              </div>
+            </div>
+        </div>
+        {% csrf_token %}
+        </form>
+        {%endfor%}
+      </div>--> 
+
+
+
     </div>
-    {% csrf_token %}
-    </form>
-    {%endfor%}
-  </div>
+  </section>
+
+
 
   {% if not request.session.role == 'admin' %}
   <section class="contacts" id="contacts">
@@ -181,8 +301,6 @@
     </div>
     <div class="created">created by <span>Admission</span> | All right reserved</div>
   </section>
-
-
 
 
   <script>
