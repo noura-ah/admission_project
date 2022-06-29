@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Admission</title>
+  <title>Home</title>
   <link rel="icon" type="image/x-icon" href="../static/images/nav_logo.png" style="width:30px;">
 </head>
 {% load static %}
@@ -41,7 +41,7 @@
             {% endif %}
           </li>
           <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#contacts">Contacat</a>
+            <a class="nav-link " aria-current="page" href="#contacts">Contact us</a>
           </li>
           {% if request.session.role == 'admin' %}
           <li class="nav-item">
@@ -50,8 +50,7 @@
 
           </li>
           <li class="nav-item">
-            <a href="/show_message" class="nav-link">Messages <span class="badge bg-info ms-2">{{ request.session.msgs
-                }}</span></a>
+            <a href="/show_message" class="nav-link">Messages <span class="badge bg-info ms-2">{{ request.session.msgs}}</span></a>
           </li>
           {% endif %}
         </ul>
