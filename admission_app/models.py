@@ -13,22 +13,22 @@ class userManager(models.Manager):
             errors['password'] = "Password should be at least 8 characters"
         elif postData['password'] != postData['confirm_pw']:
                 errors['password'] = "Passwords DO NOT match!"
-        try:
-            email_exist=User.objects.get(email=postData["email"])
-            if len(email_exist) != 0 : # there is user already with this email 
-                errors["email"] = "The email is already exist, please try another one"
-        except:
-            pass
+        
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')   
         if not postData["email"]:
                 errors["email"] = "Please enter email (Empty Check)"
         elif not EMAIL_REGEX.match(postData['email']):    # test whether a field matches the pattern            
             errors['email'] = "Invalid email address!"     
+        try:
+            email_exist=User.objects.get(email=postData["email"])
+            if email_exist : # there is user already with this email 
+                errors["email"] = "The email is already exist, please try another one"
+        except:
+            pass
+        
         return errors
     
     def file_validatior(self,file):
-        
-                
         limit = 2 * 1024 * 1024
         errors={}
         if not file.name.endswith((".pdf")):

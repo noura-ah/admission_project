@@ -3,8 +3,8 @@
 {%block content%}
 
 <div class="container">
-    <div class="container" style="width:400px; margin-top: 40px;" enctype="multipart/form-data">
-        <form action="/edit_profile" method="post">
+    <div class="container" style="width:400px; margin-top: 40px;">
+        <form action="/edit_profile" method="post"  enctype="multipart/form-data">
             {% csrf_token %}
 
             <div>
@@ -17,11 +17,18 @@
                 <input type="text" name="last_name" id="last_name" class="form-control" value="{{user.last_name}}"
                     readonly>
             </div>
-
+            <div>
+                <input type="file" name="cv" id="cv" style="display:none;" disabled/>
+                <label for="cv" id="cv-label" name="cv-lable" class="btn btn-info text-light mt-3 mb-3">Click
+                    here to upload your cv
+                </label>
+                <!-- <label for="">CV:</label>
+                <input type="file" name="cv" id="cv" value="{{user.cv}}" disabled> -->
+            </div>
             {% if user.course %}
             <div>
                 <label for="">Course you applied to:</label>
-                <select name="course" id="courses" disabled>
+                <select name="course" id="courses" class="form-control" disabled>
                     {% for course in courses %}
 
                     {% if course.id == user.course.id %}
@@ -33,12 +40,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <div>
-                <input type="file" name="cv" id="cv" style="display:none;" disabled />
-                <label for="cv" class="btn btn-light">Click here to upload your cv</label>
-                <!-- <label for="">CV:</label>
-            <input type="file" name="cv" id="cv" value="{{user.cv}}" disabled> -->
-            </div>
+
             <div>
                 {% if user.state == 'approve' %}
                 <p class="text-muted">* You can't change the course after application is being Approved.</p>
@@ -50,7 +52,7 @@
                 {% endif %}
             </div>
             {% else %}
-            <p class="alert alert-warning w-25">You did not apply to any course </p>
+            <p class="alert alert-warning ">You did not apply to any course </p>
             {% endif %}
 
             <input type="submit" id="update_btn" value="Update my profile" class="btn btn-light" style="display:none ;">
@@ -58,9 +60,9 @@
 
         </form>
         {% if user.state == 'approve' %}
-        <input type="submit" id="btn2" value="edit" class="btn btn-info">
+        <input type="submit" id="btn2" value="edit" class="btn btn-info text-light">
         {% else %}
-        <input type="submit" id="btn" value="edit" class="btn btn-info">
+        <input type="submit" id="btn" value="edit" class="btn btn-info text-light">
         {% endif %}
     </div>
 

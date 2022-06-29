@@ -191,6 +191,7 @@ def edit_profile(request):
             this_user.course=this_course
         
         #check if cv was upladed
+        print(request.FILES.get('cv','empty'))
         if request.FILES.get('cv'):
             errors = User.objects.file_validatior(request.FILES['cv'])
             if len(errors) > 0:
@@ -199,7 +200,7 @@ def edit_profile(request):
                 return redirect(f'/student_profile/{this_user.id}')
             else:
                 this_user.cv = request.FILES['cv']
-                messages.success(request, 'Cv is added successfully')
+                messages.success(request, 'CV is added successfully')
         
         #if no cv in the db
         elif not this_user.cv:
