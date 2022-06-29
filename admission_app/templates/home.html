@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-
+{% block title %}Home{% endblock %}
 {%block content%}
 
 
@@ -79,6 +79,9 @@
           <button type="submit">Send</button>
           {% csrf_token %}
         </form>
+        {% if "sucess_msg"  in  request.session %}
+        <p style="color: green;">{{  request.session.sucess_msg }}<p>
+        {% endif %}
       </div>
     </div>
   </div>

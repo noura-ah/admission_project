@@ -1,64 +1,69 @@
 {%extends 'base.html'%}
-
+{% block title %}Profile{% endblock %}
 {%block content%}
 
 <div class="container">
-    <form action="/edit_profile" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div>
-            <label for="">First Name:</label>
-            <input type="text" name="first_name" id="first_name" value="{{user.first_name}}" readonly>
-        </div>
-        <div>
-            <label for="">Last Name:</label>
-            <input type="text" name="last_name" id="last_name" value="{{user.last_name}}" readonly>
-        </div>
-        {% if user.course %}
-        <div>
-            <label for="">Course you applied to:</label>
-            <select name="course" id="courses" disabled>
-                {% for course in courses %}
+    <div class="container" style="width:400px; margin-top: 40px;" enctype="multipart/form-data">
+        <form action="/edit_profile" method="post">
+            {% csrf_token %}
 
-                {% if course.id == user.course.id %}
-                <option value="{{course.id}}" selected>{{course.name}}</option>
-                {% else %}
-                <option value="{{course.id}}">{{course.name}}</option>
-                {% endif %}
+            <div>
+                <label for="">First Name:</label>
+                <input type="text" name="first_name" id="first_name" class="form-control" value="{{user.first_name}}"
+                    readonly>
+            </div>
+            <div>
+                <label for="">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" class="form-control" value="{{user.last_name}}"
+                    readonly>
+            </div>
 
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <input type="file" name="cv" id="cv" style="display:none;" disabled />
-            <label for="cv" class="btn btn-light">Click here to upload your cv</label>
-            <!-- <label for="">CV:</label>
+            {% if user.course %}
+            <div>
+                <label for="">Course you applied to:</label>
+                <select name="course" id="courses" disabled>
+                    {% for course in courses %}
+
+                    {% if course.id == user.course.id %}
+                    <option value="{{course.id}}" selected>{{course.name}}</option>
+                    {% else %}
+                    <option value="{{course.id}}">{{course.name}}</option>
+                    {% endif %}
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <input type="file" name="cv" id="cv" style="display:none;" disabled />
+                <label for="cv" class="btn btn-light">Click here to upload your cv</label>
+                <!-- <label for="">CV:</label>
             <input type="file" name="cv" id="cv" value="{{user.cv}}" disabled> -->
-        </div>
-        <div>
-            {% if user.state == 'approve' %}
-            <p class="text-muted">* You can't change the course after application is being Approved.</p>
-            <label class="alert alert-success" for="">Request State : {{user.state}}</label>
-            {% elif user.state == 'decline' %}
-            <label class="alert alert-danger" for="">Request State : {{user.state}}</label>
+            </div>
+            <div>
+                {% if user.state == 'approve' %}
+                <p class="text-muted">* You can't change the course after application is being Approved.</p>
+                <label class="alert alert-success" for="">Request State : {{user.state}}</label>
+                {% elif user.state == 'decline' %}
+                <label class="alert alert-danger" for="">Request State : {{user.state}}</label>
+                {% else %}
+                <label class="alert alert-light" for="">Request State : {{user.state}}</label>
+                {% endif %}
+            </div>
             {% else %}
-            <label class="alert alert-light" for="">Request State : {{user.state}}</label>
+            <p class="alert alert-warning w-25">You did not apply to any course </p>
             {% endif %}
-        </div>
+
+            <input type="submit" id="update_btn" value="Update my profile" class="btn btn-light" style="display:none ;">
+
+
+        </form>
+        {% if user.state == 'approve' %}
+        <input type="submit" id="btn2" value="edit" class="btn btn-info">
         {% else %}
-        <p class="alert alert-warning w-25">You did not apply to any course </p>
+        <input type="submit" id="btn" value="edit" class="btn btn-info">
         {% endif %}
-
-        <input type="submit" id="update_btn" value="Update my profile" class="btn btn-light" style="display:none ;">
-
-
-    </form>
-    {% if user.state == 'approve' %}
-    <input class="btn btn-light" type="submit" id="btn2" value="Edit my profile">
-    {% else %}
-    <input class="btn btn-light" type="submit" id="btn" value="Edit my profile">
-    {% endif %}
-</div>
+    </div>
 
 
 
-{%endblock%}
+    {%endblock%}
