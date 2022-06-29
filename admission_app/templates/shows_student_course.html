@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{% block title %}Dashboard{% endblock %}
+{%block content%}
+<div class="container content-profile">
+  <div class="d-flex justify-content-between">
+    <h4 class="display-6">Welcome,{{User.name}}</h4>
+    <!-- ADD COURSE BUTTON  -->
+    
+  </div>
+  <!-- STUDENTS REQUESTS TABLE  -->
+  <h5 class="mt-5">Approved Students List for course {{course.name}} </h5>
+  <table class="table table-hover table-bordered" id="pending">
+    <thead class="" style="background-color: rgb(145, 214, 213)">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Course Name</th>
+        <th scope="col">CV</th>
+        <!-- <th scope="col">State</th> -->
+        <!-- <th scope="col">Actions:</th> -->
+      </tr>
+    </thead>
+    {% if students %}
+    <tbody>
+      {% for student in students%}
+      <tr>
+        <th scope="row">{{student.id}}</th>
+        <td>{{student.first_name}} {{student.last_name}}</td>
+        <td>{{student.course.name}}</td>
+        {% if student.cv %}
+        <td><a href="{{student.cv.url}}">Link</a></td>
+        {% else %}
+        <td>Empty</td>
+        {% endif %}
+        <!-- <td>{{student.state }}</td> -->
+        <!-- <td>
+          <a
+            class="btn btn-outline-*"
+            style="color: rgb(78, 183, 181)"
+            href="/edit_state/{{student.id}}/approve"
+            >Approve</a
+          >
+          |
+          <a
+            class="btn btn-outline-* text-danger"
+            href="/edit_state/{{student.id}}/decline"
+            >Decline</a
+          >
+        </td> -->
+      </tr>
+      {%endfor%}
+    </tbody>
+    {% else %}
+    <tr>
+      <td colspan="6 " class="text-center">There is no approved students yet</td>
+    </tr>
+  </table>
+  {% endif %}
+</div>
+{%endblock%}

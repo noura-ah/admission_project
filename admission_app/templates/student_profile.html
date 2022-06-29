@@ -88,66 +88,67 @@
               </select>
             </div>
           </div>
-          {% if user.state == 'approve' %}
-          <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col-md-2 mb-3">
-                <label>Request State :</label>
-              </div>
-              <div class="col-md-9 mb-3">
-                <div class="form-control  alert-success" for="">{{user.state}} </div>
-                <div>
-                  <p class="text-muted">
-                    * You can't change the course after application is being Approved.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% elif user.state == 'decline' %}
-          <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col-md-2 mb-3">
-                <label>Request State :</label>
-              </div>
-              <div class="col-md-9 mb-3">
-                <div class="form-control  alert-danger" for="">{{user.state}} </div>
-              </div>
-            </div>
-          </div>
-          {% else %}
-          <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col-md-2 mb-3">
-                <label>Request State :</label>
-              </div>
-              <div class="col-md-9 mb-3">
-                <div class="form-control  alert-light" for="">{{user.state}} </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {% else %}
-
-          <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col col-md-11 mb-1">
-                <div class="form-control alert-warning">You did not apply to any course</div>
-              </div>
-            </div>
-          </div>
-
-          {% endif %}
         </div>
+        {% if user.state == 'approve' %}
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label>Request State :</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <div class="form-control  alert-success" for="">{{user.state}} </div>
+              <div>
+                <p class="text-muted">
+                  * You can't change the course after application is being Approved.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% elif user.state == 'decline' %}
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label>Request State :</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <div class="form-control  alert-danger" for="">{{user.state}} </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label>Request State :</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <div class="form-control  alert-light" for="">{{user.state}} </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% else %}
+
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col col-md-11 mb-1">
+              <div class="form-control alert-warning">You did not apply to any course</div>
+            </div>
+          </div>
+        </div>
+
+        {% endif %}
       </div>
   </div>
-  <div class="row justify-content-md-center">
-    <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
-      <input type="submit" id="update_btn" value="Update my profile" class="btn text-light"
-        style="background-color: rgb(78, 183, 181); display: none;" />
-    </div>
+</div>
+<div class="row justify-content-md-center">
+  <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
+    <input type="submit" id="update_btn" value="Update my profile" class="btn text-light"
+      style="background-color: rgb(78, 183, 181); display: none;" />
   </div>
+</div>
 </div>
 </form>
 <div class="row justify-content-md-center">

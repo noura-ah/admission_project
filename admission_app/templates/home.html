@@ -6,7 +6,7 @@
     <div class="overlay">
       <div class="container">
         <div class="content">
-          <h3>The Lowest Prices Available </h3>
+          <h3>Apply to courses and programmes in AST </h3>
           <div id="type_text"></div>
           <div class="content-btn">
             <a href="#courses" class="btn btn-content">Show Courses</a>
@@ -18,132 +18,78 @@
 </section>
 
 
-<section class="course" id="course">
-  <div class="container">
-    <h3 class="text-center  mb-5">Selection Of Courses</h3>
-    <div class="container my-5">
-      <hr class="my-5">
 
-      <!--Carousel Wrapper-->
-      <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-        <!--Slides-->
-        <div class="carousel-inner" role="listbox">
+<h3 class="text-center  mt-5">Selection Of Courses</h3>
 
-          <!--First slide-->
-          <div class="carousel-item active">
-            {% for course in courses %}
-            <div class="col-md-4 col-sm-12 card-parent" style="float:left">
-              <div class="card mb-2">
-                <div class="img-course-home">
-                  <img class="card-img-top" src="{{course.photo.url}}" alt="Card image cap">
-                </div>
-                <div class="card-body">
-                  <div class="cont-text">
-                    <h4 class="card-title">{{course.name}}</h4>
-                    <p class="card-text">{{course.desc}}.</p>
-                  </div>
+<section id="courses" class="course">
+  <div class="carousel-inner" role="listbox">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
 
-                  <div class="btn-course-home">
-                    {% if request.session.role == 'admin' %}
-                    <a class="btn btn-card" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
-                    {% elif "userId" not in request.session %}
-                    <a class="btn btn-card" style="color: white;" href="/register">Apply</a>
-                    {% else %}
-                    <input class="btn btn-card" type="submit" name="btn" id="" value="Apply">
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% csrf_token %}
-            </form>
-            {%endfor%}
-          </div>
-          <!--/.First slide-->
-
-          <!--Second slide-->
-          <div class="carousel-item ">
-            {% for course in courses %}
-            <div class="col-md-4  col-sm-6" style="float:left">
-              <div class="card mb-2">
-                <div class="img-course-home">
-                  <img class="card-img-top" src="{{course.photo.url}}" alt="Card image cap">
-                </div>
-                <div class="card-body">
-                  <div class="cont-text">
-                    <h4 class="card-title">{{course.name}}</h4>
-                    <p class="card-text">{{course.desc}}.</p>
-                  </div>
-                  <div class="btn-course-home">
-                    {% if request.session.role == 'admin' %}
-                    <a class="btn btn-card" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
-                    {% elif "userId" not in request.session %}
-                    <a class="btn btn-card" style="color: white;" href="/register">Apply</a>
-                    {% else %}
-                    <input class="btn btn-card" type="submit" name="btn" id="" value="Apply">
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% csrf_token %}
-            </form>
-            {%endfor%}
-          </div>
-          <!--/.Second slide-->
-
-
-
-        </div>
-        <!--/.Slides-->
-
-
-        <!--Controls-->
-        <div class="controls-top">
-          <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-          <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a>
-        </div>
-        <!--/.Controls-->
-
-        <!--Indicators-->
-        <ol class="carousel-indicators">
-          <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-          <li data-target="#multi-item-example" data-slide-to="1"></li>
-
-        </ol>
-        <!--/.Indicators-->
-      </div>
-      <!--/.Carousel Wrapper-->
-
-
-      <!--   <div class="row row-cols-1 row-cols-md-4 g-4 cards">
         {% for course in courses %}
-        <div class="col">
-          <form method="post" action="/apply_course/{{course.id}}" class='card-deck'>
-            <div class="card" style="width: 16rem;">
-              <img src="{{course.photo.url}}" class="card-img-top" style="width:100%; height:200px;" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">{{course.name}}</h5>
-                <p class="card-text">{{course.desc}}</p>
-                <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
-                {% if request.session.role == 'admin' %}
-                <a class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
-                {% elif "userId" not in request.session %}
-                <a class="btn btn-info" style="color: white;" href="/register">Apply</a>
-                {% else %}
-                <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
+        {% load mathfilters %}
+
+        {% if forloop.counter0 == 0 %}
+
+        <div class="carousel-item active">
+          <div class="cards-wrapper">
+            {% elif forloop.counter0|mod:3 == 0 %}
+
+            <div class="carousel-item ">
+              <div class="cards-wrapper">
                 {% endif %}
+                <!-- style='#F6F5F7' -->
+                <div class="card d-none d-md-block">
+                  <img src="{{course.photo.url}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{course.name}}</h5>
+                    <div class="card-text">{{course.desc}}</div>
+                  </div>
+                  <div class="card-footer w-100">
+                    {% if request.session.role == 'admin' %}
+                    <a class="btn" style="background-color: rgb(78, 183, 181);color: white;"
+                      href="/delete_course/{{course.id}}">Delete</a>
+                    {% elif "userId" not in request.session %}
+                    <a class="btn text-light" style="background-color: rgb(78, 183, 181); color: white;"
+                      href="/register">Apply</a>
+                    {% else %}
+                    <form method="post" action="/apply_course/{{course.id}}">
+                      {% csrf_token %}
+                      <input class="btn text-light" style="background-color: rgb(78, 183, 181)" type="submit" name="btn"
+                        id="" value="Apply">
+                    </form>
+                    {% endif %}
+                  </div>
+                </div>
+
+                {% if forloop.counter0 == 2 %}
               </div>
             </div>
+            {% elif forloop.counter0|mod:3 == 2 %}
+          </div>
         </div>
-        {% csrf_token %}
-        </form>
-        {%endfor%}
-      </div>-->
-
-
-
+        {% elif forloop.counter0 == count_course %}
+      </div>
     </div>
+    {% endif %}
+
+    {% endfor %}
+
+
+  </div>
+  <a class="carousel-control-prev" style="background-color: rgb(78, 183, 181)" href="#carouselExampleControls"
+    role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" style="background-color: rgb(78, 183, 181); " href="#carouselExampleControls"
+    role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  </div>
+
+
 </section>
 
 
@@ -212,7 +158,8 @@
     <a href="#contact">Contact</a>
     <a href="#Privacy Policy">Privacy Policy</a>
   </div>
-  <div class="created">created by <span>Bashayer , Mariam , Norah , Shahad and Khdijah</span> | All right reserved</div>
+  <div class="created">created by <span>Bashayer , Mariam , Norah , Shahad and Khdijah</span> | All right reserved
+  </div>
 </section>
 
 

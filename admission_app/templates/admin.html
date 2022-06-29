@@ -6,113 +6,97 @@
     <h4 class="display-6">Welcome, {{user.first_name}}</h4>
     <!-- ADD COURSE BUTTON  -->
     <div style="justify-content: right">
-      <a
-        class="btn table-hover btn-add-course"
-        style="background-color: rgb(145, 214, 213)"
-        href="/add_course"
-        >Add Course</a
-      >
+      <a class="btn table-hover btn-add-course" style="background-color: rgb(145, 214, 213)" href="/add_course">Add
+        Course</a>
     </div>
   </div>
+
   <!-- CORSES LIST TABLE  -->
   <h5 class="mt-4">Courses List </h5>
-  <table class="table table-hover table-bordered">
-    <thead style="background-color: rgb(145, 214, 213)">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Course Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Available Seats</th>
-        <th scope="col">Students Number:</th>
-        <th scope="col">Actions:</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if courses %}
-      {% for course in courses %}
-      <tr>
-        <th scope="row">{{course.id}}</th>
-        <td>{{course.name}}</td>
-        <td>{{course.desc}}</td>
-        {% load filters %} {% load mathfilters %}
-         {% with count_approve=course.users.all|in_category:'approve'|length %}
-        <td>{{ course.capacity|sub:count_approve }}</td>
-        <td>{{ count_approve }}</td>
-        {% endwith %}
-        <td>
-          <a
-            class="btn btn-outline-*"
-            style="color: rgb(78, 183, 181)"
-            href="/edit_course/{{course.id}}"
-          >
-            Edit</a
-          >
-          |
-          <a
-            class="btn btn-outline-* text-danger"
-            href="/delete_course/{{course.id}}"
-            >Delete</a
-          >
-        </td>
-      </tr>
-      {%endfor%}
-      {% else %}
-      <tr>
-        <td colspan="6 " class="text-center">There is no Courses</td>
-      </tr>
-      {% endif %}
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead style="background-color: rgb(145, 214, 213)">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Course Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Available Seats</th>
+          <th scope="col">Students Number:</th>
+          <th scope="col">Actions:</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if courses %}
+        {% for course in courses %}
+        <tr>
+          <th scope="row">{{course.id}}</th>
+          <td><a href="/admin/{{course.id}}">{{course.name}}</a></td>
+          <td>{{course.desc}}</td>
+          {% load filters %} {% load mathfilters %}
+          {% with count_approve=course.users.all|in_category:'approve'|length %}
+          <td>{{ course.capacity|sub:count_approve }}</td>
+          <td>{{ count_approve }}</td>
+          {% endwith %}
+          <td>
+            <a class="btn btn-outline-*" style="color: rgb(78, 183, 181)" href="/edit_course/{{course.id}}">
+              Edit</a>
+            |
+            <a class="btn btn-outline-* text-danger" href="/delete_course/{{course.id}}">Delete</a>
+          </td>
+        </tr>
+        {%endfor%}
+        {% else %}
+        <tr>
+          <td colspan="6 " class="text-center">There is no Courses</td>
+        </tr>
+        {% endif %}
 
-    </tbody>
-  </table>
-<br>
+      </tbody>
+    </table>
+  </div>
+  <br>
   <!-- STUDENTS REQUESTS TABLE  -->
   <h5 class="mt-5">Pending Requests List </h5>
-  <table class="table table-hover table-bordered" id="pending">
-    <thead class="" style="background-color: rgb(145, 214, 213)">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered" id="pending">
+      <thead class="" style="background-color: rgb(145, 214, 213)">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Course Name</th>
+          <th scope="col">CV</th>
+          <th scope="col">State</th>
+          <th scope="col">Actions:</th>
+        </tr>
+      </thead>
+      {% if students %}
+      <tbody>
+        {% for student in students%}
+        <tr>
+          <th scope="row">{{student.id}}</th>
+          <td>{{student.first_name}} {{student.last_name}}</td>
+          <td>{{student.course.name}}</td>
+          {% if student.cv %}
+          <td><a href="{{student.cv.url}}">Link</a></td>
+          {% else %}
+          <td>Empty</td>
+          {% endif %}
+          <td>{{student.state }}</td>
+          <td>
+            <a class="btn btn-outline-*" style="color: rgb(78, 183, 181)"
+              href="/edit_state/{{student.id}}/approve">Approve</a>
+            |
+            <a class="btn btn-outline-* text-danger" href="/edit_state/{{student.id}}/decline">Decline</a>
+          </td>
+        </tr>
+        {%endfor%}
+      </tbody>
+      {% else %}
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Student Name</th>
-        <th scope="col">Course Name</th>
-        <th scope="col">CV</th>
-        <th scope="col">State</th>
-        <th scope="col">Actions:</th>
+        <td colspan="6 " class="text-center">There is no pending request</td>
       </tr>
-    </thead>
-    {% if students %}
-    <tbody>
-      {% for student in students%}
-      <tr>
-        <th scope="row">{{student.id}}</th>
-        <td>{{student.first_name}} {{student.last_name}}</td>
-        <td>{{student.course.name}}</td>
-        {% if student.cv %}
-        <td><a href="{{student.cv.url}}">Link</a></td>
-        {% else %}
-        <td>Empty</td>
-        {% endif %}
-        <td>{{student.state }}</td>
-        <td>
-          <a
-            class="btn btn-outline-*"
-            style="color: rgb(78, 183, 181)"
-            href="/edit_state/{{student.id}}/approve"
-            >Approve</a
-          >
-          |
-          <a
-            class="btn btn-outline-* text-danger"
-            href="/edit_state/{{student.id}}/decline"
-            >Decline</a
-          >
-        </td>
-      </tr>
-      {%endfor%}
-    </tbody>
-    {% else %}
-    <tr>
-      <td colspan="6 " class="text-center">There is no pending request</td>
-    </tr>
-  </table>
+    </table>
+  </div>
   {% endif %}
 </div>
 {%endblock%}
