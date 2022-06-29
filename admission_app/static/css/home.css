@@ -1,5 +1,12 @@
 
 /*Navbar start */
+html{
+    overflow-x: hidden;
+}
+body{
+    margin: 0 auto;
+    padding: 0px;
+}
 .navbar{
     height: 70px;
     position: fixed;
@@ -272,8 +279,16 @@ section.contacts .contact-form button {
 .course{
     background-color: #fff;
     padding: 50px 20px;
+    display: flex;
+    justify-content: center;
   }
-
+.carousel-indicators{
+    margin-bottom: -30px;
+}
+.carousel-indicators li::after{
+    background-color: #16aeca;
+}
+.carousel-indicators
   .container.my-5 {
     min-width: 100%;
 }
@@ -316,13 +331,13 @@ section.contacts .contact-form button {
     position: absolute;
     right: 2%;
     font-size: 30px;
-    color: #16aeca;
+    color: transparent;
 }
 .fa-chevron-left:before  {
     position: absolute;
     left: -4%;
     font-size: 30px;
-    color: #16aeca;
+    color: transparent;
 }
 .navbar-toggler-icon {
     background: #fdfcff;;
@@ -343,6 +358,13 @@ section.contacts .contact-form button {
     }
      .home .content p{
         font-size: 1.4rem;
+    }
+}
+@media (min-width: 992px){
+    n
+    .btn-log{
+display: flex;
+justify-content: flex-end;
     }
 }
 @media (max-width: 992px){
@@ -400,7 +422,7 @@ section.contacts .contact-form button {
         background-color: #f7f7f7;
         width: 100%;
         padding: 20px;
-        margin-top: -29px;
+        margin-top: -24px;
      }
 .navbar-light .navbar-nav .nav-link {
     color: #000;
@@ -411,6 +433,12 @@ section.contacts .contact-form button {
     margin-top: -50px;
 }
 }
+@media (max-width: 775px){
+    .collapse.show {
+        margin-top: 0px;
+     }
+}
+
 
 
 
