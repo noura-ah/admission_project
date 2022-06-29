@@ -1,25 +1,29 @@
-{%extends 'base.html'%} {% block title %}Profile{% endblock %} {%block content%}
+{%extends 'base.html'%}
+{% block title %}Profile{% endblock %}
+{% block content %}
 <div class="container content-profile">
   <div class="container">
     <form action="/edit_profile" method="post" enctype="multipart/form-data">
-      <div class="row justify-content-md-center">
+      <div class="row justify-content-center">
         <!-- <div class="col col-md-12"> -->
-        <div class=" form-row">
-          {% if messages %}
-          <div></div>
-          <div class=" col-md-10 mb-1">
-            <div class="messages">
-              {% for message in messages %}
-              <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
-                {{ message }}
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-          {% endif %}
-        </div>
+
       </div>
       <div class="row justify-content-md-center">
+        <div class="col col-md-9">
+          <div class="form-row">
+            {% if messages %}
+            <div class="col col-md-11 mb-1">
+              <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
+                  {{ message }}
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
         {% csrf_token %}
         <div class="col col-md-9">
           <div class="form-row">
@@ -50,15 +54,19 @@
               <label for="cv">Your CV:</label>
             </div>
             <div class="col-md-9 mb-3">
-              {%if user.cv %}
+              {%if user.cv != "Empty" %}
               <div id="viewer">
                 <object data={{user.cv.url}} type="application/pdf" width="100%" height="70%">
                   <iframe src="{{user.cv.url}}" width="100%" height="100%" style="border: none;">
                   </iframe>
                 </object>
               </div>
-              {%endif%}
+              {%else%}
               <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled />
+              {%endif%}
+              <input class="form-control" type="file" name="cv" id="cv2" accept="application/pdf" style="display:none ;"
+                disabled />
+
             </div>
           </div>
         </div>
@@ -80,64 +88,66 @@
               </select>
             </div>
           </div>
-        </div>
-
-        {% if user.state == 'approve' %}
-        <div class="col col-md-9">
-          <div class="form-row">
-            <div class="col-md-2 mb-3">
-              <label>Request State :</label>
-            </div>
-            <div class="col-md-9 mb-3">
-              <div class="form-control  alert-success" for="">{{user.state}} </div>
-              <div>
-                <p class="text-muted">
-                  * You can't change the course after application is being Approved.
-                </p>
+          {% if user.state == 'approve' %}
+          <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col-md-2 mb-3">
+                <label>Request State :</label>
+              </div>
+              <div class="col-md-9 mb-3">
+                <div class="form-control  alert-success" for="">{{user.state}} </div>
+                <div>
+                  <p class="text-muted">
+                    * You can't change the course after application is being Approved.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        {% elif user.state == 'decline' %}
-        <div class="col col-md-9">
-          <div class="form-row">
-            <div class="col-md-2 mb-3">
-              <label>Request State :</label>
-            </div>
-            <div class="col-md-9 mb-3">
-              <div class="form-control  alert-danger" for="">{{user.state}} </div>
-            </div>
-          </div>
-        </div>
-        {% else %}
-        <div class="col col-md-9">
-          <div class="form-row">
-            <div class="col-md-2 mb-3">
-              <label>Request State :</label>
-            </div>
-            <div class="col-md-9 mb-3">
-              <div class="form-control  alert-light" for="">{{user.state}} </div>
+          {% elif user.state == 'decline' %}
+          <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col-md-2 mb-3">
+                <label>Request State :</label>
+              </div>
+              <div class="col-md-9 mb-3">
+                <div class="form-control  alert-danger" for="">{{user.state}} </div>
+              </div>
             </div>
           </div>
-        </div>
-        {% endif %}
+          {% else %}
+          <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col-md-2 mb-3">
+                <label>Request State :</label>
+              </div>
+              <div class="col-md-9 mb-3">
+                <div class="form-control  alert-light" for="">{{user.state}} </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
 
-        {% else %}
-        <div class="row justify-content-md-center">
-          <div class="col-md-7 mb-3">
-            <div class="form-control alert-warning">You did not apply to any course</div>
+          {% else %}
+
+          <div class="col col-md-9">
+            <div class="form-row">
+              <div class="col col-md-11 mb-1">
+                <div class="form-control alert-warning">You did not apply to any course</div>
+              </div>
+            </div>
           </div>
+
+          {% endif %}
         </div>
-        {% endif %}
       </div>
   </div>
-</div>
-<div class="row justify-content-md-center">
-  <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
-    <input type="submit" id="update_btn" value="Update my profile" class="btn text-light"
-      style="background-color: rgb(78, 183, 181); display: none;" />
+  <div class="row justify-content-md-center">
+    <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
+      <input type="submit" id="update_btn" value="Update my profile" class="btn text-light"
+        style="background-color: rgb(78, 183, 181); display: none;" />
+    </div>
   </div>
-</div>
 </div>
 </form>
 <div class="row justify-content-md-center">
