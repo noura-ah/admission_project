@@ -6,6 +6,21 @@
         <div class="row justify-content-md-center">
             <div class="col col-md-9">
                 <div class="form-row">
+                    {% if messages %}
+                    <div class="col col-md-11 mb-1">
+                        <div class="messages">
+                            {% for message in messages %}
+                            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col col-md-9">
+                <div class="form-row">
                     <div class="col-md-2 mb-3">
                         <label class="form-label">Name: </label>
                     </div>
@@ -63,7 +78,7 @@
             <div class="row justify-content-md-center">
                 <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
                     <button type="submit" class="btn text-light"
-                    style="background-color: rgb(78, 183, 181)">Add</button>
+                        style="background-color: rgb(78, 183, 181)">Add</button>
                 </div>
             </div>
         </div>
