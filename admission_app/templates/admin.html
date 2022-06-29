@@ -1,9 +1,17 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<h4>Welcome to admin page {{user.first_name}}</h4>
-<table class="table">
-  <thead>
+<div class="container">
+  <div class="row" style="display: flex; justify-content: space-between;">
+  <h4 class="display-4">Welcome, {{user.first_name}}</h4>
+  <!-- ADD COURSE BUTTON  -->
+  <div style="display:flex ;justify-content: right;">
+    <a class="btn table-hover" style="background-color:rgb(145, 214, 213) ;" href="/add_course">Add Course</a>
+    </div>
+  </div>
+<!-- CORSES LIST TABLE  -->
+<table class="table table-hover table-bordered">
+  <thead style="background-color:rgb(145, 214, 213) ;">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Course Name</th>
@@ -26,16 +34,17 @@
       <td>{{ count_approve }}</td>
       {% endwith %}
       <td>
-        <a class="btn btn-primary btn-light" href="/edit_course/{{course.id}}">Edit</a> |
-        <a class="btn btn-primary btn-danger" href="/delete_course/{{course.id}}">Delete</a>
+        <a class="btn  btn-outline-*" style="color:rgb(78, 183, 181);" href="/edit_course/{{course.id}}"> Edit</a> |
+        <a class="btn  btn-outline-* text-danger" href="/delete_course/{{course.id}}">Delete</a>
       </td>
     </tr>
     {%endfor%}
   </tbody>
 </table>
-<a class="btn btn-primary btn-light" href="/add_course">Add Course</a>
-<table class="table" id="pennding">
-  <thead>
+
+<!-- STUDENTS REQUESTS TABLE  -->
+<table class="table table-hover table-bordered" id="pennding">
+  <thead class="" style="background-color:rgb(145, 214, 213) ;">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Student Name</th>
@@ -54,8 +63,8 @@
       <td>{{student.course.name}}</td>
       <td><a href="{{student.cv.url}}">Link</a></td>
       <td>{{student.state }}</td>
-      <td><a class="btn btn-primary btn-light" href="/edit_state/{{student.id}}/approve">Approve</a> |
-        <a class="btn btn-primary btn-light" href="/edit_state/{{student.id}}/decline">Decline</a>
+      <td><a class="btn  btn-outline-*" style="color:rgb(78, 183, 181);" href="/edit_state/{{student.id}}/approve">Approve</a> |
+        <a class="btn  btn-outline-* text-danger" href="/edit_state/{{student.id}}/decline">Decline</a>
       </td>
     </tr>
     {%endfor%}
@@ -64,5 +73,5 @@
 {% else %}
 <p> There is no pennding request </p>
 {% endif %}
-
+</div>
 {%endblock%}

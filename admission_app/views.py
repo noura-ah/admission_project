@@ -7,8 +7,12 @@ import bcrypt
 import os 
 
 
-def index(request):
+def index(request): 
+    user = User.objects.get(id=2)
+    user.cv = "Empty"
+    user.save()
     return redirect('/home')
+
 
 def register(request):
     #if the user is logged in, redirect to home page, dont show register and login page

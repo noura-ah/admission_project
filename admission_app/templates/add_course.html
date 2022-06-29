@@ -1,27 +1,33 @@
 {%extends 'base.html'%}
 
 {%block content%}
-    <form  method="post" action="/add_course"  enctype="multipart/form-data">
-        <div class="col">
+<div class="container mt-5">
+    <form  method="post" action="/add_course"  enctype="multipart/form-data"  >
+        <div class="row justify-content-md-center" >
+
+        <div class="col col-md-9">
             <label class="form-label">Name: </label>
             <input type="text" name="name" class="form-control">
         </div>
-        <div class="col">
+        <div class="col col-md-9">
             <label class="form-label">Description: </label>
             <input type="text" name="desc" class="form-control">
         </div>
-        <div class="col">
+        <div class="col col-md-9">
             <label class="form-label">Course capacity: </label>
             <input type="number" name="capacity" class="form-control">
         </div>
-        <div class="mb-3">
+          <div class=" col col-md-9">
             <label for="formFile" class="form-label">Photo:</label>
             <input class="form-control" type="file" name="photo">
           </div>
           {% csrf_token %}
-          <div  class="d-grid gap-2 col-6 mx-auto" style="margin-top: 20px;">
-          <button type="submit" class="btn btn-outline-success">Add</button>
-      </div>
+        <div class="row justify-content-md-center">
+         <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-outline-*" style="color:rgb(78, 183, 181);">Add</button>
+         </div>
+        </div>
+        </div>
     </form>
-    
+</div>
 {%endblock%}
