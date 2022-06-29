@@ -48,9 +48,8 @@
                     </li>
                     {% if request.session.role == 'admin' %}
                     <li class="nav-item">
-                        <a href="/admin#pending" data-scroll="pending" class="nav-link">Pending Requests <span
-                                class="badge ms-2" style="background-color:rgb(78, 183, 181);">{{
-                                request.session.request_pending }}</span></a>
+                        <a href="/admin#pending" data-scroll="pending" class="nav-link">pending requests <span
+                                class="badge ms-2" style="background-color:rgb(78, 183, 181);">{{ request.session.request_pending }}</span></a>
 
                     </li>
                     <li class="nav-item">

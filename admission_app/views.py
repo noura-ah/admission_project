@@ -10,8 +10,6 @@ import os
 def index(request):
     return redirect('/home')
 
-
-
 def register(request):
     #if the user is logged in, redirect to home page, dont show register and login page
     if 'userId' in request.session:
