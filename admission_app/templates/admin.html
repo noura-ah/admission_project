@@ -52,7 +52,12 @@
       <th scope="row">{{student.id}}</th>
       <td>{{student.first_name}} {{student.last_name}}</td>
       <td>{{student.course.name}}</td>
+      {% if student.cv %}
       <td><a href="{{student.cv.url}}">Link</a></td>
+      {% else %}
+      <td>Empty</td>
+      {% endif %}
+
       <td>{{student.state }}</td>
       <td><a class="btn btn-primary btn-light" href="/edit_state/{{student.id}}/approve">Approve</a> |
         <a class="btn btn-primary btn-light" href="/edit_state/{{student.id}}/decline">Decline</a>
