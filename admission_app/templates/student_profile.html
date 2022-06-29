@@ -50,7 +50,7 @@
         <label for="cv">Your CV:</label>
           </div>
           <div class="col-md-9 mb-3">
-            {%if user.cv.url %}
+            {%if user.cv.name != "Empty" %}
             <div id="viewer">
             <object data={{user.cv.url}} type="application/pdf" width="100%" height="70%" >
               <iframe src="{{user.cv.url}}" width="100%" height="100%" style="border: none;">
