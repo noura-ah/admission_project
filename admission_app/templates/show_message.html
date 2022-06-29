@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
-
+{% block title %}Messages{% endblock %}
 {%block content%}
-<div class="container" style=" display: flex;">
+<div class="content-profile" style=" display: flex;">
     {% for msg in msgs %}
     <div id="accordion">
         <div class="card" style="margin: 40px; width: 300px;">
