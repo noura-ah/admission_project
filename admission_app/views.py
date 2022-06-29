@@ -191,12 +191,13 @@ def edit_profile(request):
                 return redirect(f'/student_profile/{this_user.id}')
             else:
                 this_user.cv = request.FILES['cv']
-                messages.success(request, 'CV is added successfully')
+                #messages.success(request, 'CV is added successfully')
         
         #if no cv in the db
         elif not this_user.cv:
             messages.error(request,"You did not upload your CV")
         this_user.save()
+    messages.success(request, 'your profile updated successfully')
     return redirect(f'/student_profile/{this_user.id}')
 
 def add_message(request):
