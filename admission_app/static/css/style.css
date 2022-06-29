@@ -5,16 +5,17 @@
 }
 
 body {
-	background: #f6f5f7;
+	/* background: #b3b0b5; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 120vh;
+	height: 100vh;
 	margin: -20px 0 50px;
+	background-color: rgba(128, 123, 123, 0.326);
 }
-/* 
+
 h1 {
 	font-weight: bold;
 	margin: 0;
@@ -41,7 +42,7 @@ a {
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
-} */
+}
 /* ------------------------------button style-------------------------------------- */
 button {
 	border-radius: 20px;
@@ -143,7 +144,7 @@ input {
 	top: 0;
 	left: 50%;
 	width: 50%;
-	height: 100%;
+	max-height: 100%;
 	overflow: hidden;
 	transition: transform 0.6s ease-in-out;
 	z-index: 100;
@@ -156,7 +157,7 @@ input {
 .overlay {
 	background: #56C2C1;
 	/* background: -webkit-linear-gradient(to right, #5264ea,white); */
-	background: linear-gradient(to left,#bbe4e4,#399897,#6bb5b4,#bbe4e4);
+	background: linear-gradient(to left,#619292,#1c6160,#448d8b,#6d9999);
 	color: #FFFFFF;
 	position: relative;
 	left: -100%;
@@ -199,16 +200,24 @@ input {
 .container.right-panel-active .overlay-right {
 	transform: translateX(20%);
 }
-/*start home */
-
-.img-bg{
-background-color: #56C2C1;
-
-    }
 .overlay {
     background-color: rgba(0, 0, 0, 0.3);
     height: 100vh;
 }
 
-
-/*end home*/
+/* --------------------------alert message----------------------------------------- */
+.alert {
+	padding: 10px;
+	background-color: #f4433682;
+	color: white;
+  }
+  .closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+  }

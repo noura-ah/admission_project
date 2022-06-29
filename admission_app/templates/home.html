@@ -1,90 +1,117 @@
-{%extends 'base.html'%}
-{% block title %}Home{% endblock %}
-{%block content%}
 
-
-<section class="home w-100">
-  <div class="img-bg">
-    <div class="overlay">
-      <div class="content">
-        <h3>The Lowest Prices Available </h3>
-        <p>Lorem, ipsum dolor sit amet Id,Lorem, ipsum dolor sit amet consectetur adipisicing elit id</p>
-        <div class="content-btn">
-          <a href="#home" class="btn btn-content">get your now</a>
+{%extends 'home_nav.html'%}
+ {% block content %}
+  <button class="top-btn">🔝</button>
+  <section class="home w-100">
+    <div class="img-bg">
+      <div class="overlay">
+        <div class="container">
+          <div class="content">
+            <h3>The Lowest Prices Available </h3>
+            <div id="type_text"></div>
+            <div class="content-btn">
+              <a href="#courses" class="btn btn-content">Show Courses</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </section>
+  <div id="courses" class="row row-cols-1 row-cols-md-4 g-4">
+    {% for course in courses %}
+    <div class="col">
+      <form method="post" action="/apply_course/{{course.id}}" class='card-deck'>
+        <div class="card" style="width: 16rem;">
+          <img src="{{course.photo.url}}" class="card-img-top" style="width:100%; height:200px;" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{course.name}}</h5>
+            <p class="card-text">{{course.desc}}</p>
+            <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
+            {% if request.session.role == 'admin' %}
+            <a class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
+            {% elif "userId" not in request.session %}
+            <a class="btn btn-info" style="color: white;" href="/register">Apply</a>
+            {% else %}
+            <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
+            {% endif %}
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+    </form>
+    {%endfor%}
   </div>
-</section>
 
+  {% if not request.session.role == 'admin' %}
+  <section class="contacts" id="contacts">
+    <div class="container">
+      <h3 class="text-center  mb-5">Contact Us</h3>
+      <div class="row mt-2 ">
+        <div class="col-md-6">
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.4511370374094!2d46.672206415518346!3d24.71138765730089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03280e046f99%3A0x37737eab160a212!2sKingdom%20Tower!5e0!3m2!1sen!2str!4v1632085323976!5m2!1sen!2str"
+              style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="col-md-6 ">
+          <form class="contact-form row needs-validation" method="post" action="/add_message" novalidate>
+            <div class="col-md-6 mb-3">
+              <input type="text" class="form-control text-start" name="name" placeholder="Enter the name..." required>
+              <div class="invalid-feedback">
+                Enter The Name
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <input type="email" class="form-control  text-start" name="email" placeholder="Enter the email..."required>
+              <div class="invalid-feedback">
+               Enter the Email
+              </div>
+            </div>
+            <div class="col-12 mb-3">
+              <textarea class="form-control  text-start" name="message" placeholder="Message..." required></textarea>
+              <div class="invalid-feedback">
+                Message
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="send-message">Send</button>
+            </div>
 
-
-<div class="row row-cols-1 row-cols-md-4 g-4">
-  {% for course in courses %}
-  <div class="col">
-    <form method="post" action="/apply_course/{{course.id}}" class='card-deck'>
-      <div class="card" style="width: 16rem;">
-        <img src="{{course.photo.url}}" class="card-img-top" style="width:100%; height:200px;" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{course.name}}</h5>
-          <p class="card-text">{{course.desc}}</p>
-          <p class="card-text"><small class="text-muted">Created at: {{course.created_at.date}}</small></p>
-          {% if request.session.role == 'admin' %}
-          <a class="btn btn-info" style="color: white;" href="/delete_course/{{course.id}}">Delete</a>
-          {% elif "userId" not in request.session %}
-          <a class="btn btn-info" style="color: white;" href="/register">Apply</a>
-          {% else %}
-          <input class="btn btn-primary" type="submit" name="btn" id="" value="Apply">
+            {% csrf_token %}
+          </form>
+          {% if "sucess_msg" in request.session %}
+            <p style="color: green;">{{ request.session.sucess_msg }}
+            <p>
           {% endif %}
         </div>
       </div>
-  </div>
-  {% csrf_token %}
-  </form>
-  {%endfor%}
-</div>
-
-{% if not request.session.role == 'admin' %}
-<section class="contacts" id="contacts">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.4511370374094!2d46.672206415518346!3d24.71138765730089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03280e046f99%3A0x37737eab160a212!2sKingdom%20Tower!5e0!3m2!1sen!2str!4v1632085323976!5m2!1sen!2str"
-            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <h3 class="text-center">Contacat Us</h3>
-        <form class="contact-form row needs-validation" method="post" action="/add_message" novalidate>
-          <div class="col-md-6 mb-3">
-            <input type="text" class="form-control" name="name" placeholder="Enter the name..." required>
-            <div class="invalid-feedback">
-              Enter The Name
-            </div>
-          </div>
-          <div class="col-md-6 mb-3">
-            <input type="email" class="form-control" name="email" placeholder="Enter the email..." required>
-            <div class="invalid-feedback">
-              Enter the Email
-            </div>
-          </div>
-          <div class="col-12 mb-3">
-            <textarea class="form-control" name="message" placeholder="Message..." required></textarea>
-            <div class="invalid-feedback">
-              Message
-            </div>
-          </div>
-          <button type="submit">Send</button>
-          {% csrf_token %}
-        </form>
-        {% if "sucess_msg"  in  request.session %}
-        <p style="color: green;">{{  request.session.sucess_msg }}<p>
-        {% endif %}
-      </div>
     </div>
-  </div>
-</section>
-{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="footer">
+    <div class="share">
+      <a href="#" class="fab fa-facebook-f"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+      <a href="#" class="fab fa-linkedin"></a>
+      <a href="#" class="fab fa-pinterest"></a>
+    </div>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#cource">courses</a>
+      <a href="#contactus">location</a>
+      <a href="#contact">Contact</a>
+      <a href="#Privacy Policy">Privacy Policy</a>
+    </div>
+    <div class="created">created by <span>Bashayer , Mariam , Norah , Shahad and Khdijah</span> | All right reserved</div>
+  </section>
+
+
+
+
+
 {%endblock%}
+

@@ -1,155 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- {% load staticfiles %} -->
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="../static/images/nav_logo.png" style="width:30px;">
+    </head>
+    {% load static %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-
-
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
     <!--font awesom cdn-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="icon" href="./static/img/logo.png" type="image/icon type">
-    <style>
-        .home {
-            position: relative;
-        }
-
-        .img-bg {
-            background: url("/static/images/bg9.jpeg") no-repeat;
-            background-position: bottom;
-            height: 100vh;
-            background-size: cover;
-            max-width: 100%;
-
-        }
-
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.6);
-            height: 100vh;
-        }
-
-        .home .content {
-            max-width: 50rem;
-            position: absolute;
-            top: 25%;
-            right: 40%;
-        }
-
-        .home .content h3 {
-            font-size: 3.2rem;
-            text-transform: uppercase;
-            color: #fff;
-        }
-
-        .home .content p {
-            font-size: 2rem;
-            color: #fff;
-            font-weight: lighter;
-            padding: 1rem 0;
-            margin: 10px;
-        }
-
-        .content-btn {
-            position: relative;
-        }
-
-        .btn-content {
-            position: absolute;
-            right: 50%;
-            width: 180px;
-            padding: 10px;
-            background-color: #fff;
-            color: black;
-
-        }
-
-        section.contacts {
-            padding: 100px 0 60px;
-        }
-
-        section.contacts .map iframe {
-            height: 200px;
-            width: 90%;
-        }
-
-        section.contacts .contact-addresses h4 {
-            font-size: 24px;
-            color: #181c1c;
-            margin-bottom: 40px;
-        }
-
-        section.contacts .contact-addresses ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        section.contacts .contact-addresses ul li {
-            font-size: 18px;
-            line-height: 25px;
-            color: #16aeca;
-            margin-bottom: 15px;
-        }
-
-        section.contacts .contact-addresses li address {
-            display: inline;
-        }
-
-        section.contacts .contact-text {
-            margin: 50px auto 20px;
-        }
-
-        section.contacts .contact-text h3 {
-            font-size: 24px;
-            color: #181c1c;
-            font-weight: bold;
-        }
-
-        section.contacts .contact-form {
-            width: 60%;
-            margin: auto;
-        }
-
-        section.contacts .contact-form input,
-        section.contacts .contact-form textarea {
-            background-color: #f7f7f7;
-            border: 2px solid #ececec;
-            color: #5c5c5c;
-            font-size: 15px;
-            line-height: 25px;
-            border-radius: 3px;
-            text-align: right;
-        }
-
-        section.contacts .contact-form button {
-            background-color: #16aeca;
-            font-size: 15px;
-            color: #fff;
-            padding: 10px 30px;
-            border-radius: 3px;
-            width: auto;
-            margin-right: 12px;
-            border: 0;
-        }
-    </style>
 </head>
 
-<body>
+<body style=" background-color: #ececec;">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <div class="container-fluid">
             {% load static %}
-            <img src="{% static 'img/logo.png' %}" alt="logo" style="width:5%; height:5%;">
-            <!-- <a class="navbar-brand" href="#">Admission</a> -->
+            <img class='logo-nav' src="{% static 'images/logo-2.png' %}" alt="logo">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -159,13 +38,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                        <a class="nav-link " aria-current="page" href="/home">Home</a>
                     </li>
-                    <li class="nav-item">
-                        {% if request.session.role == 'admin' %}
-                        <a class="nav-link" href="/admin" class="btn btn-dark">Profile</a>
-                        {% else %}
-                        <a class="nav-link" href="/student_profile/{{ request.session.userId}}" class="">Profile</a>
+                    {% if request.session.role == 'Student' %}
                     <li class="nav-item">
                         <a class="nav-link" href="/home#contacts" class="">Contact us</a>
                     </li>
@@ -173,20 +48,33 @@
                     </li>
                     {% if request.session.role == 'admin' %}
                     <li class="nav-item">
-                        <a href="/admin#pennding" data-scroll="pennding" class="nav-link">pennding requests <span
-                                class="badge bg-info ms-2">{{ request.session.request_pennding }}</span></a>
+                        <a href="/admin#pending" data-scroll="pending" class="nav-link">Pending Requests <span
+                                class="badge ms-2" style="background-color:rgb(78, 183, 181);">{{
+                                request.session.request_pending }}</span></a>
 
                     </li>
                     <li class="nav-item">
-                        <a href="/show_message" class="nav-link">Messages <span class="badge bg-info ms-2">{{
-                                request.session.msgs }}</span></a>
+                        <a href="/show_message" class="nav-link">Messages <span class="badge ms-2"
+                                style="background-color:rgb(78, 183, 181);">{{request.session.msgs }}</span></a>
 
                     </li>
                     {% endif %}
                 </ul>
-                <div class="mr-2">
-                    <a href="/logout" class="btn btn-dark">Logout</a>
+                <div class="mr-4">
+                    {% if request.session.role == 'admin' %}
+                    <a href="/admin" class="text-light icon-person"><i class="fas fa-user-alt fa-lg"></i></a>
+                    {% else %}
+                    <a href="/student_profile/{{ request.session.userId}}" class="text-light icon-person"><i
+                            class="fas fa-user-alt fa-lg"></i></a>
+                    {% endif %}
                 </div>
+                <div class="mr-2 logout ">
+                    <a href="/logout" class="icon-logout">Logout </a>
+
+                    <a href="/logout"> <span class="mt-2"><i class="fas fa-sign-out-alt fa-lg  icon-logout"></i></span>
+                    </a>
+                </div>
+
             </div>
             {% else %}
             <div class="mr-2">
@@ -196,17 +84,37 @@
         </div>
     </nav>
 
-
-    {% if messages %}
-    {% for message in messages %}
+    <!-- {#% if messages %#}
+    {#% for message in messages %#}
     <div class="alert alert-{{message.tags}}">{{ message }}</div>
-    {% endfor %}
-    {% endif %}
-
+    {#% endfor %#}
+    {#% endif %#} -->
 
 
     {% block content %}{% endblock %}
-    </div>
+
+    <!-- add_course page validation -->
+    <script>
+        //  JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
@@ -223,7 +131,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="{% static 'js/script.js' %}"></script> -->
 </body>
 
 </html>

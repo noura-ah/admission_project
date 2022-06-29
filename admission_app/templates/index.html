@@ -12,12 +12,6 @@
 	integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
 </head>
 <body>
-	{% if messages %}
-	{% for message in messages %}
-	<div style="background-color: rgba(255, 0, 0, 0.361);padding: 10px;">{{ message }}</div>
-	{% endfor %}
-	{% endif %}
-
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form method="post" action="/register">
@@ -58,6 +52,18 @@
 			</div>
 		</div>
 	</div>
+	{% if messages %}
+	<ul class="messages" style="list-style-type: none">
+	  {% for message in messages %}
+	  <li {% if message.tags %} class="alert alert-{{ message.tags }} alert alert-danger"
+		{% endif %}>
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+
+		{{ message }}
+	  </li>
+	  {% endfor %}
+	</ul>
+	{% endif %}
 	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"

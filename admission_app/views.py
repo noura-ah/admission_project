@@ -8,8 +8,8 @@ import os
 
 
 def index(request):
-    
     return redirect('/home')
+
 
 def register(request):
     #if the user is logged in, redirect to home page, dont show register and login page
@@ -28,8 +28,9 @@ def register(request):
             phone= request.POST["phone"]
             password = request.POST["password"]
             passwordHash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-            newUser = User.objects.create(first_name=first_name,last_name=last_name,email=email,phone=phone,role = "Student",state="Pennding", password=passwordHash)
+            newUser = User.objects.create(first_name=first_name,last_name=last_name,email=email,phone=phone,role = "Student", password=passwordHash)
             request.session["userId"] = newUser.id
+            request.session['role'] = newUser.role
             return redirect("/home")
     return render(request,"index.html")
 
@@ -53,6 +54,9 @@ def login(request):
 def home(request):
     if "userId" in request.session:
         user = User.objects.get(id=request.session["userId"])
+
+    msg=Message.objects.filter(read=False)
+    request.session["msgs"]=len(msg)
     # if(user.role=="Student"):
     context = {
             # "user": user,
@@ -67,10 +71,9 @@ def admin(request):
 
     user = User.objects.get(id=request.session["userId"])
     courses =Course.objects.all()
-    students = User.objects.filter(state="pennding")
-    request.session["request_pennding"]=len(students)
-    msg=Message.objects.filter(read=False)
-    request.session["msgs"]=len(msg)
+    students = User.objects.filter(state="pending")
+    request.session["request_pending"]=len(students)
+    
     if(user.role=="admin"):
         context = {
             "user": user,
@@ -106,7 +109,7 @@ def edit_state(request,id,state):
         user.course=None
     elif user.course.capacity == len(user.course.users.all().filter(state='approve')):
         messages.error(request,f'{user.course.name} course is full')
-        #state var here is approve, we need to change t0 pennding
+        #state var here is approve, we need to change t0 pending
         state=user.state
     user.state = state
     user.save()
@@ -120,30 +123,17 @@ def apply_course(request,id):
         if (not user.course):
             course=Course.objects.get(id=id)
             user.course=course
-            user.state="pennding"
+            user.state="pending"
             user.save()
             return redirect(f'/student_profile/{user.id}')
         else: #user already applied to another course 
-            messages.error(request, "you are already applied to another course")
+            messages.error(request, "you already applied to another course")
+            return redirect(f'/student_profile/{user.id}')
     return redirect(f'/student_profile/{user.id}')
 
 def show_student(request,id):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
-    # if request.method=='POST':
-    #     user=User.objects.get(id=id)
-    #     user.first_name=request.POST['first_name']
-    #     user.last_name=request.POST['last_name']
-    #     if request.POST.get('course'):
-    #         user.course=Course.objects.get(id=request.POST['course'])
-    #     if request.FILES.get('cv'):
-    #         if not request.FILES['cv'].name.endswith((".pdf")):
-    #             messages.error(request,"Only PDF files are accepted")
-    #             return redirect(f'/student_profile/{user.id}')
-    #         user.cv = request.FILES['cv']
-    #     user.save()
-    #     return redirect(f'/student_profile/{user.id}')
-    
     context={
         'user':User.objects.get(id=id),
         'courses':Course.objects.all(),
@@ -201,12 +191,13 @@ def edit_profile(request):
                 return redirect(f'/student_profile/{this_user.id}')
             else:
                 this_user.cv = request.FILES['cv']
-                messages.success(request, 'CV is added successfully')
+                #messages.success(request, 'CV is added successfully')
         
         #if no cv in the db
         elif not this_user.cv:
             messages.error(request,"You did not upload your CV")
         this_user.save()
+        messages.success(request, 'your profile updated successfully')
     return redirect(f'/student_profile/{this_user.id}')
 
 def add_message(request):
@@ -219,16 +210,19 @@ def add_message(request):
     return redirect("/")   
 
 def show_message(request):
+    msg=Message.objects.filter(read=False)
+    request.session["msgs"]=len(msg)
     context={
-        "msgs":Message.objects.all()
+        "msgs":Message.objects.filter(read=False)
     }
     return render(request,"show_message.html",context)
 
 def read_message(request , id):
+    msg=Message.objects.filter(read=False)
+    request.session["msgs"]=len(msg)
     msg=Message.objects.get(id=id)
     msg.read=True
     msg.save()
-    request.session["msgs"]= request.session["msgs"] - 1
     return redirect('/show_message')
 
 

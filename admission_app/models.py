@@ -7,11 +7,11 @@ class userManager(models.Manager):
         errors = {}
         if len(postData['first_name']) < 2:
             errors["first_name"] = "First Name should be at least 2 characters"
-        elif len(postData['last_name']) < 2:
+        if len(postData['last_name']) < 2:
             errors["last_name"] = "Last Name should be at least 2 characters"
-        elif len(postData['password']) < 8:
+        if len(postData['password']) < 8:
             errors['password'] = "Password should be at least 8 characters"
-        elif postData['password'] != postData['confirm_pw']:
+        if postData['password'] != postData['confirm_pw']:
                 errors['password'] = "Passwords DO NOT match!"
         
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')   
@@ -62,7 +62,7 @@ class User(models.Model):
     course = models.ForeignKey(Course, related_name="users", on_delete=models.CASCADE, null=True)
     state = models.CharField(null= True, max_length=255)
     password = models.CharField(max_length=255)
-    cv = models.FileField(upload_to='cv_files/',null=True)
+    cv = models.FileField(upload_to='cv_files/',null=True, default='Empty')
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects= userManager()
@@ -74,3 +74,4 @@ class Message(models.Model):
     read = models.BooleanField(default=False)
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
