@@ -1,71 +1,32 @@
-{%extends 'base.html'%} {%block content%}
-<div class="container" style="margin-top: 30px; margin-left: 20%;">
-  <div class="row justify-content-md-center">
-    <form method="post" action="/add_course" enctype="multipart/form-data" class="needs-validation" novalidate>
-      <div class="row mb-3">
-        <label class="form-label" for="validationCustom01">Name: </label>
-        <div class="col-sm-8">
-          <input type="text" name="name" class="form-control" id="validationCustom01" required/>
+{%extends 'base.html'%}
+{%block content%}
+<div class="container mt-5">
+    <form  method="post" action="/add_course"  enctype="multipart/form-data"  >
+        <div class="row justify-content-md-center" >
+
+        <div class="col col-md-9">
+            <label class="form-label">Name: </label>
+            <input type="text" name="name" class="form-control">
         </div>
-        <div class="invalid-feedback">
-            Please provide a valid Name.
-          </div>
-      </div>
-      <div class="row mb-3">
-        <label class="form-label" for="validationCustom02">Description: </label>
-        <div class="col-sm-8">
-          <input type="text" name="desc" class="form-control" id="validationCustom02" required/>
+        <div class="col col-md-9">
+            <label class="form-label">Description: </label>
+            <input type="text" name="desc" class="form-control">
         </div>
-        <div class="invalid-feedback">
-            Please provide a valid Description.
-          </div>
-      </div>
-      <div class="row mb-3">
-        <label class="form-label" for="validationCustom03">Course capacity: </label>
-        <div class="col-sm-8">
-          <input type="number" name="capacity" class="form-control" id="validationCustom03" required/>
+        <div class="col col-md-9">
+            <label class="form-label">Course capacity: </label>
+            <input type="number" name="capacity" class="form-control">
         </div>
-        <div class="invalid-feedback">
-            Please provide a valid capacity.
+          <div class=" col col-md-9">
+            <label for="formFile" class="form-label">Photo:</label>
+            <input class="form-control" type="file" name="photo">
           </div>
-      </div>
-      <div class="row mb-3">
-        <label for="formFile" class="form-label" for="validationCustom04">Photo:</label>
-        <div class="col-sm-8">
-          <input class="form-control" type="file" name="photo" id="validationCustom04" required/>
+          {% csrf_token %}
+        <div class="row justify-content-md-center">
+         <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-outline-*" style="color:rgb(78, 183, 181);">Add</button>
+         </div>
         </div>
-               <div class="invalid-feedback">
-            Please provide a valid photo.
-          </div>
-      </div>
-      {% csrf_token %}
-      <div
-        class="d-grid col-1 mx-auto"
-        style="margin-top: 20px; background-color: #45adacb7; border-radius: 5px">
-        <button type="submit" class="btn">Add</button>
-      </div>
+        </div>
     </form>
-  </div>
 </div>
-<!-- <script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(() => {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
-</script> -->
 {%endblock%}

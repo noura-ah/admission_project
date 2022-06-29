@@ -18,12 +18,9 @@
                     readonly>
             </div>
             <div>
-                <input type="file" name="cv" id="cv" style="display:none;" disabled/>
-                <label for="cv" id="cv-label" name="cv-lable" class="btn btn-info text-light mt-3 mb-3">Click
-                    here to upload your cv
-                </label>
-                <!-- <label for="">CV:</label>
-                <input type="file" name="cv" id="cv" value="{{user.cv}}" disabled> -->
+                <label for="cv">Upload CV:</label>
+                <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled/>
+               
             </div>
             {% if user.course %}
             <div>
