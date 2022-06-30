@@ -128,7 +128,7 @@ def apply_course(request,id):
             user.save()
             return redirect(f'/student_profile/{user.id}')
         else: #user already applied to another course 
-            messages.error(request, "you already applied to another course")
+            messages.error(request, f"you already applied to {user.course.name} course")
             return redirect(f'/student_profile/{user.id}')
     return redirect(f'/student_profile/{user.id}')
 
