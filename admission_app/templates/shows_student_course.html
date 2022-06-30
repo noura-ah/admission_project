@@ -5,7 +5,7 @@
   <div class="d-flex justify-content-between">
     <h4 class="display-6">Welcome,{{User.name}}</h4>
     <!-- ADD COURSE BUTTON  -->
-    
+
   </div>
   <!-- STUDENTS REQUESTS TABLE  -->
   <h5 class="mt-5">Approved Students List for course {{course.name}} </h5>
@@ -16,8 +16,6 @@
         <th scope="col">Student Name</th>
         <th scope="col">Course Name</th>
         <th scope="col">CV</th>
-        <!-- <th scope="col">State</th> -->
-        <!-- <th scope="col">Actions:</th> -->
       </tr>
     </thead>
     {% if students %}
@@ -32,21 +30,6 @@
         {% else %}
         <td>Empty</td>
         {% endif %}
-        <!-- <td>{{student.state }}</td> -->
-        <!-- <td>
-          <a
-            class="btn btn-outline-*"
-            style="color: rgb(78, 183, 181)"
-            href="/edit_state/{{student.id}}/approve"
-            >Approve</a
-          >
-          |
-          <a
-            class="btn btn-outline-* text-danger"
-            href="/edit_state/{{student.id}}/decline"
-            >Decline</a
-          >
-        </td> -->
       </tr>
       {%endfor%}
     </tbody>

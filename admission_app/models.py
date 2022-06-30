@@ -13,7 +13,6 @@ class userManager(models.Manager):
             errors['password'] = "Password should be at least 8 characters"
         if postData['password'] != postData['confirm_pw']:
                 errors['password'] = "Passwords DO NOT match!"
-        
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')   
         if not postData["email"]:
                 errors["email"] = "Please enter email (Empty Check)"
@@ -40,8 +39,8 @@ class userManager(models.Manager):
 class CourseManager(models.Manager):
     def basic_validator(self,postData):
         errors={}
-        # if len(postData['desc']) > 200:
-        #     errors['desc'] = "The length of characters is more than 200 characters"
+        if len(postData['desc']) > 200:
+            errors['desc'] = "The length of characters is more than 200 characters"
         if not postData['photo'].name.endswith((".jpg",".png",".gif",".jpeg")):
             errors['img']="Only images end with .png, .gif, .jpg and .jpeg are accepted"
         return errors

@@ -41,9 +41,9 @@
                 <!-- style='#F6F5F7' -->
                 <div class="card d-none d-md-block">
                   <img src="{{course.photo.url}}" class="card-img-top" alt="...">
-                  <div class="card-body">
+                  <div class="card-body card-body ">
                     <h5 class="card-title">{{course.name}}</h5>
-                    <div class="card-text">{{course.desc}}</div>
+                    <div class="card-text scroll">{{course.desc}}</div>
                   </div>
                   <div class="card-footer w-100">
                     {% if request.session.role == 'admin' %}
@@ -158,7 +158,8 @@
     <a href="#contact">Contact</a>
     <a href="#Privacy Policy">Privacy Policy</a>
   </div>
-  <div class="created" >created by <span style=" font-weight: normal;">Bashayer , Mariam , Norah , Shahad and Khdijah</span> | All right reserved</div>
+  <div class="created">created by <span style=" font-weight: normal;">Bashayer , Mariam , Norah , Shahad and
+      Khdijah</span> | All right reserved</div>
 </section>
 
 
