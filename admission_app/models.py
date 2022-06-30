@@ -37,12 +37,18 @@ class userManager(models.Manager):
         return errors
 
 class CourseManager(models.Manager):
+    def basic_validator_files(self,postData):
+        errors={}
+        
+        if not postData['photo'].name.endswith((".jpg",".png",".gif",".jpeg")):
+            errors['img']="Only images end with .png, .gif, .jpg and .jpeg are accepted"
+        return errors
+    
     def basic_validator(self,postData):
         errors={}
         if len(postData['desc']) > 200:
             errors['desc'] = "The length of characters is more than 200 characters"
-        if not postData['photo'].name.endswith((".jpg",".png",".gif",".jpeg")):
-            errors['img']="Only images end with .png, .gif, .jpg and .jpeg are accepted"
+        
         return errors
     
 class Course(models.Model):

@@ -88,7 +88,8 @@ def add_course(request):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
     if request.method == "POST":
-        errors = Course.objects.basic_validator(request.FILES)
+        errors = Course.objects.basic_validator_files(request.FILES)
+        errors.update(Course.objects.basic_validator(request.POST))
         if len(errors) > 0:
             for key, errorMessage in errors.items():
                 messages.error(request, errorMessage)
@@ -128,7 +129,7 @@ def apply_course(request,id):
             user.save()
             return redirect(f'/student_profile/{user.id}')
         else: #user already applied to another course 
-            messages.error(request, "you already applied to another course")
+            messages.error(request, f"you already applied to {user.course.name} course")
             return redirect(f'/student_profile/{user.id}')
     return redirect(f'/student_profile/{user.id}')
 
@@ -171,7 +172,11 @@ def edit_course(request,id):
     return render(request,'edit_course.html',context)
 
 def show_students_course(request,id):
-    return render(request,'shows_student_course.html',{'students':Course.objects.get(id=id).users.filter(state='approve')})
+    context={
+        'course':Course.objects.get(id=id),
+        'students':Course.objects.get(id=id).users.filter(state='approve')
+        }
+    return render(request,'shows_student_course.html',context)
 
 def edit_profile(request):
     this_user=User.objects.get(id=request.session["userId"])
