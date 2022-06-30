@@ -89,43 +89,43 @@
           </div>
         </div>
         {% if user.state == 'approve' %}
-        <div class="col col-md-9">
-          <div class="form-row">
-            <div class="col-md-2 mb-3">
-              <label>Request State :</label>
-            </div>
-            <div class="col-md-9 mb-3">
-              <div class="form-control  alert-success" for="">{{user.state}} </div>
-              <div>
-                <p class="text-muted">
-                  * You can't change the course after application is being Approved.
-                </p>
+            <div class="col col-md-9">
+              <div class="form-row">
+                <div class="col-md-2 mb-3">
+                  <label>Request State :</label>
+                </div>
+                <div class="col-md-9 mb-3">
+                  <div class="form-control  alert-success" for="">{{user.state}} </div>
+                  <div>
+                    <p class="text-muted">
+                      * You can't change the course after application is being Approved.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
         {% elif user.state == 'decline' %}
-        <div class="col col-md-9">
-          <div class="form-row">
-            <div class="col-md-2 mb-3">
-              <label>Request State :</label>
+            <div class="col col-md-9">
+              <div class="form-row">
+                <div class="col-md-2 mb-3">
+                  <label>Request State :</label>
+                </div>
+                <div class="col-md-9 mb-3">
+                  <div class="form-control  alert-danger" for="">{{user.state}} </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-9 mb-3">
-              <div class="form-control  alert-danger" for="">{{user.state}} </div>
-            </div>
-          </div>
-        </div>
         {% else %}
-        <div class="col col-md-9">
-          <div class="form-row">
-            <div class="col-md-2 mb-3">
-              <label>Request State :</label>
+            <div class="col col-md-9">
+              <div class="form-row">
+                <div class="col-md-2 mb-3">
+                  <label>Request State :</label>
+                </div>
+                <div class="col-md-9 mb-3">
+                  <div class="form-control  alert-light" for="">{{user.state}} </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-9 mb-3">
-              <div class="form-control  alert-light" for="">{{user.state}} </div>
-            </div>
-          </div>
-        </div>
         {% endif %}
 
         {% else %}

@@ -111,7 +111,7 @@ def edit_state(request,id,state):
         user.course=None
     elif user.course.capacity == len(user.course.users.all().filter(state='approve')):
         messages.error(request,f'{user.course.name} course is full')
-        #state var here is approve, we need to change t0 pending
+        #state var here is approve, we need to change to pending
         state=user.state
     user.state = state
     user.save()
