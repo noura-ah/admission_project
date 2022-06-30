@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="../static/images/nav_logo.png" style="width:30px;">
@@ -47,12 +48,13 @@
                     </li>
                     {% if request.session.role == 'admin' %}
                     <li class="nav-item">
-                        <a href="/admin#pending" data-scroll="pending" class="nav-link">Pending Requests <span
+                        <a href="/admin#pending" data-scroll="pending" class="nav-link">pending requests <span
                                 class="badge ms-2" style="background-color:rgb(78, 183, 181);">{{ request.session.request_pending }}</span></a>
 
                     </li>
                     <li class="nav-item">
-                        <a href="/show_message" class="nav-link">Messages <span class="badge ms-2" style="background-color:rgb(78, 183, 181);">{{request.session.msgs }}</span></a>
+                        <a href="/show_message" class="nav-link">Messages <span class="badge ms-2"
+                                style="background-color:rgb(78, 183, 181);">{{request.session.msgs }}</span></a>
 
                     </li>
                     {% endif %}
@@ -61,7 +63,8 @@
                     {% if request.session.role == 'admin' %}
                     <a href="/admin" class="text-light icon-person"><i class="fas fa-user-alt fa-lg"></i></a>
                     {% else %}
-                    <a href="/student_profile/{{ request.session.userId}}" class="text-light icon-person"><i class="fas fa-user-alt fa-lg"></i></a>
+                    <a href="/student_profile/{{ request.session.userId}}" class="text-light icon-person"><i
+                            class="fas fa-user-alt fa-lg"></i></a>
                     {% endif %}
                 </div>
                 <div class="mr-2 logout ">
@@ -80,37 +83,37 @@
         </div>
     </nav>
 
-    {% if messages %}
-    {% for message in messages %}
+    <!-- {#% if messages %#}
+    {#% for message in messages %#}
     <div class="alert alert-{{message.tags}}">{{ message }}</div>
-    {% endfor %}
-    {% endif %}
+    {#% endfor %#}
+    {#% endif %#} -->
 
 
     {% block content %}{% endblock %}
-    
+
     <!-- add_course page validation -->
-<script>
+    <script>
         //  JavaScript for disabling form submissions if there are invalid fields
         (() => {
-      'use strict'
+            'use strict'
 
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation')
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
 
-      // Loop over them and prevent submission
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
 
-          form.classList.add('was-validated')
-        }, false)
-      })
-    })()
-</script>
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
@@ -128,4 +131,5 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

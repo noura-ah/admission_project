@@ -56,10 +56,12 @@ def home(request):
 
     msg=Message.objects.filter(read=False)
     request.session["msgs"]=len(msg)
+    course=Course.objects.all()
     # if(user.role=="Student"):
     context = {
             # "user": user,
-            "courses":Course.objects.all()
+            "courses":course,
+            'count_course':len(course)-1,
         }
     return render(request, 'home.html', context)
     # return HttpResponse("Please authenticate first")
@@ -126,7 +128,7 @@ def apply_course(request,id):
             user.save()
             return redirect(f'/student_profile/{user.id}')
         else: #user already applied to another course 
-            messages.error(request, "you already applied to another course")
+            messages.error(request, f"you already applied to {user.course.name} course")
             return redirect(f'/student_profile/{user.id}')
     return redirect(f'/student_profile/{user.id}')
 
@@ -167,8 +169,10 @@ def edit_course(request,id):
         'course':course
     }
     return render(request,'edit_course.html',context)
-    
-    
+
+def show_students_course(request,id):
+    return render(request,'shows_student_course.html',{'students':Course.objects.get(id=id).users.filter(state='approve')})
+
 def edit_profile(request):
     this_user=User.objects.get(id=request.session["userId"])
     if request.method == "POST":
@@ -181,7 +185,6 @@ def edit_profile(request):
             this_user.course=this_course
         
         #check if cv was upladed
-        print(request.FILES.get('cv','empty'))
         if request.FILES.get('cv'):
             errors = User.objects.file_validatior(request.FILES['cv'])
             if len(errors) > 0:
@@ -193,10 +196,10 @@ def edit_profile(request):
                 #messages.success(request, 'CV is added successfully')
         
         #if no cv in the db
-        elif not this_user.cv:
+        elif this_user.cv =='Empty':
             messages.error(request,"You did not upload your CV")
         this_user.save()
-    messages.success(request, 'your profile updated successfully')
+        messages.success(request, 'your profile updated successfully')
     return redirect(f'/student_profile/{this_user.id}')
 
 def add_message(request):

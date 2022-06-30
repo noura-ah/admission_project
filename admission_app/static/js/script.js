@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // switch between Login and Register form 
+=======
+// SWITCH BETWEEN LOGIN AND REGISTER FORM //
+>>>>>>> 338796bb9cda5fb9c08e218f7a26211d4092b06f
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');

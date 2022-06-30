@@ -1,155 +1,166 @@
-{%extends 'base.html'%} {% block title %}Profile{% endblock %} {%block content%}
+{%extends 'base.html'%}
+{% block title %}Profile{% endblock %}
+{% block content %}
 <div class="container content-profile">
   <div class="container">
     <form action="/edit_profile" method="post" enctype="multipart/form-data">
-      <div class="row justify-content-md-center" >
+      <div class="row justify-content-center">
         <!-- <div class="col col-md-12"> -->
-        <div class=" form-row">
-          {% if messages %}
-          <div></div>
-          <div class=" col-md-10 mb-1">
-          <div class="messages">
-            {% for message in messages %}
-            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %} >
-              {{ message }}
+
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col col-md-9">
+          <div class="form-row">
+            {% if messages %}
+            <div class="col col-md-11 mb-1">
+              <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
+                  {{ message }}
+                </div>
+                {% endfor %}
+              </div>
             </div>
-            {% endfor %}
+            {% endif %}
           </div>
         </div>
-          {% endif %}
-        </div>
-      </div>
-        <div class="row justify-content-md-center" >
-      {% csrf_token %}
-      <div class="col col-md-9">
-        <div class="form-row">
-          <div class="col-md-2 mb-3">
-            <label class="form-label">First Name:</label>
-          </div>
-          <div class="col-md-9 mb-3">
-            <input type="text" name="first_name" id="first_name" class="form-control" value="{{user.first_name}}
-            " readonly/>
+        {% csrf_token %}
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label class="form-label">First Name:</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <input type="text" name="first_name" id="first_name" class="form-control" value="{{user.first_name}}
+            " readonly />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col col-md-9">
-        <div class="form-row">
-          <div class="col-md-2 mb-3">
-            <label class="form-label">Last Name:</label>
-          </div>
-          <div class="col-md-9 mb-3">
-            <input type="text" name="last_name" id="last_name" class="form-control" value="{{user.last_name}}"
-              readonly/>
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label class="form-label">Last Name:</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <input type="text" name="last_name" id="last_name" class="form-control" value="{{user.last_name}}"
+                readonly />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col col-md-9">
-        <div class="form-row">
-           <div class="col-md-2 mb-3">
-        <label for="cv">Your CV:</label>
-          </div>
-          <div class="col-md-9 mb-3">
-            {%if user.cv.name != "Empty" %}
-            <div id="viewer">
-            <object data={{user.cv.url}} type="application/pdf" width="100%" height="70%" >
-              <iframe src="{{user.cv.url}}" width="100%" height="100%" style="border: none;">
-              </iframe>
-            </object>
-          </div>
-          {%else%}
-        <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled/>
-        {%endif%}
-        <input class="form-control" type="file" name="cv" id="cv2" accept="application/pdf" style="display:none ;" disabled/>
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label for="cv">Your CV:</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              {%if user.cv != "Empty" %}
+              <div id="viewer">
+                <object data={{user.cv.url}} type="application/pdf" width="100%" height="70%">
+                  <iframe src="{{user.cv.url}}" width="100%" height="100%" style="border: none;">
+                  </iframe>
+                </object>
+              </div>
+              {%else%}
+              <input class="form-control" type="file" name="cv" id="cv" accept="application/pdf" disabled />
+              {%endif%}
+              <input class="form-control" type="file" name="cv" id="cv2" accept="application/pdf" style="display:none ;"
+                disabled />
 
-    </div>
-</div>
-      </div>
-      {% if user.course %}
-      <div class="col col-md-9">
-        <div class="form-row">
-          <div class="col-md-2 mb-3">
-        <label for="">Course you applied to:</label>
+            </div>
           </div>
-          <div class="col-md-9 mb-3">
-        <select name="course" id="courses" class="form-control" disabled>
-          {% for course in courses %} {% if course.id == user.course.id %}
-          <option value="{{course.id}}" selected>{{course.name}}</option>
-          {% else %}
-          <option value="{{course.id}}">{{course.name}}</option>
-          {% endif %} {% endfor %}
-        </select>
-      </div>
         </div>
-    </div>
+        {% if user.course %}
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label for="">Course you applied to:</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <select name="course" id="courses" class="form-control" disabled>
+                {% for course in courses %}
+                {% if course.id == user.course.id %}
+                <option value="{{course.id}}" selected>{{course.name}}</option>
+                {% else %}
+                <option value="{{course.id}}">{{course.name}}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
         {% if user.state == 'approve' %}
         <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col-md-2 mb-3">
-        <label>Request State :</label>
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label>Request State :</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <div class="form-control  alert-success" for="">{{user.state}} </div>
+              <div>
+                <p class="text-muted">
+                  * You can't change the course after application is being Approved.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-9 mb-3">
-        <div class="form-control  alert-success" for="">{{user.state}} </div>
-        <div>
-            <p class="text-muted">
-                * You can't change the course after application is being Approved.
-              </p>
-        </div>
-        </div>
-        </div>
-    </div>
         {% elif user.state == 'decline' %}
         <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col-md-2 mb-3">
-        <label>Request State :</label>
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label>Request State :</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <div class="form-control  alert-danger" for="">{{user.state}} </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-9 mb-3">
-        <div class="form-control  alert-danger" for="">{{user.state}} </div>
-        </div>
-        </div>
-    </div>
         {% else %}
         <div class="col col-md-9">
-            <div class="form-row">
-              <div class="col-md-2 mb-3">
-        <label>Request State :</label>
+          <div class="form-row">
+            <div class="col-md-2 mb-3">
+              <label>Request State :</label>
+            </div>
+            <div class="col-md-9 mb-3">
+              <div class="form-control  alert-light" for="">{{user.state}} </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-9 mb-3">
-        <div class="form-control  alert-light" for="">{{user.state}} </div>
+        {% endif %}
+
+        {% else %}
+
+        <div class="col col-md-9">
+          <div class="form-row">
+            <div class="col col-md-11 mb-1">
+              <div class="form-control alert-warning">You did not apply to any course</div>
+            </div>
+          </div>
         </div>
-        </div>
-    </div>
+
         {% endif %}
       </div>
-      {% else %}
-      <div class="row justify-content-md-center" >
-      <div class="col-md-7 mb-3">
-      <div class="form-control alert-warning">You did not apply to any course</div>
-    </div>
-      {% endif %}
-        </div>
-    </div>
-    </div>
-
-
-
-    <div class="row justify-content-md-center">
-        <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
-      <input type="submit" id="update_btn" value="Update my profile" class="btn text-light" style="background-color: rgb(78, 183, 181); display: none;"/>
-        </div>
-    </div>
-    </div>
-    </form>
-    <div class="row justify-content-md-center">
-        <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
+  </div>
+</div>
+<div class="row justify-content-md-center">
+  <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
+    <input type="submit" id="update_btn" value="Update my profile" class="btn text-light"
+      style="background-color: rgb(78, 183, 181); display: none;" />
+  </div>
+</div>
+</div>
+</form>
+<div class="row justify-content-md-center">
+  <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
     {% if user.state == 'approve' %}
-    <input type="submit" id="btn2" value="Click to edit your information" class="btn text-light" style="background-color: rgb(78, 183, 181)"/>
+    <input type="submit" id="btn2" value="Click to edit your information" class="btn text-light"
+      style="background-color: rgb(78, 183, 181)" />
     {% else %}
-    <input type="submit" id="btn" value="Click to edit your information" class="btn text-light" style="background-color: rgb(78, 183, 181)"/>
+    <input type="submit" id="btn" value="Click to edit your information" class="btn text-light"
+      style="background-color: rgb(78, 183, 181)" />
     {% endif %}
   </div>
-  </div>
-  </div>
-  {%endblock%}
 </div>
+
+{%endblock%}

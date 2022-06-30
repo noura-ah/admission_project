@@ -1,0 +1,8 @@
+bcrypt==3.2.2
+cffi==1.15.0
+Django==2.2.4
+django-mathfilters==1.0.0
+Pillow==9.1.1
+pycparser==2.21
+pytz==2022.1
+sqlparse==0.4.2
