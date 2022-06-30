@@ -76,10 +76,10 @@
           <th scope="row">{{student.id}}</th>
           <td>{{student.first_name}} {{student.last_name}}</td>
           <td>{{student.course.name}}</td>
-          {% if student.cv %}
+          {% if student.cv.name != "Empty" %}
           <td><a href="{{student.cv.url}}">Link</a></td>
           {% else %}
-          <td>Empty</td>
+          <td>Didnt add cv</td>
           {% endif %}
           <td>{{student.state }}</td>
           <td>
