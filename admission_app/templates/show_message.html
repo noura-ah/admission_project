@@ -3,33 +3,34 @@
 {%block content%}
 
 {%if msgs%}
-<div class=" container w-75 content-profile">
+<div class="container w-75 content-profile">
   <small class="text-muted">* Click to expand message</small>
   <div id="accordion">
     {% for msg in msgs %}
-        <div class="card" style="margin: 10px;">
-          <div class="card-header" id="heading{{msg.name}} ">
-            <div class="mb-0" style="display: flex; justify-content: space-between">
-              <h4 data-toggle="collapse" data-target="#{{msg.name}} " aria-expanded="true" aria-controls="collapseOne">
-                {{msg.name}}    
-              </h4>
-              <div>
-              <a  class="fw-bold" style="height: 30px; color:rgb(78, 183, 181);" href="/read_message/{{msg.id}}">Read</a></div>
-              </div>
-          </div>
-          <div id="{{msg.name}} " class="collapse" aria-labelledby="headingOne" data-parent="#accordion" style="margin-left:20px ;">
-            <div class="card-body p-6" >
-               {{msg.message}}
-               <div style="display: flex; justify-content: right">
-                <a class="fw-bold" style="color:rgb(47, 146, 252);" href = "mailto: {{msg.email}}"> Reply</a>
-            </div>
-            </div>
-            <div>
-            </div>
+    <div class="card w-100" style="margin: 10px;">
+      <div class="card-header" id="heading{{msg.name}} ">
+        <div class="mb-0" style="display: flex; justify-content: space-between">
+          <h4 data-toggle="collapse" data-target="#{{msg.name}} " aria-expanded="true" aria-controls="collapseOne">
+            {{msg.name}}
+          </h4>
+          <div>
+            <a class="fw-bold" style="height: 30px; color:rgb(78, 183, 181);" href="/read_message/{{msg.id}}">Read</a>
           </div>
         </div>
-  {%endfor%}
-</div>
+      </div>
+      <div id="{{msg.name}} " class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body p-6">
+          {{msg.message}}
+          <div style="display: flex; justify-content: right">
+            <a class="fw-bold" style="color:rgb(47, 146, 252);" href="mailto: {{msg.email}}"> Reply</a>
+          </div>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
 </div>
 {%endif%}
 {%endblock%}

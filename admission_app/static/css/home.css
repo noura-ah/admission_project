@@ -337,6 +337,11 @@ section.contacts .contact-form button {
     position: relative;
 }
 
+.scroll {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
 .carousel-control-prev,
 .carousel-control-next {
     background-color: #e1e1e1;
@@ -385,7 +390,7 @@ section.contacts .contact-form button {
     padding: 1em;
 }
 
-.card-body {
+.card-body-home {
     background: #f6f5f7;
     height: 200px;
 }
