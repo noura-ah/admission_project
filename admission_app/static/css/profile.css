@@ -1,3 +1,22 @@
-.content-profile{
+.content-profile {
     margin-top: 170px;
 }
+
+.btn-add-course {
+    border: 1px solid #56C2C1;
+}
+
+.btn-add-course:hover {
+    background-color: #56C2C1;
+}
+
+.btn:active:focus {
+    box-shadow: transparent
+}
+/*
+@media (max-width : 767px ){
+    .form-add-course{
+        display: flex;
+    }
+}
+*/

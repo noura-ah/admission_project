@@ -1,27 +1,82 @@
 {%extends 'base.html'%}
 {% block title %}Edit Course{% endblock %}
 {%block content%}
+<div class="container content-profile">
 <form method="post" action="" enctype="multipart/form-data">
-    <div class="col">
-        <label class="form-label">Name: </label>
-        <input type="text" name="name" class="form-control" value="{{course.name}}">
-    </div>
-    <div class="col">
-        <label class="form-label">Description: </label>
-        <input type="text" name="desc" class="form-control" value="{{course.desc}}">
-    </div>
-    <div class="col">
-        <label class="form-label">Course capacity: </label>
-        <input type="number" name="capacity" class="form-control" value="{{course.capacity}}">
-    </div>
-    <div class="mb-3">
-        <label for="formFile" class="form-label">Photo:</label>
-        <input class="form-control" type="file" name="photo">
-    </div>
+   
+    <div class="row justify-content-md-center">
+         <!----------- MESSAGES ERRORS -------------->
+        <div class="col col-md-9">
+            <div class="form-row">
+                {% if messages %}
+                <div class="col col-md-11 mb-1">
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!------------ THE BEGINNING OF FORM INPUTS --------------->
+         <!------------ THE FIRST INPUT --------------->
+            <div class="col col-md-9">
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Name: </label>
+                    </div>
+                    <div class="col-md-9 mb-3">
+                        <input type="text" name="name" class="form-control" value="{{course.name}}">
+                    </div>
+                </div>
+            </div>
+            <!------------ THE 2ND INPUT --------------->
+            <div class="col col-md-9">
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                    <label class="form-label">Description: </label>
+                    </div>
+                    <div class="col-md-9 mb-3">
+                    <input type="text" name="desc" class="form-control" value="{{course.desc}}">
+                    </div>
+                </div>
+            </div>
+            <!------------ THE 3RD INPUT --------------->
+            <div class="col col-md-9">
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Course capacity: </label>
+                    </div>
+                    <div class="col-md-9 mb-3">
+                        <input type="number" name="capacity" class="form-control" value="{{course.capacity}}">
+                    </div>
+                </div>
+            </div>
+            <!------------ THE 4TH INPUT --------------->
+            <div class="col col-md-9">
+                <div class="form-row">
+                    <div class="col-md-2 mb-3">
+                        <label for="formFile" class="form-label">Photo:</label>
+                    </div>
+                    <div class="col-md-9 mb-3">
+                        <input class="form-control" type="file" name="photo">
+                    </div>
+                </div>
+            </div>
+
+            <!------------ BUTTON --------------->
     {% csrf_token %}
-    <div class="d-grid gap-2 col-6 mx-auto" style="margin-top: 20px;">
-        <button type="submit" class="btn btn-outline-success">edit</button>
+    <div class="row justify-content-md-center">
+        <div class="d-grid gap-2 col-3" style="margin-top: 20px;">
+        <button type="submit" class="btn text-light"
+        style="background-color: rgb(78, 183, 181)">edit</button>
+        </div>
+    </div>
+
     </div>
 </form>
-
+</div>
 {%endblock%}

@@ -1,108 +1,165 @@
-
 {%extends 'home_nav.html'%}
- {% block content %}
-  <button class="top-btn">🔝</button>
-  <section class="home w-100">
-    <div class="img-bg">
-      <div class="overlay">
-        <div class="container">
-          <div class="content">
-            <h3>The Lowest Prices Available </h3>
-            <div id="type_text"></div>
-            <div class="content-btn">
-              <a href="#courses" class="btn btn-content">Show Courses</a>
-            </div>
+{% block content %}
+<button class="top-btn">🔝</button>
+<section class="home w-100">
+  <div class="img-bg">
+    <div class="overlay">
+      <div class="container">
+        <div class="content">
+          <h3>Apply to courses and programmes in AST </h3>
+          <div id="type_text"></div>
+          <div class="content-btn">
+            <a href="#courses" class="btn btn-content">Show Courses</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-      <div class="container my-5">
-      <hr class="my-5">
-    
-      <!--Carousel Wrapper-->
-      <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-        <!--Slides-->
-
-        <!--/.Slides-->
-    
-
-
-      </div>
-      <!--/.Carousel Wrapper-->
-
-    </div>
+  </div>
+</section>
 
 
 
-  {% if not request.session.role == 'admin' %}
-  <section class="contacts" id="contacts">
-    <div class="container">
-      <h3 class="text-center  mb-5">Contact Us</h3>
-      <div class="row mt-2 ">
-        <div class="col-md-6">
-          <div class="map">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.4511370374094!2d46.672206415518346!3d24.71138765730089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03280e046f99%3A0x37737eab160a212!2sKingdom%20Tower!5e0!3m2!1sen!2str!4v1632085323976!5m2!1sen!2str"
-              style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+<h3 class="text-center  mt-5">Selection Of Courses</h3>
+
+<section id="courses" class="course">
+  <div class="carousel-inner" role="listbox">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+
+        {% for course in courses %}
+        {% load mathfilters %}
+
+        {% if forloop.counter0 == 0 %}
+
+        <div class="carousel-item active">
+          <div class="cards-wrapper">
+            {% elif forloop.counter0|mod:3 == 0 %}
+
+            <div class="carousel-item ">
+              <div class="cards-wrapper">
+                {% endif %}
+                <!-- style='#F6F5F7' -->
+                <div class="card d-none d-md-block">
+                  <img src="{{course.photo.url}}" class="card-img-top" alt="...">
+                  <div class="card-body card-body-home">
+                    <h5 class="card-title">{{course.name}}</h5>
+                    <div class="card-text scroll">{{course.desc}}</div>
+                  </div>
+                  <div class="card-footer w-100">
+                    {% if request.session.role == 'admin' %}
+                    <a class="btn" style="background-color: rgb(78, 183, 181);color: white;"
+                      href="/delete_course/{{course.id}}">Delete</a>
+                    {% elif "userId" not in request.session %}
+                    <a class="btn text-light" style="background-color: rgb(78, 183, 181); color: white;"
+                      href="/register">Apply</a>
+                    {% else %}
+                    <form method="post" action="/apply_course/{{course.id}}">
+                      {% csrf_token %}
+                      <input class="btn text-light" style="background-color: rgb(78, 183, 181)" type="submit" name="btn"
+                        id="" value="Apply">
+                    </form>
+                    {% endif %}
+                  </div>
+                </div>
+
+                {% if forloop.counter0 == 2 %}
+              </div>
+            </div>
+            {% elif forloop.counter0|mod:3 == 2 %}
           </div>
         </div>
-        <div class="col-md-6 ">
-          <form class="contact-form row needs-validation" method="post" action="/add_message" novalidate>
-            <div class="col-md-6 mb-3">
-              <input type="text" class="form-control text-start" name="name" placeholder="Enter the name..." required>
-              <div class="invalid-feedback">
-                Enter The Name
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <input type="email" class="form-control  text-start" name="email" placeholder="Enter the email..."required>
-              <div class="invalid-feedback">
-               Enter the Email
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <textarea class="form-control  text-start" name="message" placeholder="Message..." required></textarea>
-              <div class="invalid-feedback">
-                Message
-              </div>
-            </div>
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="send-message">Send</button>
-            </div>
+        {% elif forloop.counter0 == count_course %}
+      </div>
+    </div>
+    {% endif %}
 
-            {% csrf_token %}
-          </form>
-          {% if "sucess_msg" in request.session %}
-            <p style="color: green;">{{ request.session.sucess_msg }}
-            <p>
+    {% endfor %}
+
+
+  </div>
+  <a class="carousel-control-prev" style="background-color: rgb(78, 183, 181)" href="#carouselExampleControls"
+    role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" style="background-color: rgb(78, 183, 181); " href="#carouselExampleControls"
+    role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  </div>
+
+
+</section>
+
+
+
+{% if not request.session.role == 'admin' %}
+<section class="contacts" id="contacts">
+  <div class="container">
+    <h3 class="text-center  mb-5">Contact Us</h3>
+    <div class="row mt-2 ">
+      <div class="col-md-6">
+        <div class="map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.4511370374094!2d46.672206415518346!3d24.71138765730089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03280e046f99%3A0x37737eab160a212!2sKingdom%20Tower!5e0!3m2!1sen!2str!4v1632085323976!5m2!1sen!2str"
+            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="col-md-6 ">
+        <form class="contact-form row needs-validation" method="post" action="/add_message" novalidate>
+          <div class="col-md-6 mb-3">
+            <input type="text" class="form-control text-start" name="name" placeholder="Enter the name..." required>
+            <div class="invalid-feedback">
+              Enter The Name
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <input type="email" class="form-control  text-start" name="email" placeholder="Enter the email..." required>
+            <div class="invalid-feedback">
+              Enter the Email
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <textarea class="form-control  text-start" name="message" placeholder="Message..." required></textarea>
+            <div class="invalid-feedback">
+              Message
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="send-message">Send</button>
+          </div>
+
+          {% csrf_token %}
+        </form>
+        {% if "sucess_msg" in request.session %}
+        <p style="color: green;">{{ request.session.sucess_msg }}
+        <p>
           {% endif %}
-        </div>
       </div>
     </div>
-  </section>
-  {% endif %}
+  </div>
+</section>
+{% endif %}
 
-  <section class="footer">
-    <div class="share">
-      <a href="#" class="fab fa-facebook-f"></a>
-      <a href="#" class="fab fa-twitter"></a>
-      <a href="#" class="fab fa-instagram"></a>
-      <a href="#" class="fab fa-linkedin"></a>
-      <a href="#" class="fab fa-pinterest"></a>
-    </div>
-    <div class="links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#cource">courses</a>
-      <a href="#contactus">location</a>
-      <a href="#contact">Contact</a>
-      <a href="#Privacy Policy">Privacy Policy</a>
-    </div>
-    <div class="created">created by <span>Bashayer , Mariam , Norah , Shahad and Khdijah</span> | All right reserved</div>
-  </section>
+<section class="footer">
+  <div class="share">
+    <a href="#" class="fab fa-facebook-f"></a>
+    <a href="#" class="fab fa-twitter"></a>
+    <a href="#" class="fab fa-instagram"></a>
+    <a href="#" class="fab fa-linkedin"></a>
+    <a href="#" class="fab fa-pinterest"></a>
+  </div>
+  <div class="links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#cource">courses</a>
+    <a href="#contactus">location</a>
+    <a href="#contact">Contact</a>
+    <a href="#Privacy Policy">Privacy Policy</a>
+  </div>
+  <div class="created" >created by <small style=" font-weight: normal; color: #58dad7;">Bashayer , Khadijah , Mariam , Norah and Shahad </small> | All right reserved</div>
+</section>
 
 
 {%endblock%}
-

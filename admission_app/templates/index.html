@@ -7,10 +7,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-	<title>Document</title>
+	<title>Register and Login</title>
+	<link rel="icon" type="image/x-icon" href="../static/images/nav_logo.png" style="width:30px;">
+
 	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 	integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
 </head>
+
 <body>
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
@@ -54,20 +57,19 @@
 	</div>
 	{% if messages %}
 	<ul class="messages" style="list-style-type: none">
-	  {% for message in messages %}
-	  <li {% if message.tags %} class="alert alert-{{ message.tags }} alert alert-danger"
-		{% endif %}>
-		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		{% for message in messages %}
+		<li {% if message.tags %} class="alert alert-{{ message.tags }} alert alert-danger" {% endif %}>
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 
-		{{ message }}
-	  </li>
-	  {% endfor %}
+			{{ message }}
+		</li>
+		{% endfor %}
 	</ul>
 	{% endif %}
 	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-	crossorigin="anonymous"></script>
+		integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -56,13 +56,12 @@ def home(request):
 
     msg=Message.objects.filter(read=False)
     request.session["msgs"]=len(msg)
-    # if(user.role=="Student"):
+    course=Course.objects.all()
     context = {
-            # "user": user,
-            "courses":Course.objects.all()
+            "courses":course,
+            'count_course':len(course)-1,
         }
     return render(request, 'home.html', context)
-    # return HttpResponse("Please authenticate first")
 
 def admin(request):
     if "userId" not in request.session:
@@ -86,7 +85,8 @@ def add_course(request):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
     if request.method == "POST":
-        errors = Course.objects.basic_validator(request.FILES)
+        errors = Course.objects.basic_validator_files(request.FILES)
+        errors.update(Course.objects.basic_validator(request.POST))
         if len(errors) > 0:
             for key, errorMessage in errors.items():
                 messages.error(request, errorMessage)
@@ -104,11 +104,9 @@ def edit_state(request,id,state):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
     user = User.objects.get(id=id)
-    if state=='decline':
-        user.course=None
-    elif user.course.capacity == len(user.course.users.all().filter(state='approve')):
+    if user.course.capacity == len(user.course.users.all().filter(state='approve')):
         messages.error(request,f'{user.course.name} course is full')
-        #state var here is approve, we need to change t0 pending
+        #state var here is approve, we need to change to pending
         state=user.state
     user.state = state
     user.save()
@@ -119,14 +117,14 @@ def apply_course(request,id):
         return HttpResponse("Please authenticate first")
     if request.method =='POST':
         user = User.objects.get(id=request.session["userId"])
-        if (not user.course):
+        if not user.course or  user.state == 'decline':
             course=Course.objects.get(id=id)
             user.course=course
             user.state="pending"
             user.save()
             return redirect(f'/student_profile/{user.id}')
         else: #user already applied to another course 
-            messages.error(request, "you already applied to another course")
+            messages.error(request, f"you already applied to {user.course.name} course")
             return redirect(f'/student_profile/{user.id}')
     return redirect(f'/student_profile/{user.id}')
 
@@ -152,7 +150,7 @@ def edit_course(request,id):
     if request.method == "POST":
         course.name = request.POST["name"]
         course.desc = request.POST["desc"]
-        if len(course.users.filter(state="approve"))<int(request.POST["capacity"]):
+        if len(course.users.filter(state="approve"))<=int(request.POST["capacity"]):
             course.capacity=request.POST["capacity"]
         else:
             messages.error(request,"The new seats number is less than the number of applicants.")
@@ -167,8 +165,14 @@ def edit_course(request,id):
         'course':course
     }
     return render(request,'edit_course.html',context)
-    
-    
+
+def show_students_course(request,id):
+    context={
+        'course':Course.objects.get(id=id),
+        'students':Course.objects.get(id=id).users.filter(state='approve')
+        }
+    return render(request,'shows_student_course.html',context)
+
 def edit_profile(request):
     this_user=User.objects.get(id=request.session["userId"])
     if request.method == "POST":
@@ -181,7 +185,6 @@ def edit_profile(request):
             this_user.course=this_course
         
         #check if cv was upladed
-        print(request.FILES.get('cv','empty'))
         if request.FILES.get('cv'):
             errors = User.objects.file_validatior(request.FILES['cv'])
             if len(errors) > 0:
@@ -193,10 +196,10 @@ def edit_profile(request):
                 #messages.success(request, 'CV is added successfully')
         
         #if no cv in the db
-        elif not this_user.cv:
+        elif this_user.cv =='Empty':
             messages.error(request,"You did not upload your CV")
         this_user.save()
-    messages.success(request, 'your profile updated successfully')
+        messages.success(request, 'your profile updated successfully')
     return redirect(f'/student_profile/{this_user.id}')
 
 def add_message(request):

@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{% block title %}Dashboard{% endblock %}
+{%block content%}
+<div class="container content-profile">
+  <div class="d-flex justify-content-between">
+    <h4 class="display-6">Welcome,{{User.name}}</h4>
+    <!-- ADD COURSE BUTTON  -->
+
+  </div>
+  <!-- STUDENTS REQUESTS TABLE  -->
+  <h5 class="mt-5">Approved Students List for course {{course.name}} </h5>
+  <table class="table table-hover table-bordered" id="pending">
+    <thead class="" style="background-color: rgb(145, 214, 213)">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">CV</th>
+      </tr>
+    </thead>
+    {% if students %}
+    <tbody>
+      {% for student in students%}
+      <tr>
+        <th scope="row">{{student.id}}</th>
+        <td>{{student.first_name}} {{student.last_name}}</td>
+        {% if student.cv.name != "Empty" %}
+        <td><a href="{{student.cv.url}}">Link</a></td>
+        {% else %}
+        <td>Didn't add cv</td>
+        {% endif %}
+      </tr>
+      {%endfor%}
+    </tbody>
+    {% else %}
+    <tr>
+      <td colspan="6 " class="text-center">There is no approved students yet</td>
+    </tr>
+  </table>
+  {% endif %}
+</div>
+{%endblock%}

@@ -20,7 +20,8 @@ urlpatterns = [
     path('edit_profile',views.edit_profile),
     path('add_message',views.add_message),
     path('show_message',views.show_message),
-    path('read_message/<int:id>',views.read_message)
+    path('read_message/<int:id>',views.read_message),
+    path('admin/<int:id>',views.show_students_course)
 
 ]
 

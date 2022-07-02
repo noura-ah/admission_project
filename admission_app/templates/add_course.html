@@ -2,69 +2,85 @@
 {% block title %}Add Course{% endblock %}
 {%block content%}
 <div class="container content-profile">
-    <form  method="post" action="/add_course" class="needs-validation" enctype="multipart/form-data" novalidate>
-        <div class="row justify-content-md-center" >
-            <div class="col col-md-9">
-            <div class="form-row">
-                <div class="col-md-2 mb-3">
-                  <label class="form-label">Name: </label>
-                 </div>
-            <div class="col-md-9 mb-3">
-                <input type="text" name="name" class="form-control" required>
-                <div class="invalid-feedback">
-                    Enter The Name
-                  </div>
-            </div>
-            </div>
-            </div>
-
-        <div class="col col-md-9">
-            <div class="form-row">
-                <div class="col-md-2 mb-3">
-                 <label class="form-label">Description: </label>
+    <form method="post" action="/add_course" class="needs-validation" enctype="multipart/form-data" novalidate>
+        <div class="row justify-content-md-center form-column">
+            <div class="col col-md-9 col-12">
+                <div class="form-row">
+                    {% if messages %}
+                    <div class="col col-md-11 mb-1">
+                        <div class="messages">
+                            {% for message in messages %}
+                            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-            <div class="col-md-9 mb-3">
-                 <input type="text" name="desc" class="form-control" required>
-                 <div class="invalid-feedback">
-                    Enter The Description
-                  </div>
             </div>
-            </div>
-        </div>
-
-         <div class="col col-md-9">
-            <div class="form-row">
-                <div class="col-md-2 mb-3">
-            <label class="form-label">Available Seats: </label>
-         </div>
-         <div class="col-md-9 mb-3">
-            <input type="number" name="capacity" class="form-control" required>
-            <div class="invalid-feedback">
-                Enter The Available Seats
-              </div>
-            </div>
-            </div>
-        </div>
-
-          <div class="col col-md-9">
-            <div class="form-row">
-                <div class="col-md-2 mb-3">
-            <label for="formFile" class="form-label">Photo:</label>
+            <div class="col col-md-9 col-12 form-add-course">
+                <div class="form-row form-add-course">
+                    <div class="col-3 mb-3">
+                        <label class="form-label">Name: </label>
+                    </div>
+                    <div class="col-9 mb-3 ">
+                        <input type="text" name="name" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Enter The Name
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-9 mb-3">
-            <input class="form-control" type="file" name="photo" required>
-            <div class="invalid-feedback">
-                Upload The photo
-              </div>
-        </div>
-    </div>
-          </div>
-          {% csrf_token %}
-        <div class="row justify-content-md-center">
-         <div  class="d-grid gap-2 col-3" style="margin-top: 20px;">
-          <button type="submit" class="btn btn-outline-*" style="color:rgb(78, 183, 181);">Add</button>
-         </div>
-        </div>
+            </div>
+
+            <div class="col col-md-9 col-12">
+                <div class="form-row form-add-course">
+                    <div class="col-3 mb-3">
+                        <label class="form-label">Description: </label>
+                    </div>
+                    <div class="col-9 mb-3">
+                        <input type="text" name="desc" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Enter The Description
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-md-9 col-12">
+                <div class="form-row form-add-course">
+                    <div class="col-3 mb-3">
+                        <label class="form-label">Available Seats: </label>
+                    </div>
+                    <div class="col-9 mb-3">
+                        <input type="number" name="capacity" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Enter The Available Seats
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-md-9 col-12">
+                <div class="form-row form-add-course">
+                    <div class="col-3 mb-3">
+                        <label for="formFile" class="form-label">Photo:</label>
+                    </div>
+                    <div class="col-9 mb-3">
+                        <input class="form-control" type="file" name="photo" required>
+                        <div class="invalid-feedback">
+                            Upload The photo
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% csrf_token %}
+            <div class="row justify-content-md-center col-12 text-center">
+                <div class=" " style="margin-top: 20px;">
+                    <button type="submit" class="btn text-light w-25 pe-4 ps-4"
+                        style="background-color: rgb(78, 183, 181)">Add</button>
+                </div>
+            </div>
         </div>
     </form>
 </div>
