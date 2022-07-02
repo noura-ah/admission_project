@@ -57,14 +57,11 @@ def home(request):
     msg=Message.objects.filter(read=False)
     request.session["msgs"]=len(msg)
     course=Course.objects.all()
-    # if(user.role=="Student"):
     context = {
-            # "user": user,
             "courses":course,
             'count_course':len(course)-1,
         }
     return render(request, 'home.html', context)
-    # return HttpResponse("Please authenticate first")
 
 def admin(request):
     if "userId" not in request.session:
@@ -107,11 +104,9 @@ def edit_state(request,id,state):
     if "userId" not in request.session:
         return HttpResponse("Please authenticate first")
     user = User.objects.get(id=id)
-    if state=='decline':
-        user.course=None
-    elif user.course.capacity == len(user.course.users.all().filter(state='approve')):
+    if user.course.capacity == len(user.course.users.all().filter(state='approve')):
         messages.error(request,f'{user.course.name} course is full')
-        #state var here is approve, we need to change t0 pending
+        #state var here is approve, we need to change to pending
         state=user.state
     user.state = state
     user.save()
@@ -122,7 +117,7 @@ def apply_course(request,id):
         return HttpResponse("Please authenticate first")
     if request.method =='POST':
         user = User.objects.get(id=request.session["userId"])
-        if (not user.course):
+        if not user.course or  user.state == 'decline':
             course=Course.objects.get(id=id)
             user.course=course
             user.state="pending"
@@ -155,7 +150,7 @@ def edit_course(request,id):
     if request.method == "POST":
         course.name = request.POST["name"]
         course.desc = request.POST["desc"]
-        if len(course.users.filter(state="approve"))<int(request.POST["capacity"]):
+        if len(course.users.filter(state="approve"))<=int(request.POST["capacity"]):
             course.capacity=request.POST["capacity"]
         else:
             messages.error(request,"The new seats number is less than the number of applicants.")

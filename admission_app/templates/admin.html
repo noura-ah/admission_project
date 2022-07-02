@@ -2,6 +2,17 @@
 {% block title %}Dashboard{% endblock %}
 {%block content%}
 <div class="container content-profile">
+  {% if messages %}
+  <div class="mb-1">
+    <div class="messages">
+      {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%endif %}>
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
   <div class="d-flex justify-content-between">
     <h4 class="display-6">Welcome, {{user.first_name}}</h4>
     <!-- ADD COURSE BUTTON  -->
@@ -19,7 +30,7 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Course Name</th>
-          <th scope="col" >Description</th>
+          <th scope="col">Description</th>
           <th scope="col">Available Seats</th>
           <th scope="col">Students Number</th>
           <th scope="col" class="col-2 ">Actions</th>
