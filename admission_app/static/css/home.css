@@ -286,7 +286,7 @@ section.contacts .contact-form button {
     color: #fff;
     font-weight: normal;
     padding: 0.6rem 1.5rem 1.5rem;
-    
+
 }
 
 .footer span {
@@ -316,6 +316,7 @@ section.contacts .contact-form button {
     padding: 50px 20px;
 
 }
+
 /* *************New card style************ */
 
 .carousel-indicators {
@@ -359,13 +360,16 @@ section.contacts .contact-form button {
     }
 }
 
+
+
+
+
 .img-course-home {
     width: 98%;
     height: 170px !important;
 }
 
-.card-img-top {
-
+.embed-responsive .card-img-top {
     object-fit: contain;
 }
 
@@ -373,11 +377,11 @@ section.contacts .contact-form button {
     display: flex;
     justify-content: center;
 }
-
+/* 
 .card img {
     max-width: 100%;
     max-height: 100%;
-}
+} */
 
 .card {
     margin: 0 0.5em;
@@ -441,6 +445,8 @@ section.contacts .contact-form button {
     color: transparent;
     border-color: transparent;
 }
+
+
 
 
 @media (max-width: 1200px) {
@@ -516,6 +522,7 @@ section.contacts .contact-form button {
         height: 14%;
         width: 14%;
     }
+
     .fa-user-alt {
         color: #000000;
     }
@@ -543,8 +550,10 @@ section.contacts .contact-form button {
     }
 }
 
+
 @media (max-width: 775px) {
     .collapse.show {
         margin-top: 0px;
     }
+
 }
