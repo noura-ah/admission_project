@@ -18,25 +18,25 @@
 </section>
 
 <h3 class="text-center  mt-5">Selection Of Courses</h3>
-
 <section id="courses" class="course">
   <div class="carousel-inner" role="listbox">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
+      <div class="carousel-inner d-none d-md-block">
+
 
         {% for course in courses %}
         {% load mathfilters %}
 
         {% if forloop.counter0 == 0 %}
 
-        <div class="carousel-item active">
+        <div class="carousel-item active ">
           <div class="cards-wrapper">
             {% elif forloop.counter0|mod:3 == 0 %}
 
-            <div class="carousel-item ">
+            <div class="carousel-item">
               <div class="cards-wrapper">
                 {% endif %}
-                <!-- style='#F6F5F7' -->
+
                 <div class="card d-none d-md-block">
                   <img src="{{course.photo.url}}" class="card-img-top" alt="...">
                   <div class="card-body card-body-home">
@@ -73,22 +73,75 @@
 
     {% endfor %}
 
-
   </div>
-  <a class="carousel-control-prev" style="background-color: rgb(78, 183, 181)" href="#carouselExampleControls"
-    role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" style="background-color: rgb(78, 183, 181); " href="#carouselExampleControls"
-    role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+  </div>
+  <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner d-lg-none d-md-none">
+      {% for course in courses %}
+      {% if forloop.counter0 == 0 %}
+      <div class="carousel-item active">
+        {% else %}
+        <div class="carousel-item">
+
+          {% endif %}
+          <div class="cards-wrapper">
+            <div class="card d-lg-none d-md-none">
+              <div class="embed-responsive embed-responsive-16by9">
+                <img src="{{course.photo.url}}" class="card-img-top embed-responsive-item" alt="...">
+              </div>
+              <div class="card-body card-body-home">
+                <h5 class="card-title">{{course.name}}</h5>
+                <div class="card-text scroll">{{course.desc}}</div>
+              </div>
+              <div class="card-footer w-100">
+                {% if request.session.role == 'admin' %}
+                <a class="btn" style="background-color: rgb(78, 183, 181);color: white;"
+                  href="/delete_course/{{course.id}}">Delete</a>
+                {% elif "userId" not in request.session %}
+                <a class="btn text-light" style="background-color: rgb(78, 183, 181); color: white;"
+                  href="/register">Apply</a>
+                {% else %}
+                <form method="post" action="/apply_course/{{course.id}}">
+                  {% csrf_token %}
+                  <input class="btn text-light" style="background-color: rgb(78, 183, 181)" type="submit" name="btn"
+                    id="" value="Apply">
+                </form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <a class="carousel-control-prev" style="background-color: rgb(78, 183, 181)" href="#carouselExampleControls"
+      role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" style="background-color: rgb(78, 183, 181); " href="#carouselExampleControls"
+      role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <a class="carousel-control-prev d-lg-none d-md-none" style="background-color: rgb(78, 183, 181)"
+      href="#carouselExampleControls1" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next d-lg-none d-md-none" style="background-color: rgb(78, 183, 181); "
+      href="#carouselExampleControls1" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
   </div>
 
 
 </section>
+
+</div>
+
 
 
 
@@ -156,7 +209,8 @@
     <a href="#contact">Contact</a>
     <a href="#Privacy Policy">Privacy Policy</a>
   </div>
-  <div class="created" >created by <small style=" font-weight: normal; color: #58dad7;">Bashayer , Khadijah , Mariam , Norah and Shahad </small> | All right reserved</div>
+  <div class="created">created by <small style=" font-weight: normal; color: #58dad7;">Bashayer , Khadijah , Mariam ,
+      Norah and Shahad </small> | All right reserved</div>
 </section>
 
 

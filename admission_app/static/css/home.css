@@ -286,7 +286,7 @@ section.contacts .contact-form button {
     color: #fff;
     font-weight: normal;
     padding: 0.6rem 1.5rem 1.5rem;
-    
+
 }
 
 .footer span {
@@ -316,7 +316,8 @@ section.contacts .contact-form button {
     padding: 50px 20px;
 
 }
-/* *************New card style************ */
+
+/* ************* start New card style************ */
 
 .carousel-indicators {
     margin-bottom: -30px;
@@ -359,13 +360,16 @@ section.contacts .contact-form button {
     }
 }
 
+
+
+
+
 .img-course-home {
     width: 98%;
     height: 170px !important;
 }
 
-.card-img-top {
-
+.embed-responsive .card-img-top {
     object-fit: contain;
 }
 
@@ -374,10 +378,11 @@ section.contacts .contact-form button {
     justify-content: center;
 }
 
+/* 
 .card img {
     max-width: 100%;
     max-height: 100%;
-}
+} */
 
 .card {
     margin: 0 0.5em;
@@ -430,7 +435,7 @@ section.contacts .contact-form button {
     color: transparent;
 }
 
-/* **********New card style ************* */
+/* ********** end New card style ************* */
 .navbar-toggler-icon {
     background: #fdfcff;
     ;
@@ -442,7 +447,6 @@ section.contacts .contact-form button {
     border-color: transparent;
 }
 
-
 @media (max-width: 1200px) {
 
     .home .content h3 {
@@ -453,13 +457,6 @@ section.contacts .contact-form button {
 
     .home .content p {
         font-size: 1.4rem;
-    }
-}
-
-@media (min-width: 992px) {
-    n .btn-log {
-        display: flex;
-        justify-content: flex-end;
     }
 }
 
@@ -516,6 +513,7 @@ section.contacts .contact-form button {
         height: 14%;
         width: 14%;
     }
+
     .fa-user-alt {
         color: #000000;
     }
@@ -543,8 +541,65 @@ section.contacts .contact-form button {
     }
 }
 
+/*
+.logout > *{
+    color: #000;
+    margin-top: -50px;
+}
+
 @media (max-width: 775px) {
     .collapse.show {
         margin-top: 0px;
+    }
+}
+*/
+@media (max-width: 768px) {
+    .navbar {
+        padding-top: 62px;
+    }
+
+    .navbar-light .navbar-toggler-icon {
+        padding: 15px
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        padding-top: 70px;
+    }
+
+    img.logo-nav {
+        width: 21%;
+        margin-left: -2%;
+        margin-bottom: -1%;
+    }
+
+    .home .content {
+        margin-top: -25px;
+    }
+
+    .btn-content {
+        margin-top: 21px;
+    }
+}
+
+@media (max-width: 450px) {
+    img.logo-nav {
+        width: 100px;
+        margin-bottom: -2%;
+    }
+
+    .home .content h3 {
+        font-size: 1.4rem;
+    }
+
+    #type_text {
+        font-size: 16px;
+    }
+
+    .btn-content {
+        margin-top: 56px;
+        margin-right: -76px;
+        width: 155px;
     }
 }
