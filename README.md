@@ -45,11 +45,16 @@
             pip install bcrypt  | environment must be activated 
     6. Install  Mathfilter package :
             pip install django-mathfilters | environment must be activated 
-     **OR install Dependencies in one line using : **
+   **OR install Dependencies in one line using : **
   
-       pip install -r requirements.txt
+   > pip install -r requirements.txt
      
-
+# Run The Project:
+    *make sure that tour environment is active and you in the same level with manage.py file and then type: 
+   > python manage.py makemigrations 
+   > python manage.py migrate
+   > python manage.py runserver 
+    
 # Non-functional Requirements:
     - Security 
     - UI Responsiveness
