@@ -45,10 +45,10 @@
             pip install bcrypt  | environment must be activated 
     6. Install  Mathfilter package :
             pip install django-mathfilters | environment must be activated 
-     ### OR install Dependencies in one line using : 
-     ```bash
+     **OR install Dependencies in one line using : **
+  
        pip install -r requirements.txt
-     ```
+     
 
 # Non-functional Requirements:
     - Security 
