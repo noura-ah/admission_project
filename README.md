@@ -2,7 +2,13 @@
 
 
 # Admission project:
-    --- Python Django web application where it provides courses for students. The website also managed by administrators. This web allows for students to register and login. Students can apply to course. Moreover, students can edit their profile and upload their cv. Gust and student can send a message include suggestions or proposals to the admin. Admin can manage students requests for courses via decline or approve . Admin also can add, edit, and delete courses.    He/She also can read and reply messages from both gusts and students.
+        Python Django web application where it provides courses for students. The website 
+    also managed by administrators. This web allows for students to register and login.
+    Students can apply to course. Moreover, students can edit their profile and upload 
+    their cv. Gust and student can send a message include suggestions or proposals to 
+    the admin. Admin can manage students requests for courses via decline or approve. 
+    Admin also can add, edit, and delete courses.He/She also can read and reply messages 
+    from both gusts and students.
 
 # Admission project link:
     http://50.19.89.100/home
