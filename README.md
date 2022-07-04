@@ -50,9 +50,11 @@
    > pip install -r requirements.txt
      
 # Run The Project:
-    *make sure that tour environment is active and you in the same level with manage.py file and then type: 
+   make sure that your environment is active and you in the same level with manage.py file and then type: 
    > python manage.py makemigrations 
+   
    > python manage.py migrate
+   
    > python manage.py runserver 
     
 # Non-functional Requirements:
