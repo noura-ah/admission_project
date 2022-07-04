@@ -1,5 +1,5 @@
 #admission
-# admission_project
+
 
 # Admission project:
     --- Python Django web application where it provides courses for students. The website also managed by administrators. This web allows for students to register and login. Students can apply to course. Moreover, students can edit their profile and upload their cv. Gust and student can send a message include suggestions or proposals to the admin. Admin can manage students requests for courses via decline or approve . Admin also can add, edit, and delete courses.    He/She also can read and reply messages from both gusts and students.
@@ -66,9 +66,10 @@
         * Display courses 
         * Send Message to admin
 # Admission project interface:
+
     GUST HOME
-    ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177202705-ade6257b-1eca-4cfd-bad5-e5ec331efab5.png)
-    ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203305-68855ee2-0b63-4c76-be39-02bdd3709e59.png)
+   ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177202705-ade6257b-1eca-4cfd-bad5-e5ec331efab5.png)
+   ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203305-68855ee2-0b63-4c76-be39-02bdd3709e59.png)
     ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203368-3d07a878-3787-4fd8-8d6b-af7081417d72.png)
     ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203435-6ce3fe7d-9f35-4b66-acea-bd9f1fded5ab.png)
     REGISTER/LOGIN
