@@ -47,7 +47,7 @@ class CourseManager(models.Manager):
     def basic_validator(self,postData):
         errors={}
         if len(postData['desc']) > 200:
-            errors['desc'] = "The length of characters is more than 200 characters"
+            errors['desc'] = "The length of Description is should be less than 200 characters"
         
         return errors
     
