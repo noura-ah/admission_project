@@ -13,3 +13,10 @@
 .btn:active:focus {
     box-shadow: transparent
 }
+/*
+@media (max-width : 767px ){
+    .form-add-course{
+        display: flex;
+    }
+}
+*/
