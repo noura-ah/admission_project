@@ -1,7 +1,7 @@
 #admission
 
 
-# Admission project:
+# Admission Project:
         Python Django web application where it provides courses for students. The website 
     also managed by administrators. This web allows for students to register and login.
     Students can apply to course. Moreover, students can edit their profile and upload 
@@ -10,17 +10,21 @@
     Admin also can add, edit, and delete courses.He/She also can read and reply messages 
     from both gusts and students.
 
-# Admission project link:
+# Try It:
     http://50.19.89.100/home
+
+# Project Demo:
+    https://youtu.be/cU6KwimPJGU
 
 # Skills:
     - Web Security
     - Object Relational Mapper(ORM)
     - OOP Design Principals
     - RESTful API Design
+    - Python - Django
     - Deploy web applications via AWS 
 
-# Installation requirements:
+# Installation Requirements:
     1. Install python 
         - Mac: 
             * ~$ brew -v
@@ -41,13 +45,14 @@
             pip install bcrypt  | environment must be activated 
     6. Install  Mathfilter package :
             pip install django-mathfilters | environment must be activated 
+    Or use for effortless: pip install -r requirements.txt
 
-# Non-functional requirements:
+# Non-functional Requirements:
     - Security 
     - UI Responsiveness
     - Usability 
     - Reliability
-# Functional requirements:
+# Functional Requirements:
     - Admin side: 
         * Login
         *  add courses
