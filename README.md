@@ -68,3 +68,4 @@ Functional requirements:
 Admission project interface:
     GUST HOME
     ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177202705-ade6257b-1eca-4cfd-bad5-e5ec331efab5.png)
+    ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203305-68855ee2-0b63-4c76-be39-02bdd3709e59.png)
