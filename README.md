@@ -69,3 +69,8 @@ Admission project interface:
     GUST HOME
     ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177202705-ade6257b-1eca-4cfd-bad5-e5ec331efab5.png)
     ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203305-68855ee2-0b63-4c76-be39-02bdd3709e59.png)
+    ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203368-3d07a878-3787-4fd8-8d6b-af7081417d72.png)
+    ![GUSTHOME!](https://user-images.githubusercontent.com/88772180/177203435-6ce3fe7d-9f35-4b66-acea-bd9f1fded5ab.png)
+    REGISTER/LOGIN
+    ![LOGIN!](https://user-images.githubusercontent.com/88772180/177203501-271e71b7-5301-47f9-92b7-e3f1ceb66bac.png)
+    ![LOGIN!](https://user-images.githubusercontent.com/88772180/177203836-f5f29be6-be3d-4202-8c34-eb54083a9a38.png)
