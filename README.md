@@ -21,8 +21,16 @@
     - Object Relational Mapper(ORM)
     - OOP Design Principals
     - RESTful API Design
-    - Python - Django
     - Deploy web applications via AWS 
+
+
+# Languages and Tools:
+   - HTML 
+   - CSS
+   - Bootstrap 
+   - Javascript-Jquery 
+   - Python - Django 
+   - sqlite
 
 # Installation Requirements:
     1. Install python 
