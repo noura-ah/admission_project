@@ -354,21 +354,6 @@ section.contacts .contact-form button {
     z-index: 99;
 }
 
-@media (min-width: 768px) {
-    .card img {
-        height: 11em;
-    }
-}
-
-
-
-
-
-.img-course-home {
-    width: 98%;
-    height: 170px !important;
-}
-
 .embed-responsive .card-img-top {
     object-fit: contain;
 }
@@ -378,18 +363,26 @@ section.contacts .contact-form button {
     justify-content: center;
 }
 
-/* 
+
 .card img {
     max-width: 100%;
     max-height: 100%;
-} */
+}
 
 .card {
     margin: 0 0.5em;
     box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
     border: none;
     border-radius: 0;
+    
 }
+
+
+.img-course-home {
+    width: 98%;
+    height: 170px !important;
+}
+
 
 .carousel-inner {
     padding: 1em;
@@ -398,6 +391,7 @@ section.contacts .contact-form button {
 .card-body-home {
     background: #f6f5f7;
     height: 200px;
+    
 }
 
 .cont-text {

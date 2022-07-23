@@ -36,9 +36,10 @@
             <div class="carousel-item">
               <div class="cards-wrapper">
                 {% endif %}
-
                 <div class="card d-none d-md-block">
-                  <img src="{{course.photo.url}}" class="card-img-top" alt="...">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <img src="{{course.photo.url}}" class="card-img-top embed-responsive-item" alt="course image">
+                  </div>
                   <div class="card-body card-body-home">
                     <h5 class="card-title">{{course.name}}</h5>
                     <div class="card-text scroll">{{course.desc}}</div>
@@ -59,7 +60,6 @@
                     {% endif %}
                   </div>
                 </div>
-
                 {% if forloop.counter0 == 2 %}
               </div>
             </div>
@@ -93,6 +93,7 @@
                 <h5 class="card-title">{{course.name}}</h5>
                 <div class="card-text scroll">{{course.desc}}</div>
               </div>
+
               <div class="card-footer w-100">
                 {% if request.session.role == 'admin' %}
                 <a class="btn" style="background-color: rgb(78, 183, 181);color: white;"
